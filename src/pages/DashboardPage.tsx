@@ -6,7 +6,7 @@ import { GPACard, StatCard } from '@/components/gpa/GPACard';
 import { courseStorage } from '@/lib/storage';
 import { GPAEngine } from '@/lib/gpa-engine';
 import type { Course, GPACalculation } from '@/types/types';
-import { GraduationCap, Plus } from 'lucide-react';
+import { GraduationCap, Plus, TrendingUp } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -82,25 +82,54 @@ export default function DashboardPage() {
 
       {/* بطاقات المعدل */}
       {gpaCalc && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <GPACard
-            title={t('gpa.cumulative')}
-            gpa={gpaCalc.cumulativeGPA}
-            classification={gpaCalc.classification}
-          />
-          <StatCard
-            title={t('course.totalHours')}
-            value={gpaCalc.totalRegisteredHours.toString()}
-          />
-          <StatCard
-            title={t('course.passedHours')}
-            value={gpaCalc.totalPassedHours.toString()}
-          />
-          <StatCard
-            title={t('course.totalCourses')}
-            value={courses.length.toString()}
-          />
-        </div>
+        <>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <GPACard
+              title={t('gpa.cumulative')}
+              gpa={gpaCalc.cumulativeGPA}
+              classification={gpaCalc.classification}
+            />
+            <StatCard
+              title={t('course.totalHours')}
+              value={gpaCalc.totalRegisteredHours.toString()}
+            />
+            <StatCard
+              title={t('course.passedHours')}
+              value={gpaCalc.totalPassedHours.toString()}
+            />
+            <StatCard
+              title={t('course.totalCourses')}
+              value={courses.length.toString()}
+            />
+          </div>
+
+          {/* بطاقة تحسين المعدل */}
+          <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border-primary/20">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-4">
+                <div className="rounded-full bg-primary/10 p-3">
+                  <TrendingUp className="h-6 w-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-2">
+                    {language === 'ar' ? 'هل تريد تحسين معدلك؟' : 'Want to improve your GPA?'}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {language === 'ar'
+                      ? 'احصل على تحليل ذكي وتوصيات مخصصة لتحسين معدلك الأكاديمي بناءً على بياناتك الحالية'
+                      : 'Get intelligent analysis and personalized recommendations to improve your academic GPA based on your current data'}
+                  </p>
+                  <Button asChild>
+                    <Link to="/improvement">
+                      <TrendingUp className="h-4 w-4 me-2" />
+                      {language === 'ar' ? 'عرض التحليل الذكي' : 'View Smart Analysis'}
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </>
       )}
 
       {/* المقررات الأخيرة */}

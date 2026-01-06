@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,6 +46,28 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
   const [year, setYear] = useState(course?.year?.toString() || new Date().getFullYear().toString());
   const [isRetake, setIsRetake] = useState(course?.isRetake || false);
   const [loading, setLoading] = useState(false);
+
+  // تحديث الحقول عند تغيير المقرر (للتعديل)
+  useEffect(() => {
+    if (course && open) {
+      setCourseCode(course.courseCode);
+      setCourseName(course.courseName);
+      setCreditHours(course.creditHours.toString());
+      setGrade(course.grade);
+      setSemester(course.semester);
+      setYear(course.year.toString());
+      setIsRetake(course.isRetake);
+    } else if (!course && open) {
+      // إعادة تعيين النموذج للإضافة
+      setCourseCode('');
+      setCourseName('');
+      setCreditHours('3');
+      setGrade('A');
+      setSemester('Fall');
+      setYear(new Date().getFullYear().toString());
+      setIsRetake(false);
+    }
+  }, [course, open]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

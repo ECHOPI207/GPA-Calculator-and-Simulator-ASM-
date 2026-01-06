@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Edit, Trash2 } from 'lucide-react';
 import type { Course } from '@/types/types';
-import { courseApi } from '@/db/api';
+import { courseStorage } from '@/lib/storage';
 import { useToast } from '@/hooks/use-toast';
 import { CourseForm } from './CourseForm';
 
@@ -43,11 +43,11 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
     setFormOpen(true);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     if (!deletingCourse) return;
 
     try {
-      await courseApi.deleteCourse(deletingCourse.id);
+      courseStorage.delete(deletingCourse.id);
       toast({
         title: t('common.success'),
         description: t('message.courseDeleted'),
@@ -56,7 +56,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
     } catch (error) {
       toast({
         title: t('common.error'),
-        description: error instanceof Error ? error.message : 'An error occurred',
+        description: error instanceof Error ? error.message : 'حدث خطأ',
         variant: 'destructive',
       });
     } finally {

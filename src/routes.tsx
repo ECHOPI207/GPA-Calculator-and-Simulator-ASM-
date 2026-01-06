@@ -3,6 +3,7 @@ import CalculatorPage from './pages/CalculatorPage';
 import SimulatorPage from './pages/SimulatorPage';
 import TimelinePage from './pages/TimelinePage';
 import ReportsPage from './pages/ReportsPage';
+import ImprovementPage from './pages/ImprovementPage';
 import SettingsPage from './pages/SettingsPage';
 import type { ReactNode } from 'react';
 
@@ -28,6 +29,11 @@ const routes: RouteConfig[] = [
     name: 'Simulator',
     path: '/simulator',
     element: <SimulatorPage />
+  },
+  {
+    name: 'Improvement',
+    path: '/improvement',
+    element: <ImprovementPage />
   },
   {
     name: 'Timeline',
