@@ -4,6 +4,9 @@ import SimulatorPage from './pages/SimulatorPage';
 import TimelinePage from './pages/TimelinePage';
 import ReportsPage from './pages/ReportsPage';
 import ImprovementPage from './pages/ImprovementPage';
+import CLPAssessmentPage from './pages/CLPAssessmentPage';
+import CLPResultsPage from './pages/CLPResultsPage';
+import IntegratedPlanPage from './pages/IntegratedPlanPage';
 import SettingsPage from './pages/SettingsPage';
 import type { ReactNode } from 'react';
 
@@ -34,6 +37,24 @@ const routes: RouteConfig[] = [
     name: 'Improvement',
     path: '/improvement',
     element: <ImprovementPage />
+  },
+  {
+    name: 'CLP Assessment',
+    path: '/clp-assessment',
+    element: <CLPAssessmentPage />,
+    visible: false
+  },
+  {
+    name: 'CLP Results',
+    path: '/clp-results',
+    element: <CLPResultsPage />,
+    visible: false
+  },
+  {
+    name: 'Integrated Plan',
+    path: '/integrated-plan',
+    element: <IntegratedPlanPage />,
+    visible: false
   },
   {
     name: 'Timeline',

@@ -1,9 +1,11 @@
 // خدمة التخزين المحلي للمقررات والسيناريوهات
 import type { Course, Scenario } from '@/types/types';
+import type { CLPProfile } from './clp-engine';
 
 const COURSES_KEY = 'echo-pi-courses';
 const SCENARIOS_KEY = 'echo-pi-scenarios';
 const SETTINGS_KEY = 'echo-pi-settings';
+const CLP_PROFILE_KEY = 'echo-pi-clp-profile';
 
 export interface AppSettings {
   language: 'ar' | 'en';
@@ -131,5 +133,29 @@ export const settingsStorage = {
   update: (updates: Partial<AppSettings>): void => {
     const current = settingsStorage.get();
     settingsStorage.save({ ...current, ...updates });
+  },
+};
+
+// ملف التعلم المعرفي (CLP)
+export const clpStorage = {
+  get: (): CLPProfile | null => {
+    try {
+      const data = localStorage.getItem(CLP_PROFILE_KEY);
+      return data ? JSON.parse(data) : null;
+    } catch {
+      return null;
+    }
+  },
+
+  save: (profile: CLPProfile): void => {
+    localStorage.setItem(CLP_PROFILE_KEY, JSON.stringify(profile));
+  },
+
+  delete: (): void => {
+    localStorage.removeItem(CLP_PROFILE_KEY);
+  },
+
+  exists: (): boolean => {
+    return localStorage.getItem(CLP_PROFILE_KEY) !== null;
   },
 };

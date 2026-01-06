@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { GPACard, StatCard } from '@/components/gpa/GPACard';
-import { courseStorage } from '@/lib/storage';
+import { courseStorage, clpStorage } from '@/lib/storage';
 import { GPAEngine } from '@/lib/gpa-engine';
 import type { Course, GPACalculation } from '@/types/types';
-import { GraduationCap, Plus, TrendingUp } from 'lucide-react';
+import { GraduationCap, Plus, TrendingUp, Brain } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 
@@ -125,6 +125,49 @@ export default function DashboardPage() {
                       {language === 'ar' ? 'عرض التحليل الذكي' : 'View Smart Analysis'}
                     </Link>
                   </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* بطاقة ملف التعلم المعرفي */}
+          <Card className="bg-gradient-to-br from-blue-50 to-background dark:from-blue-950/20 border-blue-200 dark:border-blue-900">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-4">
+                <div className="rounded-full bg-blue-500/10 p-3">
+                  <Brain className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-2">
+                    {language === 'ar' ? 'افهم كيف تتعلم' : 'Understand How You Learn'}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    {language === 'ar'
+                      ? 'أكمل تقييم سلوكي قصير للحصول على استراتيجيات مذاكرة مخصصة تناسب أسلوبك الدراسي'
+                      : 'Complete a short behavioral assessment to get personalized study strategies that match your learning style'}
+                  </p>
+                  {clpStorage.exists() ? (
+                    <div className="flex gap-2">
+                      <Button asChild>
+                        <Link to="/integrated-plan">
+                          <Brain className="h-4 w-4 me-2" />
+                          {language === 'ar' ? 'خطتك المتكاملة' : 'Your Integrated Plan'}
+                        </Link>
+                      </Button>
+                      <Button asChild variant="outline">
+                        <Link to="/clp-results">
+                          {language === 'ar' ? 'عرض الملف' : 'View Profile'}
+                        </Link>
+                      </Button>
+                    </div>
+                  ) : (
+                    <Button asChild variant="outline">
+                      <Link to="/clp-assessment">
+                        <Brain className="h-4 w-4 me-2" />
+                        {language === 'ar' ? 'ابدأ التقييم' : 'Start Assessment'}
+                      </Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </CardContent>
