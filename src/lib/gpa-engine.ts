@@ -32,6 +32,11 @@ export class GPAEngine {
 
     // Calculate semester summaries
     const semesters: SemesterSummary[] = [];
+    
+    // For cumulative GPA, we need to count each course only once (latest attempt)
+    // Build a map of course code to latest attempt
+    const latestAttempts = this.getLatestAttempts(courses);
+    
     let totalQualityPoints = 0;
     let totalRegisteredHours = 0;
     let totalPassedHours = 0;
@@ -42,17 +47,14 @@ export class GPAEngine {
       summary.semester = semester;
       summary.year = Number.parseInt(year);
       semesters.push(summary);
+    }
 
-      // Accumulate totals (handle retakes properly)
-      for (const course of semesterCourses) {
-        // Only count the latest attempt for retaken courses
-        if (!course.isRetake || !this.hasLaterRetake(course, courses)) {
-          totalQualityPoints += course.gradePoints * course.creditHours;
-          totalRegisteredHours += course.creditHours;
-          if (isPassingGrade(course.grade)) {
-            totalPassedHours += course.creditHours;
-          }
-        }
+    // Calculate cumulative totals using only latest attempts
+    for (const course of latestAttempts.values()) {
+      totalQualityPoints += course.gradePoints * course.creditHours;
+      totalRegisteredHours += course.creditHours;
+      if (isPassingGrade(course.grade)) {
+        totalPassedHours += course.creditHours;
       }
     }
 
@@ -81,6 +83,41 @@ export class GPAEngine {
       classificationNameAr: classificationRule.nameAr,
       semesters
     };
+  }
+
+  /**
+   * Get the latest attempt for each unique course
+   * Returns a map of courseCode -> latest Course
+   */
+  private static getLatestAttempts(courses: Course[]): Map<string, Course> {
+    const courseMap = new Map<string, Course[]>();
+    
+    // Group all attempts of each course
+    for (const course of courses) {
+      const key = course.courseCode;
+      if (!courseMap.has(key)) {
+        courseMap.set(key, []);
+      }
+      courseMap.get(key)!.push(course);
+    }
+    
+    // For each course, find the latest attempt
+    const latestAttempts = new Map<string, Course>();
+    
+    for (const [courseCode, attempts] of courseMap) {
+      // Sort attempts chronologically (latest last)
+      attempts.sort((a, b) => {
+        if (a.year !== b.year) return a.year - b.year;
+        const semesterOrder: Record<string, number> = { 'Fall': 1, 'Spring': 2, 'Summer': 3 };
+        return (semesterOrder[a.semester] || 0) - (semesterOrder[b.semester] || 0);
+      });
+      
+      // Take the latest attempt
+      const latestAttempt = attempts[attempts.length - 1];
+      latestAttempts.set(courseCode, latestAttempt);
+    }
+    
+    return latestAttempts;
   }
 
   /**
