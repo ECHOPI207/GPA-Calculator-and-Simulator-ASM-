@@ -56,13 +56,10 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Navigation
     'nav.dashboard': 'Dashboard',
-    'nav.calculator': 'GPA Calculator',
-    'nav.simulator': 'Scenario Simulator',
-    'nav.improvement': 'GPA Improvement',
-    'nav.timeline': 'Academic Timeline',
-    'nav.reports': 'Reports & Analysis',
+    'nav.gpa': 'GPA Management',
+    'nav.learning': 'Learning & Study',
+    'nav.reports': 'Reports & Analytics',
     'nav.settings': 'Settings',
-    'nav.admin': 'Admin Panel',
     
     // Auth
     'auth.login': 'Login',
@@ -169,13 +166,10 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Navigation
     'nav.dashboard': 'لوحة التحكم',
-    'nav.calculator': 'حاسبة المعدل',
-    'nav.simulator': 'محاكي السيناريوهات',
-    'nav.improvement': 'تحسين المعدل',
-    'nav.timeline': 'الجدول الزمني الأكاديمي',
+    'nav.gpa': 'إدارة المعدل',
+    'nav.learning': 'التعلم والمذاكرة',
     'nav.reports': 'التقارير والتحليلات',
     'nav.settings': 'الإعدادات',
-    'nav.admin': 'لوحة الإدارة',
     
     // Auth
     'auth.login': 'تسجيل الدخول',

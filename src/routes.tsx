@@ -1,12 +1,8 @@
 import DashboardPage from './pages/DashboardPage';
-import CalculatorPage from './pages/CalculatorPage';
-import SimulatorPage from './pages/SimulatorPage';
-import TimelinePage from './pages/TimelinePage';
+import GPAPage from './pages/GPAPage';
+import LearningPage from './pages/LearningPage';
 import ReportsPage from './pages/ReportsPage';
-import ImprovementPage from './pages/ImprovementPage';
 import CLPAssessmentPage from './pages/CLPAssessmentPage';
-import CLPResultsPage from './pages/CLPResultsPage';
-import IntegratedPlanPage from './pages/IntegratedPlanPage';
 import SettingsPage from './pages/SettingsPage';
 import HowToUsePage from './pages/HowToUsePage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -28,42 +24,14 @@ const routes: RouteConfig[] = [
     element: <DashboardPage />
   },
   {
-    name: 'Calculator',
-    path: '/calculator',
-    element: <CalculatorPage />
+    name: 'GPA',
+    path: '/gpa',
+    element: <GPAPage />
   },
   {
-    name: 'Simulator',
-    path: '/simulator',
-    element: <SimulatorPage />
-  },
-  {
-    name: 'Improvement',
-    path: '/improvement',
-    element: <ImprovementPage />
-  },
-  {
-    name: 'CLP Assessment',
-    path: '/clp-assessment',
-    element: <CLPAssessmentPage />,
-    visible: false
-  },
-  {
-    name: 'CLP Results',
-    path: '/clp-results',
-    element: <CLPResultsPage />,
-    visible: false
-  },
-  {
-    name: 'Integrated Plan',
-    path: '/integrated-plan',
-    element: <IntegratedPlanPage />,
-    visible: false
-  },
-  {
-    name: 'Timeline',
-    path: '/timeline',
-    element: <TimelinePage />
+    name: 'Learning',
+    path: '/learning',
+    element: <LearningPage />
   },
   {
     name: 'Reports',
@@ -74,6 +42,12 @@ const routes: RouteConfig[] = [
     name: 'Settings',
     path: '/settings',
     element: <SettingsPage />
+  },
+  {
+    name: 'CLP Assessment',
+    path: '/clp-assessment',
+    element: <CLPAssessmentPage />,
+    visible: false
   },
   {
     name: 'How to Use',

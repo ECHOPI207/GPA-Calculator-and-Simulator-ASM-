@@ -40,13 +40,16 @@ export function AppLayout({ children }: AppLayoutProps) {
 
   const menuItems = [
     { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/' },
-    { icon: Calculator, label: t('nav.calculator'), path: '/calculator' },
-    { icon: FlaskConical, label: t('nav.simulator'), path: '/simulator' },
-    { icon: TrendingUp, label: t('nav.improvement'), path: '/improvement' },
-    { icon: Clock, label: t('nav.timeline'), path: '/timeline' },
+    { icon: Calculator, label: t('nav.gpa'), path: '/gpa' },
+    { icon: FlaskConical, label: t('nav.learning'), path: '/learning' },
     { icon: FileText, label: t('nav.reports'), path: '/reports' },
     { icon: Settings, label: t('nav.settings'), path: '/settings' },
   ];
+
+  // Scroll to top on navigation
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -56,7 +59,12 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* التخطيط الرئيسي */}
       <div className="flex flex-1">
         {/* القائمة الجانبية للشاشات الكبيرة */}
-        <aside className="hidden lg:flex w-64 flex-col border-e border-border bg-card">
+        <aside
+          className={cn(
+            'hidden lg:flex flex-col border-e border-border bg-card transition-all duration-300',
+            sidebarCollapsed ? 'w-20' : 'w-64'
+          )}
+        >
           <nav className="flex-1 overflow-y-auto p-4 space-y-1">
             {menuItems.map((item) => {
               const Icon = item.icon;
@@ -65,19 +73,49 @@ export function AppLayout({ children }: AppLayoutProps) {
                 <Link
                   key={item.path}
                   to={item.path}
+                  title={sidebarCollapsed ? item.label : undefined}
                   className={cn(
                     'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all',
                     isActive
                       ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                      : 'text-foreground hover:bg-accent hover:text-accent-foreground',
+                    sidebarCollapsed && 'justify-center px-2'
                   )}
                 >
-                  <Icon className="h-5 w-5" />
-                  <span>{item.label}</span>
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {!sidebarCollapsed && <span>{item.label}</span>}
                 </Link>
               );
             })}
           </nav>
+
+          {/* زر الطي/الفتح */}
+          <div className="p-4 border-t border-border">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className={cn('w-full', sidebarCollapsed && 'px-2')}
+              title={
+                sidebarCollapsed
+                  ? language === 'ar'
+                    ? 'فتح القائمة'
+                    : 'Expand Menu'
+                  : language === 'ar'
+                  ? 'إخفاء القائمة'
+                  : 'Collapse Menu'
+              }
+            >
+              {sidebarCollapsed ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <>
+                  <ChevronLeft className="h-4 w-4 me-2" />
+                  <span>{language === 'ar' ? 'إخفاء' : 'Collapse'}</span>
+                </>
+              )}
+            </Button>
+          </div>
         </aside>
 
         {/* زر القائمة للموبايل */}
