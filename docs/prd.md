@@ -9,8 +9,7 @@
 A professional, university-grade academic decision-support system designed to calculate, analyze, and predict GPA with complete accuracy based on official university grading rules. The platform now includes a scientifically sound Cognitive Learning Profile (CLP) module that analyzes study-related behaviors and integrates them with GPA improvement strategies. This is a fully client-side application that operates entirely in the browser without requiring backend infrastructure, database, or user authentication.
 
 ### 1.3 Core Positioning
-- Academic accuracy is mandatory
-- University rules are the single source of truth
+- Academic accuracy is mandatory\n- University rules are the single source of truth
 - Simple UX for students with deep intelligence under the hood
 - Fully client-side architecture
 - Portfolio-quality engineering
@@ -23,7 +22,8 @@ A professional, university-grade academic decision-support system designed to ca
 ### 2.1 GPA Calculation Engine
 - Add, edit, and remove courses
 - Multi-semester support
-- Calculate semester GPA
+- Calculate semester GPA for each semester
+- Display semester GPA for all semesters
 - Calculate cumulative GPA
 - Track total registered hours
 - Track total passed hours
@@ -56,8 +56,7 @@ A professional, university-grade academic decision-support system designed to ca
 - Save multiple scenarios in browser local storage
 - Show instant GPA impact for each scenario
 - Compare scenarios side-by-side
-
-### 2.5 GPA Explanation Engine
+\n### 2.5 GPA Explanation Engine
 - Explain why current GPA is what it is
 - Highlight courses that helped improve GPA
 - Highlight courses that harmed GPA
@@ -70,9 +69,11 @@ A professional, university-grade academic decision-support system designed to ca
 - Display clear warnings in Arabic and English
 
 ### 2.7 Academic Timeline\n- Display GPA per semester
+- Display semester GPA for each individual semester
 - Show performance trend over time
 - Visual indicators for improvement or decline
-\n### 2.8 AI Academic Recommendations
+
+### 2.8 AI Academic Recommendations
 - Suggest grade improvements for specific courses
 - Predict GPA impact of grade changes
 - Help students plan to reach target GPA
@@ -80,10 +81,8 @@ A professional, university-grade academic decision-support system designed to ca
 
 ### 2.9 Final GPA Prediction
 - Predict graduation GPA based on remaining courses
-- Show best-case scenario\n- Show worst-case scenario
-- Show realistic scenario
-
-### 2.10 OCR Result Import (Advanced)
+- Show best-case scenario\n- Show worst-case scenario\n- Show realistic scenario
+\n### 2.10 OCR Result Import (Advanced)
 - Upload academic result image
 - Auto-extract courses, grades, and credit hours
 - Allow manual correction of extracted data
@@ -158,7 +157,8 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 ### 4.4 Output Structure
 \n#### 4.4.1 Quick Wins
 - Small effort, high GPA impact
-- Display:\n  - Course name\n  - Credit hours
+- Display:\n  - Course name
+  - Credit hours
   - Current grade
   - Suggested grade
   - GPA before\n  - GPA after
@@ -182,8 +182,8 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 - Show numeric GPA improvement prominently
 - Display matched learning strategy with clear explanation
 
-### 4.6 Language & Tone\n- Support Arabic and English
-- Use academic, respectful tone
+### 4.6 Language & Tone
+- Support Arabic and English\n- Use academic, respectful tone
 - Avoid vague advice
 - Avoid emotional language
 - Focus on numbers and clarity
@@ -332,12 +332,14 @@ For each recommendation:
 This assessment helps understand your study behaviors. It is not a personality test or psychological diagnosis.
 
 #### 5.8.2 CLP Result Disclaimer
-**Arabic:**\nهذه النتائج قابلة للتحسين ولا تعكس قدراتك أو ذكاءك.\n
+**Arabic:**\nهذه النتائج قابلة للتحسين ولا تعكس قدراتك أو ذكاءك.
+
 **English:**
 These results are adjustable and do not reflect intelligence or ability.
 
 #### 5.8.3 General Disclaimer
-**Arabic:**\nهذه التوصيات إرشادية ولا تُعد بديلاً عن السجلات الأكاديمية الرسمية.
+**Arabic:**
+هذه التوصيات إرشادية ولا تُعد بديلاً عن السجلات الأكاديمية الرسمية.
 
 **English:**
 These recommendations are advisory and not a replacement for official academic records.
@@ -359,12 +361,14 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Integrate CLP insights\n\n### 6.2 Key Metrics Display
 - Current cumulative GPA
 - Current semester GPA
+- Semester GPA for each individual semester
 - Total registered hours
 - Total passed hours\n- Academic standing (Excellent, Very Good, Good, Pass)
 - GPA trend indicator (improving, stable, declining)
 - CLP completion status
 \n### 6.3 Visual Analytics
 - GPA trend chart (line chart showing GPA per semester)
+- Semester GPA display for all semesters
 - Grade distribution chart (pie or bar chart showing grade distribution)
 - Credit hours breakdown (completed vs remaining)
 - Performance heatmap (semester vs grade performance)
@@ -375,8 +379,7 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Improvement opportunities (courses with high impact potential)
 - Milestone achievements (honor roll, dean's list, etc.)
 - Behavioral insights (if CLP completed)
-
-### 6.5 Comparison Analytics
+\n### 6.5 Comparison Analytics
 - Compare current GPA against graduation requirements
 - Compare against academic warning thresholds
 - Compare against honor roll thresholds
@@ -535,7 +538,8 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 
 ### 8.1 New Application Name
 **English:** AcademiQ  
-**Arabic:** أكاديميك\n
+**Arabic:** أكاديميك
+
 **Rationale:** Modern, professional, academic-focused name that works well in both languages and reflects intelligence and quality.
 
 ### 8.2 Logo Design Requirements
@@ -637,7 +641,8 @@ Professional, comprehensive footer with multiple sections:
 - Professional appearance matching overall platform design
 
 ---
-\n## 10. Language & Direction Support
+
+## 10. Language & Direction Support
 
 ### 10.1 Bilingual Support
 - Full support for Arabic (RTL)\n- Full support for English (LTR)\n\n### 10.2 Automatic Direction Handling
@@ -683,7 +688,8 @@ Professional, comprehensive footer with multiple sections:
 - No backend or database required
 - No user authentication or login system
 - Data persists across sessions on the same device
-- CLP results stored locally\n- Navigation state stored locally
+- CLP results stored locally
+- Navigation state stored locally
 
 ### 12.2 Privacy Messaging
 - Display clear privacy policy\n- Inform users that all data is stored locally on their device
@@ -742,6 +748,7 @@ Professional, comprehensive footer with multiple sections:
 - Test bottom navigation on mobile
 - Test scroll-to-top behavior on navigation actions
 - Test logo clickability and return to Dashboard
+- Test semester GPA display for all semesters
 
 ---
 
@@ -811,6 +818,7 @@ Professional, comprehensive footer with multiple sections:
 - Test Arabic / English\n- Test all navigation flows (desktop and mobile)
 - Test responsive design
 - Test scroll behavior
+- Test semester GPA display
 - Final QA\n
 **Deliverables:**
 - Production-ready UI
@@ -832,12 +840,17 @@ Target GPA: [ 3.00 ]
 Top Improvement Opportunities\n- Biophysics (3 credits) +0.24\n- Anatomy (4 credits) +0.31
 --------------------------------
 
-[Footer]
+Semester GPA:\n- Semester 1: 3.20
+- Semester 2: 2.85
+- Semester 3: 2.71
+\n[Footer]
 [About] [Quick Links] [Resources] [Legal] [Contact]
-Developed by echo-π | © 2026 AcademiQ\n```
+Developed by echo-π | © 2026 AcademiQ
+```
 
 ### Mobile Layout (Bottom Navigation)
-```\n[ Logo: AcademiQ ]  [ Language: EN/AR ]
+```
+[ Logo: AcademiQ ]  [ Language: EN/AR ]
 
 [Main Content Area]
 Current GPA: 2.71
@@ -851,6 +864,11 @@ Top Improvement Opportunities
 - Biophysics (3 credits) +0.24
 - Anatomy (4 credits) +0.31
 --------------------------------
+
+Semester GPA:
+- Semester 1: 3.20
+- Semester 2: 2.85
+- Semester 3: 2.71
 
 [Bottom Navigation Bar - Fixed]
 [ 🏠 Dashboard ] [ 🧮 Calculator ] [ 📈 Improve ] [ 📊 Reports ] [ ⚙️ Settings ]\n```
@@ -882,6 +900,10 @@ Top Improvement Opportunities
 **Settings:**
 - Arabic: الإعدادات
 - English: Settings
+
+### Semester GPA Labels
+**Arabic:** المعدل الفصلي  
+**English:** Semester GPA
 
 ### Footer Credits
 **Arabic:** تم التطوير بواسطة echo-π  
@@ -916,7 +938,8 @@ These recommendations are advisory and not a replacement for official academic r
 
 ---
 
-## 19. Documentation\n
+## 19. Documentation
+
 ### 19.1 System Overview
 - Academic Decision Support System
 - Does not provide diagnosis\n- Based on adjustable behaviors
@@ -957,6 +980,7 @@ With simplified, non-academic explanations for students.\n
 - Comprehensive professional footer
 - Footer pages (How to Use, Privacy Policy, Terms, Disclaimer, FAQ)
 - Exact GPA logic matching university rules
+- Semester GPA display for each individual semester
 - Fully integrated CLP module
 - GPA improvement tightly linked to learning behavior
 - Clear student UI flow

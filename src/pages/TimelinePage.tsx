@@ -10,7 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export default function TimelinePage() {
   
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [semesters, setSemesters] = useState<SemesterSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -59,14 +59,14 @@ export default function TimelinePage() {
       <div>
         <h1 className="text-3xl font-bold">{t('timeline.title')}</h1>
         <p className="text-muted-foreground mt-2">
-          Track your academic performance over time
+          {language === 'ar' ? 'تتبع أدائك الأكاديمي عبر الفصول الدراسية' : 'Track your academic performance over time'}
         </p>
       </div>
 
       {semesters.length === 0 ? (
         <Card>
           <CardContent className="py-12 text-center text-muted-foreground">
-            <p>No semester data available</p>
+            <p>{language === 'ar' ? 'لا توجد بيانات فصلية متاحة' : 'No semester data available'}</p>
           </CardContent>
         </Card>
       ) : (
@@ -84,19 +84,19 @@ export default function TimelinePage() {
                       {trend === 'up' && (
                         <Badge className="bg-success text-success-foreground">
                           <TrendingUp className="h-3 w-3 me-1" />
-                          Improved
+                          {language === 'ar' ? 'تحسن' : 'Improved'}
                         </Badge>
                       )}
                       {trend === 'down' && (
                         <Badge className="bg-warning text-warning-foreground">
                           <TrendingDown className="h-3 w-3 me-1" />
-                          Declined
+                          {language === 'ar' ? 'انخفض' : 'Declined'}
                         </Badge>
                       )}
                       {trend === 'neutral' && (
                         <Badge variant="outline">
                           <Minus className="h-3 w-3 me-1" />
-                          Stable
+                          {language === 'ar' ? 'مستقر' : 'Stable'}
                         </Badge>
                       )}
                       <div className="text-3xl font-bold text-primary">
@@ -108,17 +108,23 @@ export default function TimelinePage() {
                 <CardContent>
                   <div className="grid gap-4 md:grid-cols-2 mb-4">
                     <div>
-                      <div className="text-sm text-muted-foreground">Total Credits</div>
+                      <div className="text-sm text-muted-foreground">
+                        {language === 'ar' ? 'إجمالي الساعات' : 'Total Credits'}
+                      </div>
                       <div className="text-2xl font-semibold">{semester.totalCredits}</div>
                     </div>
                     <div>
-                      <div className="text-sm text-muted-foreground">Earned Credits</div>
+                      <div className="text-sm text-muted-foreground">
+                        {language === 'ar' ? 'الساعات المجتازة' : 'Earned Credits'}
+                      </div>
                       <div className="text-2xl font-semibold">{semester.earnedCredits}</div>
                     </div>
                   </div>
 
                   <div className="space-y-2">
-                    <div className="text-sm font-medium mb-2">Courses</div>
+                    <div className="text-sm font-medium mb-2">
+                      {language === 'ar' ? 'المقررات' : 'Courses'}
+                    </div>
                     {semester.courses.map((course) => (
                       <div
                         key={course.id}
@@ -141,7 +147,7 @@ export default function TimelinePage() {
                             {course.grade}
                           </Badge>
                           <div className="text-sm font-medium w-12 text-end">
-                            {course.creditHours} hrs
+                            {course.creditHours} {language === 'ar' ? 'ساعة' : 'hrs'}
                           </div>
                         </div>
                       </div>

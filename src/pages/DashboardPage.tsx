@@ -175,6 +175,44 @@ export default function DashboardPage() {
         </>
       )}
 
+      {/* المعدلات الفصلية */}
+      {gpaCalc && gpaCalc.semesters.length > 0 && (
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle>{language === 'ar' ? 'المعدلات الفصلية' : 'Semester GPAs'}</CardTitle>
+              <Button asChild variant="outline" size="sm">
+                <Link to="/timeline">
+                  {language === 'ar' ? 'عرض التفاصيل' : 'View Details'}
+                </Link>
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {gpaCalc.semesters.map((semester, index) => (
+                <div
+                  key={index}
+                  className="p-4 rounded-lg border border-border bg-card hover:bg-accent/50 transition-colors"
+                >
+                  <div className="text-sm font-medium text-muted-foreground mb-1">
+                    {semester.semester} {semester.year}
+                  </div>
+                  <div className="text-2xl font-bold text-primary mb-2">
+                    {semester.semesterGPA.toFixed(2)}
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>{semester.totalCredits} {language === 'ar' ? 'ساعة' : 'hrs'}</span>
+                    <span>•</span>
+                    <span>{semester.courses.length} {language === 'ar' ? 'مقرر' : 'courses'}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* المقررات الأخيرة */}
       <Card>
         <CardHeader>
