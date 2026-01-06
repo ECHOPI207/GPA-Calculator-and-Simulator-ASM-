@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/button';
 import { GPACard, StatCard } from '@/components/gpa/GPACard';
 import { courseApi } from '@/db/api';
 import { GPAEngine } from '@/lib/gpa-engine';
 import type { Course, GPACalculation } from '@/types/types';
-import { BookOpen, GraduationCap, TrendingUp, Award } from 'lucide-react';
+import { BookOpen, GraduationCap, TrendingUp, Award, Plus } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [courses, setCourses] = useState<Course[]>([]);
   const [gpaCalc, setGpaCalc] = useState<GPACalculation | null>(null);
   const [loading, setLoading] = useState(true);
@@ -60,19 +62,31 @@ export default function DashboardPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold">{t('dashboard.title')}</h1>
+          <h1 className="text-3xl font-bold text-foreground">{t('dashboard.title')}</h1>
           <p className="text-muted-foreground mt-2">{t('app.tagline')}</p>
         </div>
         
-        <Card>
-          <CardContent className="py-12 text-center">
-            <GraduationCap className="h-16 w-16 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-xl font-semibold mb-2">
+        <Card className="border-2 border-dashed border-border">
+          <CardContent className="py-16 text-center">
+            <div className="flex justify-center mb-6">
+              <div className="rounded-full bg-primary/10 p-6">
+                <GraduationCap className="h-16 w-16 text-primary" />
+              </div>
+            </div>
+            <h3 className="text-2xl font-bold mb-3 text-foreground">
               {t('course.noCourses')}
             </h3>
-            <p className="text-muted-foreground">
-              Start by adding your courses in the Calculator page
+            <p className="text-muted-foreground text-lg mb-6 max-w-md mx-auto">
+              {language === 'ar' 
+                ? 'ابدأ بإضافة مقرراتك الدراسية في صفحة حاسبة المعدل لتتبع أدائك الأكاديمي'
+                : 'Start by adding your courses in the Calculator page to track your academic performance'}
             </p>
+            <Button asChild size="lg" className="font-semibold">
+              <Link to="/calculator">
+                <Plus className="h-5 w-5 me-2" />
+                {language === 'ar' ? 'إضافة مقررات' : 'Add Courses'}
+              </Link>
+            </Button>
           </CardContent>
         </Card>
       </div>

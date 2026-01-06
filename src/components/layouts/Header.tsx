@@ -26,11 +26,13 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm">
       <div className="container flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <div className="text-2xl font-bold text-primary">echo-π</div>
-          <div className="hidden md:block text-sm text-muted-foreground">
+        <div className="flex items-center gap-3">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+            echo-π
+          </div>
+          <div className="hidden md:block text-sm text-muted-foreground font-medium">
             {t('app.tagline')}
           </div>
         </div>
@@ -42,6 +44,7 @@ export function Header() {
             size="icon"
             onClick={toggleLanguage}
             title={language === 'en' ? 'العربية' : 'English'}
+            className="hover:bg-accent"
           >
             <Languages className="h-5 w-5" />
           </Button>
@@ -52,6 +55,7 @@ export function Header() {
             size="icon"
             onClick={toggleTheme}
             title={theme === 'light' ? t('settings.darkMode') : t('settings.lightMode')}
+            className="hover:bg-accent"
           >
             {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           </Button>
@@ -60,16 +64,16 @@ export function Header() {
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" className="hover:bg-accent">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuLabel>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel className="font-semibold">
                   {profile?.username || user.email}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={signOut}>
+                <DropdownMenuItem onClick={signOut} className="cursor-pointer">
                   <LogOut className="h-4 w-4 me-2" />
                   {t('auth.logout')}
                 </DropdownMenuItem>
