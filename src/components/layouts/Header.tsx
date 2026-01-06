@@ -26,17 +26,17 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 shadow-sm">
-      <div className="container flex h-16 items-center justify-between px-4">
+    <header className="h-16 border-b border-border bg-card">
+      <div className="h-full px-6 flex items-center justify-between">
+        {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            echo-π
-          </div>
-          <div className="hidden md:block text-sm text-muted-foreground font-medium">
+          <h1 className="text-2xl font-bold text-primary">echo-π</h1>
+          <span className="hidden md:inline-block text-sm text-muted-foreground">
             {t('app.tagline')}
-          </div>
+          </span>
         </div>
 
+        {/* Actions */}
         <div className="flex items-center gap-2">
           {/* Language Toggle */}
           <Button
@@ -44,7 +44,6 @@ export function Header() {
             size="icon"
             onClick={toggleLanguage}
             title={language === 'en' ? 'العربية' : 'English'}
-            className="hover:bg-accent"
           >
             <Languages className="h-5 w-5" />
           </Button>
@@ -54,8 +53,7 @@ export function Header() {
             variant="ghost"
             size="icon"
             onClick={toggleTheme}
-            title={theme === 'light' ? t('settings.darkMode') : t('settings.lightMode')}
-            className="hover:bg-accent"
+            title={theme === 'light' ? 'الوضع الداكن' : 'الوضع الفاتح'}
           >
             {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
           </Button>
@@ -64,12 +62,12 @@ export function Header() {
           {user && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="hover:bg-accent">
+                <Button variant="ghost" size="icon">
                   <User className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel className="font-semibold">
+                <DropdownMenuLabel>
                   {profile?.username || user.email}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />

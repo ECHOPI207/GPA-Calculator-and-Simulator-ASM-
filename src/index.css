@@ -11,8 +11,8 @@ All colors MUST be HSL.
   :root {
     --radius: 0.5rem;
     
-    /* Academic Professional Color Scheme - High Contrast */
-    --background: 0 0% 100%;
+    /* Modern Academic Color Scheme */
+    --background: 240 10% 98%;
     --foreground: 222 47% 11%;
     
     --card: 0 0% 100%;
@@ -21,110 +21,91 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
     
-    /* Primary: Academic Blue */
-    --primary: 215 85% 45%;
+    /* Primary: Professional Blue */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
     
-    /* Secondary: Neutral Gray */
-    --secondary: 215 15% 90%;
+    /* Secondary: Soft Gray */
+    --secondary: 220 14% 96%;
     --secondary-foreground: 222 47% 11%;
     
-    /* Muted: Light Gray with Better Contrast */
-    --muted: 215 15% 95%;
-    --muted-foreground: 215 20% 35%;
+    /* Muted: Light Background */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
     
-    /* Accent: Lighter Blue */
-    --accent: 215 90% 94%;
-    --accent-foreground: 215 85% 25%;
+    /* Accent: Light Blue */
+    --accent: 217 91% 95%;
+    --accent-foreground: 217 91% 40%;
     
     /* Status Colors */
-    --success: 145 65% 42%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
     
-    --info: 200 85% 50%;
+    --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
     
-    --destructive: 0 72% 51%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
     /* Borders & Inputs */
-    --border: 215 20% 85%;
-    --input: 215 20% 85%;
-    --ring: 215 85% 45%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 217 91% 60%;
     
-    /* Chart Colors - Academic Palette */
-    --chart-1: 215 85% 45%;
-    --chart-2: 145 65% 42%;
+    /* Chart Colors */
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 76% 36%;
     --chart-3: 38 92% 50%;
-    --chart-4: 265 70% 55%;
-    --chart-5: 0 72% 51%;
-    
-    /* Sidebar */
-    --sidebar-background: 215 30% 12%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 215 85% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 30% 18%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 215 25% 20%;
-    --sidebar-ring: 215 85% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 0 84% 60%;
   }
 
   .dark {
-    --background: 222 47% 8%;
-    --foreground: 0 0% 98%;
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
     
-    --card: 222 47% 11%;
-    --card-foreground: 0 0% 98%;
+    --card: 222 47% 15%;
+    --card-foreground: 210 40% 98%;
     
-    --popover: 222 47% 11%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 222 47% 15%;
+    --popover-foreground: 210 40% 98%;
     
-    --primary: 215 85% 55%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222 47% 11%;
     
-    --secondary: 215 25% 18%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
     
-    --muted: 215 25% 15%;
-    --muted-foreground: 215 15% 65%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215 20% 65%;
     
-    --accent: 215 30% 18%;
-    --accent-foreground: 215 85% 70%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
     
-    --success: 145 60% 45%;
+    --success: 142 76% 36%;
     --success-foreground: 0 0% 100%;
     
-    --warning: 38 85% 55%;
+    --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
     
-    --info: 200 80% 55%;
+    --info: 199 89% 48%;
     --info-foreground: 0 0% 100%;
     
-    --destructive: 0 65% 55%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     
-    --border: 215 25% 20%;
-    --input: 215 25% 20%;
-    --ring: 215 85% 55%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
     
-    --chart-1: 215 85% 55%;
-    --chart-2: 145 60% 50%;
-    --chart-3: 38 85% 60%;
-    --chart-4: 265 70% 60%;
-    --chart-5: 0 70% 60%;
-    
-    --sidebar-background: 222 47% 6%;
-    --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 215 85% 55%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 215 30% 14%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 215 25% 15%;
-    --sidebar-ring: 215 85% 55%;
+    --chart-1: 217 91% 60%;
+    --chart-2: 142 76% 36%;
+    --chart-3: 38 92% 50%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 0 84% 60%;
   }
 }
 
@@ -138,12 +119,10 @@ All colors MUST be HSL.
     font-feature-settings: "rlig" 1, "calt" 1;
   }
   
-  /* Improve text rendering */
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold;
   }
   
-  /* Better focus states */
   *:focus-visible {
     @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
   }
