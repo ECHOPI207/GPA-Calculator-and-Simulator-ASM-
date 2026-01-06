@@ -3,14 +3,14 @@
 ## 1. Application Overview
 
 ### 1.1 Application Name
-**English:** echo-π Academic Intelligence Platform  
-**Arabic:** منصة echo-π الذكية للمعدل الأكاديمي\n
+**English:** AcademiQ - Academic Intelligence Platform  
+**Arabic:** أكاديميك - منصة الذكاء الأكاديمي
+
 ### 1.2 Application Description
 A professional, university-grade academic decision-support system designed to calculate, analyze, and predict GPA with complete accuracy based on official university grading rules. The platform now includes a scientifically sound Cognitive Learning Profile (CLP) module that analyzes study-related behaviors and integrates them with GPA improvement strategies. This is a fully client-side application that operates entirely in the browser without requiring backend infrastructure, database, or user authentication.
 
 ### 1.3 Core Positioning
-- Academic accuracy is mandatory
-- University rules are the single source of truth
+- Academic accuracy is mandatory\n- University rules are the single source of truth
 - Simple UX for students with deep intelligence under the hood
 - Fully client-side architecture
 - Portfolio-quality engineering
@@ -56,14 +56,16 @@ A professional, university-grade academic decision-support system designed to ca
 - Save multiple scenarios in browser local storage
 - Show instant GPA impact for each scenario
 - Compare scenarios side-by-side
-\n### 2.5 GPA Explanation Engine
+
+### 2.5 GPA Explanation Engine
 - Explain why current GPA is what it is
 - Highlight courses that helped improve GPA
 - Highlight courses that harmed GPA
 - Use plain academic language in both Arabic and English
 \n### 2.6 Smart Error Detection
 - Detect duplicate courses
-- Detect invalid grades\n- Detect inconsistent credit hours
+- Detect invalid grades
+- Detect inconsistent credit hours
 - Detect courses outside academic plan
 - Display clear warnings in Arabic and English
 
@@ -143,8 +145,7 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 - Simulate grade improvement scenarios (current grade → next higher grade)
 - Calculate GPA delta for each scenario
 - Rank scenarios by GPA impact
-
-#### 4.3.3 Retake Scenario Evaluation
+\n#### 4.3.3 Retake Scenario Evaluation
 - Identify failed courses
 - Identify courses with very low grades
 - Calculate GPA impact of retaking and improving grades
@@ -200,8 +201,8 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 
 ### 5.1 Module Identity
 **Module Name:** Cognitive Learning Profile (CLP)
-\n**Description:** A behavioral, non-diagnostic academic profiling module that analyzes study-related behaviors and links them directly to GPA improvement strategies.
-\n**Important:** This is NOT a personality test. This is NOT psychological diagnosis. This is an academic, behavior-based learning intelligence module.
+\n**Description:** A behavioral, non-diagnostic academic profiling module that analyzes study-related behaviors and links them directly to GPA improvement strategies.\n
+**Important:** This is NOT a personality test. This is NOT psychological diagnosis. This is an academic, behavior-based learning intelligence module.
 
 ### 5.2 Scientific & Ethical Constraints
 - Do NOT classify students into personality types
@@ -250,13 +251,14 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 #### 5.4.1 Profile Display
 - Domain scores displayed as bars or visual indicators
 - Plain-language explanations for each domain
-- Clear statement: \"This is NOT a diagnosis\"
+- Clear statement: This is NOT a diagnosis
 
 #### 5.4.2 Interpretation Guidelines
 - Explain what each score means in academic context
 - Provide examples of behaviors associated with each level
 - Emphasize that all behaviors are adjustable
-\n### 5.5 CLP Integration with GPA Improvement
+
+### 5.5 CLP Integration with GPA Improvement
 
 #### 5.5.1 Integration Requirements
 - Analyze GPA + CLP together
@@ -267,7 +269,7 @@ For each GPA improvement recommendation, explain BOTH:
 - **Academic impact:** Numeric GPA change
 - **Learning behavior adjustment:** Study strategy matched to CLP
 \n**Example:**
-\"Improving Course X can raise your GPA by +0.28. Given your profile (low active recall), this improvement is most achievable using practice testing instead of rereading.\"
+Improving Course X can raise your GPA by +0.28. Given your profile (low active recall), this improvement is most achievable using practice testing instead of rereading.
 
 ### 5.6 Evidence-Based Study Strategy Engine
 
@@ -294,7 +296,7 @@ For each recommendation:
 #### 5.7.1 Entry Point: GPA Dashboard
 - Display current GPA
 - Show GPA improvement opportunities
-- Add button: \"Understand How You Learn\"
+- Add button: Understand How You Learn
 
 #### 5.7.2 CLP Introduction Page
 - Short explanation of CLP
@@ -312,7 +314,7 @@ For each recommendation:
 - Clear explanations for each domain
 - Academic tone
 - Disclaimer visible
-- Button: \"See My Action Plan\"
+- Button: See My Action Plan
 
 #### 5.7.5 Integrated GPA Action Plan
 - GPA improvement steps
@@ -321,15 +323,15 @@ For each recommendation:
 - Clear explanation of why each strategy matches the student's profile
 
 #### 5.7.6 Continuous Feedback
-- \"If you apply this strategy, expected GPA impact is X\"
+- If you apply this strategy, expected GPA impact is X
 - Allow students to mark strategies as tried\n- Adjust recommendations based on feedback
 
 ### 5.8 Academic Transparency & Disclaimers
 
 #### 5.8.1 CLP Intro Disclaimer
 **Arabic:**
-هذا التقييم يساعدك على فهم سلوكك الدراسي وليس اختبار شخصية أو تشخيصًا نفسيًا.\n
-**English:**
+هذا التقييم يساعدك على فهم سلوكك الدراسي وليس اختبار شخصية أو تشخيصًا نفسيًا.
+\n**English:**
 This assessment helps understand your study behaviors. It is not a personality test or psychological diagnosis.
 
 #### 5.8.2 CLP Result Disclaimer
@@ -338,7 +340,8 @@ This assessment helps understand your study behaviors. It is not a personality t
 These results are adjustable and do not reflect intelligence or ability.
 
 #### 5.8.3 General Disclaimer
-**Arabic:**\nهذه التوصيات إرشادية ولا تُعد بديلاً عن السجلات الأكاديمية الرسمية.
+**Arabic:**
+هذه التوصيات إرشادية ولا تُعد بديلاً عن السجلات الأكاديمية الرسمية.
 
 **English:**
 These recommendations are advisory and not a replacement for official academic records.
@@ -383,80 +386,228 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Compare against honor roll thresholds
 \n---
 
-## 7. Language & Direction Support
+## 7. Navigation & UI Structure Improvements
 
-### 7.1 Bilingual Support
-- Full support for Arabic (RTL)\n- Full support for English (LTR)
-\n### 7.2 Automatic Direction Handling
+### 7.1 Nested Tabs System
+- Implement nested tabs within main pages to group related features
+- Reduce top-level navigation complexity
+- Group similar functionalities under parent tabs with sub-tabs
+
+**Example Structure:**
+- **لوحة التحكم (Dashboard)** - Main landing page
+- **حاسبة المعدل (GPA Calculator)**
+  - Sub-tab: إضافة مواد (Add Courses)
+  - Sub-tab: عرض المواد (View Courses)
+  - Sub-tab: تعديل المواد (Edit Courses)
+- **محاكي السيناريوهات (Scenario Simulator)**
+  - Sub-tab: سيناريوهات جديدة (New Scenarios)\n  - Sub-tab: السيناريوهات المحفوظة (Saved Scenarios)
+- **تحسين المعدل (GPA Improvement)**\n  - Sub-tab: فرص التحسين (Improvement Opportunities)
+  - Sub-tab: خطة العمل (Action Plan)
+- **الجدول الزمني الأكاديمي (Academic Timeline)**
+- **التقارير والتحليلات (Reports & Analytics)**
+  - Sub-tab: تقارير الأداء (Performance Reports)
+  - Sub-tab: التحليلات المتقدمة (Advanced Analytics)\n  - Sub-tab: تصدير PDF (PDF Export)
+- **الإعدادات (Settings)**
+  - Sub-tab: الجامعة والنظام (University & System)
+  - Sub-tab: اللغة والواجهة (Language & Interface)\n  - Sub-tab: الخصوصية (Privacy)
+
+### 7.2 Collapsible Sidebar Menu
+- Implement collapsible sidebar navigation
+- When collapsed: Show only icons\n- When expanded: Show icons + text labels
+- Toggle button to collapse/expand sidebar
+- Save sidebar state in local storage
+- Smooth animation for collapse/expand transitions
+- Responsive behavior: Auto-collapse on mobile devices
+
+### 7.3 Logo Interaction
+- Clicking on logo returns user to main dashboard (home page)
+- Logo must be clickable and visually indicate interactivity on hover
+- Maintain consistent logo placement across all pages
+
+---
+
+## 8. Branding & Visual Identity
+
+### 8.1 New Application Name
+**English:** AcademiQ  
+**Arabic:** أكاديميك\n
+**Rationale:** Modern, professional, academic-focused name that works well in both languages and reflects intelligence and quality.
+
+### 8.2 Logo Design Requirements
+- Professional, modern design
+- Reflects academic intelligence and technology
+- Works well in both RTL (Arabic) and LTR (English) layouts
+- Scalable and responsive
+- Color scheme aligned with platform identity
+- Includes both icon and text versions
+- Icon-only version for collapsed sidebar
+
+**Suggested Color Palette:**
+- Primary: Deep Blue (#1E3A8A) - Trust, intelligence, professionalism
+- Secondary: Bright Cyan (#06B6D4) - Innovation, clarity, energy
+- Accent: Gold/Amber (#F59E0B) - Achievement, excellence\n- Neutral: Slate Gray (#64748B) - Balance, sophistication
+- Background: Light Gray (#F8FAFC) / Dark Navy (#0F172A) for dark mode
+
+### 8.3 Favicon
+- Create professional favicon based on logo icon
+- Multiple sizes: 16x16, 32x32, 48x48, 64x64
+- SVG version for modern browsers
+- Optimized for visibility at small sizes
+- Consistent with brand identity
+\n---
+
+## 9. Footer Design\n
+### 9.1 Footer Structure
+Professional, comprehensive footer with multiple sections:
+\n**Section 1: About**
+- Brief platform description
+- Mission statement
+\n**Section 2: Quick Links**
+- الصفحة الرئيسية (Home)
+- حاسبة المعدل (GPA Calculator)
+- تحسين المعدل (GPA Improvement)
+- التقارير (Reports)
+\n**Section 3: Resources**
+- كيفية استخدام الموقع (How to Use)
+- الأسئلة الشائعة (FAQ)
+- الدعم الفني (Support)
+
+**Section 4: Legal & Policies**
+- سياسة الخصوصية (Privacy Policy)
+- شروط الاستخدام (Terms of Use)
+- إخلاء المسؤولية الأكاديمية (Academic Disclaimer)
+
+**Section 5: Contact & Social**
+- Contact information (if applicable)
+- Social media links (if applicable)
+\n**Section 6: Credits**
+- Developed by echo-π
+- Copyright notice
+- Version information
+
+### 9.2 Footer Pages
+\n#### 9.2.1 How to Use Page (كيفية استخدام الموقع)
+- Step-by-step guide for new users
+- Video tutorials or animated guides (optional)
+- Feature explanations with screenshots
+- Tips and best practices
+- Bilingual content (Arabic/English)
+
+#### 9.2.2 Privacy Policy Page (سياسة الخصوصية)
+- Clear explanation of data storage (client-side only)
+- No data transmission to servers
+- Local storage usage explanation
+- User data control and deletion
+- Cookie policy (if applicable)
+- Compliance with data protection standards
+
+#### 9.2.3 Terms of Use Page (شروط الاستخدام)
+- Platform usage terms
+- User responsibilities
+- Acceptable use policy
+- Limitation of liability
+- Intellectual property rights
+\n#### 9.2.4 Academic Disclaimer Page (إخلاء المسؤولية الأكاديمية)
+- Platform is advisory, not official
+- Not a replacement for official university records
+- CLP is not psychological diagnosis
+- Recommendations are guidance only
+- Users responsible for verifying with official sources
+
+#### 9.2.5 FAQ Page (الأسئلة الشائعة)
+- Common questions and answers
+- Troubleshooting guide
+- Feature explanations
+- Technical support information
+
+### 9.3 Footer Design Requirements
+- Clean, organized layout
+- Responsive design (mobile-friendly)
+- Proper RTL/LTR support
+- Consistent typography and spacing
+- Accessible color contrast
+- Links with hover states
+- Professional appearance matching overall platform design
+
+---
+\n## 10. Language & Direction Support
+
+### 10.1 Bilingual Support
+- Full support for Arabic (RTL)\n- Full support for English (LTR)\n\n### 10.2 Automatic Direction Handling
 - Arabic content displays with dir=rtl
 - English content displays with dir=ltr
 - Direction affects layout, navigation, forms, tables, charts, icons, modals, and pagination
 
-### 7.3 Logical CSS\n- Use margin-inline-*, padding-inline-*\n- Use text-align: start / end\n- Avoid duplicating layouts for RTL/LTR
-\n### 7.4 Language Preference Persistence
+### 10.3 Logical CSS\n- Use margin-inline-*, padding-inline-*
+- Use text-align: start / end\n- Avoid duplicating layouts for RTL/LTR
+\n### 10.4 Language Preference Persistence
 - Save user language preference in browser local storage
 - Apply preference across all sessions
 \n---
 
-## 8. UI/UX Design Requirements
+## 11. UI/UX Design Requirements
 
-### 8.1 Design Principles
+### 11.1 Design Principles
 - Academic, clean, modern design
-- Professional color palette
+- Professional color palette (as defined in Branding section)
 - Clear hierarchy and spacing
 - Fully responsive (mobile and desktop)
 - Accessible contrast and focus states
 - Simple interface for non-technical users
+- Smooth transitions and animations
+- Intuitive navigation
 
-### 8.2 Branding\n- Logo text: echo-π تطوير\n- Logo must have academic and tech feeling
-- Logo must be balanced in RTL and LTR
-- Logo must be responsive and not break layout
+### 11.2 Interaction Improvements
+- Logo clickable to return to home
+- Collapsible sidebar with smooth animation
+- Nested tabs for better organization
+- Clear visual feedback for all interactions
+- Loading states for calculations
+- Success/error notifications
+- Tooltips for complex features
 
-### 8.3 Application Naming
-- Apply bilingual name consistently in header, title, and meta tags
-\n---
+---
 
-## 9. Data Storage & Privacy
+## 12. Data Storage & Privacy
 
-### 9.1 Client-Side Storage
+### 12.1 Client-Side Storage
 - All data stored in browser local storage
 - No backend or database required
 - No user authentication or login system
 - Data persists across sessions on the same device
 - CLP results stored locally
+- Sidebar state stored locally
 
-### 9.2 Privacy Messaging
+### 12.2 Privacy Messaging
 - Display clear privacy policy
 - Inform users that all data is stored locally on their device
 - Explain that no data is sent to any server
-\n### 9.3 Academic Disclaimers
+\n### 12.3 Academic Disclaimers
 - Display context-aware disclaimers
 - Clarify that platform is not a replacement for official records
 - Clarify that CLP is not a psychological diagnosis
+\n---
 
----
+## 13. Export & Reporting
 
-## 10. Export & Reporting
-
-### 10.1 PDF Export
+### 13.1 PDF Export
 - Generate professional PDF report client-side
 - Format similar to official result documents
 - Include GPA, explanation, date, and disclaimer
 - Optionally include CLP summary
-
+- Include AcademiQ branding\n
 ---
 
-## 11. Architecture Requirements
+## 14. Architecture Requirements
 
-### 11.1 Client-Side Architecture
+### 14.1 Client-Side Architecture
 - Fully client-side application
 - No backend infrastructure required
 - No database required
 - No user authentication system
 - All calculations performed in browser
 - All data stored in browser local storage
-
-### 11.2 Modular Code Structure
+\n### 14.2 Modular Code Structure
 - Separate GPA calculation engine
 - Separate CLP assessment engine
 - Separate recommendation engine
@@ -465,57 +616,74 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Historical recalculation support
 - No hardcoded academic logic
 
-### 11.3 Module Interfaces
+### 14.3 Module Interfaces
 - Clear interfaces between:\n  - GPA Engine
   - CLP Module
   - Recommendation Engine\n- Modular, testable, and maintainable code
 \n---
 
-## 12. Validation & Testing
+## 15. Validation & Testing
 
-### 12.1 Testing Requirements
+### 15.1 Testing Requirements
 - Test using real student data
 - Results must match official university calculations 100%
 - Document edge cases\n- Test CLP assessment flow
 - Test integrated recommendations
+- Test navigation and UI interactions
+- Test responsive design on multiple devices
+- Test RTL/LTR switching
+- Test sidebar collapse/expand functionality
 
 ---
 
-## 13. Sprint Plan
+## 16. Sprint Plan
 
 ### Sprint 0 – Preparation (3–4 days)
 **Objective:** Establish solid foundation\n\n**Tasks:**
 - Review current GPA calculation logic
 - Isolate GPA Engine into independent module
 - Define interfaces between GPA Engine, CLP Module, and Recommendation Engine
-- Prepare Design Tokens (colors, fonts, RTL/LTR)
+- Prepare Design Tokens (colors, fonts, RTL/LTR)\n- Design new logo and favicon
+- Define new color palette
 \n**Deliverables:**\n- Architecture Diagram
 - Folder Structure
 - Technical Decisions Document
-\n### Sprint 1 – Cognitive Learning Profile (CLP) (1 week)
+- Logo and Favicon files
+- Design System documentation
+\n### Sprint 1 – UI/UX Improvements (1 week)
 **Tasks:**
-- Build CLP assessment (10–15 questions)
-- Scoring Engine for each domain
-- CLP Results page
-- Clear disclaimers
-- Save results locally
+- Implement new branding (logo, colors, favicon)
+- Build collapsible sidebar navigation
+- Implement nested tabs system
+- Create footer with all required pages
+- Make logo clickable to home
+- Improve overall design consistency
 
 **Deliverables:**
-- CLP Assessment UI
+- Updated UI with new branding
+- Collapsible sidebar\n- Nested tabs structure
+- Professional footer
+- Footer pages (How to Use, Privacy Policy, Terms, Disclaimer, FAQ)
+
+### Sprint 2 – Cognitive Learning Profile (CLP) (1 week)
+**Tasks:**\n- Build CLP assessment (10–15 questions)
+- Scoring Engine for each domain
+- CLP Results page
+- Clear disclaimers\n- Save results locally
+\n**Deliverables:**\n- CLP Assessment UI
 - CLP Result Object
 - Behavioral Scores
-\n### Sprint 2 – GPA Improvement Engine (1 week)
-**Tasks:**\n- Analyze high-impact courses
+\n### Sprint 3 – GPA Improvement Engine (1 week)
+**Tasks:**
+- Analyze high-impact courses
 - Simulate grade improvements
 - Calculate GPA Delta for each scenario
 - Rank opportunities by impact
-
-**Deliverables:**
-- GPA Action Plan Engine
+\n**Deliverables:**\n- GPA Action Plan Engine
 - What-if Simulator
 - Ranked Recommendations
 
-### Sprint 3 – Intelligent Integration (CLP + GPA) (1 week)
+### Sprint 4 – Intelligent Integration (CLP + GPA) (1 week)
 **Tasks:**
 - Link each GPA recommendation with appropriate study strategy
 - Explain why each strategy matches the student's profile
@@ -524,23 +692,33 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 **Deliverables:**
 - Integrated Action Cards
 - Explanation Layer
-\n### Sprint 4 – UX + Copy + Polish (4–5 days)
+\n### Sprint 5 – Polish & Testing (4–5 days)
 **Tasks:**
 - Improve user experience
 - Write final copy
 - Enhance interactions
-- Test Arabic / English\n
+- Test Arabic / English\n- Test all navigation flows
+- Test responsive design
+- Final QA
+
 **Deliverables:**
 - Production-ready UI
 - Final Copy
 - QA Checklist
+- Deployment-ready version
 
----\n
-## 14. Wireframes\n
+---
+\n## 17. Wireframes\n
 ### Dashboard (Main Page)
 ```
-[ Header: echo-π Academic Intelligence Platform | Language Switch ]
-\nCurrent GPA: 2.71
+[ Logo: AcademiQ | أكاديميك ] [Language Switch]\n[☰ Sidebar Toggle]
+\n[Sidebar - Expanded]
+🏠 لوحة التحكم\n🧮 حاسبة المعدل
+🔬 محاكي السيناريوهات
+📈 تحسين المعدل
+⏱️ الجدول الزمني\n📊 التقارير والتحليلات
+⚙️ الإعدادات
+\n[Main Content]\nCurrent GPA: 2.71
 Target GPA: [ 3.00 ]
 
 [ Improve My GPA ]
@@ -549,46 +727,45 @@ Target GPA: [ 3.00 ]
 Top Improvement Opportunities\n- Biophysics (3 credits) +0.24
 - Anatomy (4 credits) +0.31
 --------------------------------
+
+[Footer]
+[About] [Quick Links] [Resources] [Legal] [Contact]
+Developed by echo-π | © 2026 AcademiQ
 ```
 
-### CLP Introduction\n```
-Understand How You Learn
-
-This short assessment helps identify\nstudy behaviors that affect your academic performance.
-
-[ Start Assessment ]
-[ Skip for now ]
+### Sidebar - Collapsed
+```
+[☰]\n🏠\n🧮
+🔬
+📈
+⏱️
+📊\n⚙️
 ```
 
-### CLP Results
+### Nested Tabs Example (GPA Calculator)
 ```
-Your Cognitive Learning Profile
-
-Focus Sustainability        ▓▓▓▓░\nTime Management             ▓▓░░░\nActive Recall Usage         ▓░░░░
-Exam Stress Response        ▓▓▓░░
-
-These behaviors are adjustable and improvable.
-
-[ See My Action Plan ]
+[ حاسبة المعدل ]
+\n[Sub-tabs:]
+[ إضافة مواد ] [ عرض المواد ] [ تعديل المواد ]
+\n[Content based on selected sub-tab]
 ```
+\n---
 
-### Integrated GPA Action Plan
-```
-Action Plan to Improve Your GPA
-\n1. Improve Biophysics (3 credits)\n   GPA Impact: +0.24
-   Recommended Strategy:\n   Practice Testing (matches your low active recall)
-\n[ See How To Apply ]
-```
+## 18. Copy for UI (AR / EN)
 
----
+### Application Name
+**Arabic:** أكاديميك - منصة الذكاء الأكاديمي  
+**English:** AcademiQ - Academic Intelligence Platform
 
-## 15. Copy for UI (AR / EN)
-
-### CLP Intro\n**Arabic:**
+### Footer Credits
+**Arabic:** تم التطوير بواسطة echo-π  
+**English:** Developed by echo-π\n
+### CLP Intro
+**Arabic:**
 هذا التقييم يساعدك على فهم سلوكك الدراسي وليس اختبار شخصية أو تشخيصًا نفسيًا.
 
-**English:**\nThis assessment helps understand your study behaviors. It is not a personality test or psychological diagnosis.
-
+**English:**
+This assessment helps understand your study behaviors. It is not a personality test or psychological diagnosis.\n
 ### CLP Result Explanation
 **Arabic:**
 هذه النتائج قابلة للتحسين ولا تعكس قدراتك أو ذكاءك.
@@ -611,12 +788,13 @@ Improving this course is currently the most effective way to raise your GPA.
 These recommendations are advisory and not a replacement for official academic records.
 
 ---
-\n## 16. Documentation\n
-### 16.1 System Overview
+
+## 19. Documentation
+
+### 19.1 System Overview
 - Academic Decision Support System
-- Does not provide diagnosis
-- Based on adjustable behaviors
-\n### 16.2 Scientific Basis
+- Does not provide diagnosis\n- Based on adjustable behaviors
+\n### 19.2 Scientific Basis
 Based on proven research:
 - Dunlosky et al., 2013\n- Roediger & Karpicke, 2006
 - Cepeda et al., 2006
@@ -624,35 +802,41 @@ Based on proven research:
 
 With simplified, non-academic explanations for students.
 
-### 16.3 Ethical Statement
+### 19.3 Ethical Statement
 - No personality classification
 - No deterministic predictions
 - No value judgments
-\n### 16.4 Limitations
+\n### 19.4 Limitations
 - Results are advisory\n- Depend on input data
 - Do not represent official authority
 
-### 16.5 Future Extensions
+### 19.5 Future Extensions
 - Advisor Mode
 - OCR Results
 - University-wide analytics
 
 ---
-\n## 17. Reference Files
+\n## 20. Reference Files
 
 1. Grading table image: image.png
-2. Cumulative GPA grading image: image-2.png
 \n---
 
-## 18. Final Deliverable
+## 21. Final Deliverable
 
 - Fully working bilingual academic platform
+- New professional branding (AcademiQ)\n- Professional logo and favicon
+- Collapsible sidebar navigation
+- Nested tabs for better organization
+- Clickable logo returning to home
+- Comprehensive professional footer
+- Footer pages (How to Use, Privacy Policy, Terms, Disclaimer, FAQ)
 - Exact GPA logic matching university rules
 - Fully integrated CLP module
 - GPA improvement tightly linked to learning behavior
 - Clear student UI flow
 - Scientifically grounded recommendations
-- Ethical and legal safety\n- Professional UI/UX\n- Clean, documented source code
+- Ethical and legal safety\n- Professional UI/UX with improved design
+- Clean, documented source code
 - Deployment-ready version
 - Clear documentation for future updates
 - Fully client-side with no backend dependencies

@@ -2,9 +2,10 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Languages, Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
+import { Logo } from '@/components/common/Logo';
 
 export function Header() {
-  const { language, setLanguage, t } = useLanguage();
+  const { language, setLanguage } = useLanguage();
   const { theme, setTheme } = useTheme();
 
   const toggleLanguage = () => {
@@ -16,15 +17,10 @@ export function Header() {
   };
 
   return (
-    <header className="h-16 border-b border-border bg-card">
-      <div className="h-full px-6 flex items-center justify-between">
-        {/* الشعار */}
-        <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold text-primary">echo-π</h1>
-          <span className="hidden md:inline-block text-sm text-muted-foreground">
-            {t('app.tagline')}
-          </span>
-        </div>
+    <header className="h-16 border-b border-border bg-card sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-card/95">
+      <div className="h-full px-6 flex items-center justify-between max-w-7xl mx-auto">
+        {/* اللوجو */}
+        <Logo />
 
         {/* الإجراءات */}
         <div className="flex items-center gap-2">

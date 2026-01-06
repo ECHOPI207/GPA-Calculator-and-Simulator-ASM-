@@ -8,6 +8,10 @@ import CLPAssessmentPage from './pages/CLPAssessmentPage';
 import CLPResultsPage from './pages/CLPResultsPage';
 import IntegratedPlanPage from './pages/IntegratedPlanPage';
 import SettingsPage from './pages/SettingsPage';
+import HowToUsePage from './pages/HowToUsePage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import AboutPage from './pages/AboutPage';
 import type { ReactNode } from 'react';
 
 export interface RouteConfig {
@@ -70,6 +74,30 @@ const routes: RouteConfig[] = [
     name: 'Settings',
     path: '/settings',
     element: <SettingsPage />
+  },
+  {
+    name: 'How to Use',
+    path: '/how-to-use',
+    element: <HowToUsePage />,
+    visible: false
+  },
+  {
+    name: 'Privacy',
+    path: '/privacy',
+    element: <PrivacyPage />,
+    visible: false
+  },
+  {
+    name: 'Terms',
+    path: '/terms',
+    element: <TermsPage />,
+    visible: false
+  },
+  {
+    name: 'About',
+    path: '/about',
+    element: <AboutPage />,
+    visible: false
   }
 ];
 

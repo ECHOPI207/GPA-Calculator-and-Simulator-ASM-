@@ -11,17 +11,32 @@ import {
   FileText,
   Settings,
   Menu,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { Header } from './Header';
+import { Footer } from './Footer';
+import { Logo } from '@/components/common/Logo';
 import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
+const SIDEBAR_COLLAPSED_KEY = 'echo_pi_sidebar_collapsed';
+
 export function AppLayout({ children }: AppLayoutProps) {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const location = useLocation();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem(SIDEBAR_COLLAPSED_KEY);
+    return saved === 'true';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(SIDEBAR_COLLAPSED_KEY, sidebarCollapsed.toString());
+  }, [sidebarCollapsed]);
 
   const menuItems = [
     { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/' },
@@ -34,12 +49,12 @@ export function AppLayout({ children }: AppLayoutProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* الهيدر */}
       <Header />
       
       {/* التخطيط الرئيسي */}
-      <div className="flex h-[calc(100vh-4rem)]">
+      <div className="flex flex-1">
         {/* القائمة الجانبية للشاشات الكبيرة */}
         <aside className="hidden lg:flex w-64 flex-col border-e border-border bg-card">
           <nav className="flex-1 overflow-y-auto p-4 space-y-1">
@@ -111,6 +126,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           </div>
         </main>
       </div>
+      
+      {/* الفوتر */}
+      <Footer />
     </div>
   );
 }
