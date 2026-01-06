@@ -1,0 +1,287 @@
+import type {
+  Course,
+  GPACalculation,
+  SemesterSummary,
+  CourseImpact,
+  GPAPrediction,
+  ValidationError,
+  ScenarioCourse
+} from '@/types/types';
+import { getGradePoints, getClassification, isPassingGrade } from './university-rules';
+
+/**
+ * Core GPA Calculation Engine
+ * Implements exact university GPA calculation rules
+ */
+
+export class GPAEngine {
+  /**
+   * Calculate comprehensive GPA from courses
+   */
+  static calculateGPA(courses: Course[]): GPACalculation {
+    // Group courses by semester
+    const semesterMap = new Map<string, Course[]>();
+    
+    for (const course of courses) {
+      const key = `${course.year}-${course.semester}`;
+      if (!semesterMap.has(key)) {
+        semesterMap.set(key, []);
+      }
+      semesterMap.get(key)!.push(course);
+    }
+
+    // Calculate semester summaries
+    const semesters: SemesterSummary[] = [];
+    let totalQualityPoints = 0;
+    let totalRegisteredHours = 0;
+    let totalPassedHours = 0;
+
+    for (const [key, semesterCourses] of semesterMap) {
+      const [year, semester] = key.split('-');
+      const summary = this.calculateSemesterGPA(semesterCourses);
+      summary.semester = semester;
+      summary.year = Number.parseInt(year);
+      semesters.push(summary);
+
+      // Accumulate totals (handle retakes properly)
+      for (const course of semesterCourses) {
+        // Only count the latest attempt for retaken courses
+        if (!course.isRetake || !this.hasLaterRetake(course, courses)) {
+          totalQualityPoints += course.gradePoints * course.creditHours;
+          totalRegisteredHours += course.creditHours;
+          if (isPassingGrade(course.grade)) {
+            totalPassedHours += course.creditHours;
+          }
+        }
+      }
+    }
+
+    // Calculate cumulative GPA
+    const cumulativeGPA = totalRegisteredHours > 0 
+      ? totalQualityPoints / totalRegisteredHours 
+      : 0;
+
+    // Get classification
+    const classificationRule = getClassification(cumulativeGPA);
+
+    // Sort semesters chronologically
+    semesters.sort((a, b) => {
+      if (a.year !== b.year) return a.year - b.year;
+      return a.semester.localeCompare(b.semester);
+    });
+
+    return {
+      currentGPA: semesters.length > 0 ? semesters[semesters.length - 1].semesterGPA : 0,
+      cumulativeGPA: Number(cumulativeGPA.toFixed(2)),
+      totalRegisteredHours,
+      totalPassedHours,
+      totalQualityPoints: Number(totalQualityPoints.toFixed(2)),
+      classification: classificationRule.classification,
+      classificationNameEn: classificationRule.nameEn,
+      classificationNameAr: classificationRule.nameAr,
+      semesters
+    };
+  }
+
+  /**
+   * Calculate GPA for a single semester
+   */
+  static calculateSemesterGPA(courses: Course[]): SemesterSummary {
+    let totalQualityPoints = 0;
+    let totalCredits = 0;
+    let earnedCredits = 0;
+
+    for (const course of courses) {
+      totalQualityPoints += course.gradePoints * course.creditHours;
+      totalCredits += course.creditHours;
+      if (isPassingGrade(course.grade)) {
+        earnedCredits += course.creditHours;
+      }
+    }
+
+    const semesterGPA = totalCredits > 0 ? totalQualityPoints / totalCredits : 0;
+
+    return {
+      semester: '',
+      year: 0,
+      courses,
+      semesterGPA: Number(semesterGPA.toFixed(2)),
+      totalCredits,
+      earnedCredits
+    };
+  }
+
+  /**
+   * Check if a course has a later retake
+   */
+  private static hasLaterRetake(course: Course, allCourses: Course[]): boolean {
+    return allCourses.some(c => 
+      c.originalCourseId === course.id && 
+      c.isRetake &&
+      (c.year > course.year || (c.year === course.year && c.semester > course.semester))
+    );
+  }
+
+  /**
+   * Calculate course impact on GPA
+   */
+  static calculateCourseImpact(courses: Course[]): CourseImpact[] {
+    const impacts: CourseImpact[] = [];
+    
+    for (const course of courses) {
+      // Calculate GPA without this course
+      const coursesWithout = courses.filter(c => c.id !== course.id);
+      const gpaWithout = this.calculateGPA(coursesWithout).cumulativeGPA;
+      const gpaWith = this.calculateGPA(courses).cumulativeGPA;
+      
+      const impact = gpaWith - gpaWithout;
+      
+      impacts.push({
+        course,
+        impact: Number(impact.toFixed(3)),
+        impactType: impact > 0.01 ? 'positive' : impact < -0.01 ? 'negative' : 'neutral'
+      });
+    }
+
+    // Sort by absolute impact
+    impacts.sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
+    
+    return impacts;
+  }
+
+  /**
+   * Predict future GPA based on scenarios
+   */
+  static predictGPA(
+    currentCourses: Course[],
+    futureCourses: ScenarioCourse[],
+    targetGPA?: number
+  ): GPAPrediction {
+    const currentCalc = this.calculateGPA(currentCourses);
+    const remainingCredits = futureCourses.reduce((sum, c) => sum + c.creditHours, 0);
+
+    // Best case: all A grades
+    const bestCasePoints = futureCourses.reduce((sum, c) => sum + (4.0 * c.creditHours), 0);
+    const bestCase = (currentCalc.totalQualityPoints + bestCasePoints) / 
+      (currentCalc.totalRegisteredHours + remainingCredits);
+
+    // Worst case: all passing grades (D)
+    const worstCasePoints = futureCourses.reduce((sum, c) => sum + (1.7 * c.creditHours), 0);
+    const worstCase = (currentCalc.totalQualityPoints + worstCasePoints) / 
+      (currentCalc.totalRegisteredHours + remainingCredits);
+
+    // Realistic case: based on expected grades
+    const realisticPoints = futureCourses.reduce(
+      (sum, c) => sum + (getGradePoints(c.expectedGrade) * c.creditHours), 
+      0
+    );
+    const realisticCase = (currentCalc.totalQualityPoints + realisticPoints) / 
+      (currentCalc.totalRegisteredHours + remainingCredits);
+
+    // Calculate required GPA for target
+    let requiredGPAForTarget: number | undefined;
+    if (targetGPA && remainingCredits > 0) {
+      const requiredPoints = (targetGPA * (currentCalc.totalRegisteredHours + remainingCredits)) - 
+        currentCalc.totalQualityPoints;
+      requiredGPAForTarget = requiredPoints / remainingCredits;
+    }
+
+    return {
+      bestCase: Number(bestCase.toFixed(2)),
+      worstCase: Number(worstCase.toFixed(2)),
+      realisticCase: Number(realisticCase.toFixed(2)),
+      remainingCredits,
+      requiredGPAForTarget: requiredGPAForTarget ? Number(requiredGPAForTarget.toFixed(2)) : undefined
+    };
+  }
+
+  /**
+   * Validate courses for errors
+   */
+  static validateCourses(courses: Course[]): ValidationError[] {
+    const errors: ValidationError[] = [];
+    const courseCodeMap = new Map<string, Course[]>();
+
+    // Group by course code
+    for (const course of courses) {
+      if (!courseCodeMap.has(course.courseCode)) {
+        courseCodeMap.set(course.courseCode, []);
+      }
+      courseCodeMap.get(course.courseCode)!.push(course);
+    }
+
+    // Check for duplicates (same course, same semester, not a retake)
+    for (const [code, coursesWithCode] of courseCodeMap) {
+      const semesterMap = new Map<string, Course[]>();
+      
+      for (const course of coursesWithCode) {
+        const key = `${course.year}-${course.semester}`;
+        if (!semesterMap.has(key)) {
+          semesterMap.set(key, []);
+        }
+        semesterMap.get(key)!.push(course);
+      }
+
+      for (const [semester, semesterCourses] of semesterMap) {
+        if (semesterCourses.length > 1 && !semesterCourses.some(c => c.isRetake)) {
+          errors.push({
+            type: 'duplicate',
+            severity: 'error',
+            messageEn: `Duplicate course ${code} in ${semester}`,
+            messageAr: `مقرر مكرر ${code} في ${semester}`,
+            courseId: semesterCourses[0].id
+          });
+        }
+      }
+    }
+
+    // Check for invalid credit hours
+    for (const course of courses) {
+      if (course.creditHours <= 0 || course.creditHours > 6) {
+        errors.push({
+          type: 'invalid_credits',
+          severity: 'warning',
+          messageEn: `Unusual credit hours (${course.creditHours}) for ${course.courseCode}`,
+          messageAr: `ساعات معتمدة غير عادية (${course.creditHours}) للمقرر ${course.courseCode}`,
+          courseId: course.id
+        });
+      }
+    }
+
+    return errors;
+  }
+
+  /**
+   * Calculate what grade is needed in remaining courses to reach target GPA
+   */
+  static calculateRequiredGrades(
+    currentCourses: Course[],
+    remainingCredits: number,
+    targetGPA: number
+  ): { achievable: boolean; requiredAverage: number; message: string } {
+    const currentCalc = this.calculateGPA(currentCourses);
+    
+    const requiredTotalPoints = targetGPA * (currentCalc.totalRegisteredHours + remainingCredits);
+    const requiredFuturePoints = requiredTotalPoints - currentCalc.totalQualityPoints;
+    const requiredAverage = requiredFuturePoints / remainingCredits;
+
+    const achievable = requiredAverage <= 4.0 && requiredAverage >= 0;
+
+    let message = '';
+    if (!achievable) {
+      if (requiredAverage > 4.0) {
+        message = 'Target GPA is not achievable even with perfect grades';
+      } else {
+        message = 'Target GPA is already exceeded';
+      }
+    } else {
+      message = `You need an average of ${requiredAverage.toFixed(2)} in remaining courses`;
+    }
+
+    return {
+      achievable,
+      requiredAverage: Number(requiredAverage.toFixed(2)),
+      message
+    };
+  }
+}

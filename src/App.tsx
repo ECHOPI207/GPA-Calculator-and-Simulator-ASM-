@@ -1,37 +1,52 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import IntersectObserver from '@/components/common/IntersectObserver';
-
+import { AuthProvider } from '@/contexts/AuthContext';
+import { LanguageProvider } from '@/contexts/LanguageContext';
+import { RouteGuard } from '@/components/common/RouteGuard';
+import { AppLayout } from '@/components/layouts/AppLayout';
+import { Toaster } from '@/components/ui/toaster';
 import routes from './routes';
 
-// import { AuthProvider } from '@/contexts/AuthContext';
-// import { RouteGuard } from '@/components/common/RouteGuard';
-import { Toaster } from '@/components/ui/toaster';
+function AppContent() {
+  const location = useLocation();
+  const isLoginPage = location.pathname === '/login';
+
+  return (
+    <>
+      <IntersectObserver />
+      {isLoginPage ? (
+        <Routes>
+          {routes.map((route, index) => (
+            <Route key={index} path={route.path} element={route.element} />
+          ))}
+          <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+      ) : (
+        <AppLayout>
+          <Routes>
+            {routes.map((route, index) => (
+              <Route key={index} path={route.path} element={route.element} />
+            ))}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AppLayout>
+      )}
+      <Toaster />
+    </>
+  );
+}
 
 const App: React.FC = () => {
   return (
     <Router>
-      {/*<AuthProvider>*/}
-      {/*<RouteGuard>*/}
-      <IntersectObserver />
-      <div className="flex flex-col min-h-screen">
-        {/*<Header />*/}
-        <main className="flex-grow">
-          <Routes>
-          {routes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={route.element}
-            />
-          ))}
-          <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </main>
-      </div>
-      <Toaster />
-      {/*</RouteGuard>*/}
-      {/*</AuthProvider>*/}
+      <LanguageProvider>
+        <AuthProvider>
+          <RouteGuard>
+            <AppContent />
+          </RouteGuard>
+        </AuthProvider>
+      </LanguageProvider>
     </Router>
   );
 };
