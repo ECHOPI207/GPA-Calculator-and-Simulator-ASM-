@@ -4,9 +4,6 @@ import SimulatorPage from './pages/SimulatorPage';
 import TimelinePage from './pages/TimelinePage';
 import ReportsPage from './pages/ReportsPage';
 import SettingsPage from './pages/SettingsPage';
-import AdminPage from './pages/AdminPage';
-import LoginPage from './pages/LoginPage';
-import NotFound from './pages/NotFound';
 import type { ReactNode } from 'react';
 
 export interface RouteConfig {
@@ -46,23 +43,6 @@ const routes: RouteConfig[] = [
     name: 'Settings',
     path: '/settings',
     element: <SettingsPage />
-  },
-  {
-    name: 'Admin',
-    path: '/admin',
-    element: <AdminPage />
-  },
-  {
-    name: 'Login',
-    path: '/login',
-    element: <LoginPage />,
-    visible: false
-  },
-  {
-    name: 'Not Found',
-    path: '*',
-    element: <NotFound />,
-    visible: false
   }
 ];
 

@@ -1,6 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,7 +9,6 @@ import {
   Clock,
   FileText,
   Settings,
-  Shield,
   Menu,
 } from 'lucide-react';
 import { Header } from './Header';
@@ -22,7 +20,6 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   const { t } = useLanguage();
-  const { profile } = useAuth();
   const location = useLocation();
 
   const menuItems = [
@@ -34,18 +31,14 @@ export function AppLayout({ children }: AppLayoutProps) {
     { icon: Settings, label: t('nav.settings'), path: '/settings' },
   ];
 
-  if (profile?.role === 'admin') {
-    menuItems.push({ icon: Shield, label: t('nav.admin'), path: '/admin' });
-  }
-
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
+      {/* الهيدر */}
       <Header />
       
-      {/* Main Layout */}
+      {/* التخطيط الرئيسي */}
       <div className="flex h-[calc(100vh-4rem)]">
-        {/* Desktop Sidebar */}
+        {/* القائمة الجانبية للشاشات الكبيرة */}
         <aside className="hidden lg:flex w-64 flex-col border-e border-border bg-card">
           <nav className="flex-1 overflow-y-auto p-4 space-y-1">
             {menuItems.map((item) => {
@@ -70,7 +63,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           </nav>
         </aside>
 
-        {/* Mobile Menu Button */}
+        {/* زر القائمة للموبايل */}
         <div className="lg:hidden fixed bottom-6 end-6 z-50">
           <Sheet>
             <SheetTrigger asChild>
@@ -109,7 +102,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           </Sheet>
         </div>
 
-        {/* Main Content */}
+        {/* المحتوى الرئيسي */}
         <main className="flex-1 overflow-y-auto">
           <div className="container max-w-7xl mx-auto p-6 lg:p-8">
             {children}
