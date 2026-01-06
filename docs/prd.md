@@ -4,13 +4,13 @@
 
 ### 1.1 Application Name
 **English:** AcademiQ - Academic Intelligence Platform  
-**Arabic:** أكاديميك - منصة الذكاء الأكاديمي
-
+**Arabic:** أكاديميك - منصة الذكاء الأكاديمي\n
 ### 1.2 Application Description
 A professional, university-grade academic decision-support system designed to calculate, analyze, and predict GPA with complete accuracy based on official university grading rules. The platform now includes a scientifically sound Cognitive Learning Profile (CLP) module that analyzes study-related behaviors and integrates them with GPA improvement strategies. This is a fully client-side application that operates entirely in the browser without requiring backend infrastructure, database, or user authentication.
 
 ### 1.3 Core Positioning
-- Academic accuracy is mandatory\n- University rules are the single source of truth
+- Academic accuracy is mandatory
+- University rules are the single source of truth
 - Simple UX for students with deep intelligence under the hood
 - Fully client-side architecture
 - Portfolio-quality engineering
@@ -145,7 +145,8 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 - Simulate grade improvement scenarios (current grade → next higher grade)
 - Calculate GPA delta for each scenario
 - Rank scenarios by GPA impact
-\n#### 4.3.3 Retake Scenario Evaluation
+
+#### 4.3.3 Retake Scenario Evaluation
 - Identify failed courses
 - Identify courses with very low grades
 - Calculate GPA impact of retaking and improving grades
@@ -157,8 +158,7 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 ### 4.4 Output Structure
 \n#### 4.4.1 Quick Wins
 - Small effort, high GPA impact
-- Display:\n  - Course name
-  - Credit hours
+- Display:\n  - Course name\n  - Credit hours
   - Current grade
   - Suggested grade
   - GPA before\n  - GPA after
@@ -182,8 +182,7 @@ Provide clear, actionable, and prioritized steps that students can take to impro
 - Show numeric GPA improvement prominently
 - Display matched learning strategy with clear explanation
 
-### 4.6 Language & Tone
-- Support Arabic and English
+### 4.6 Language & Tone\n- Support Arabic and English
 - Use academic, respectful tone
 - Avoid vague advice
 - Avoid emotional language
@@ -322,16 +321,14 @@ For each recommendation:
 - Prioritized actions
 - Clear explanation of why each strategy matches the student's profile
 
-#### 5.7.6 Continuous Feedback
-- If you apply this strategy, expected GPA impact is X
-- Allow students to mark strategies as tried\n- Adjust recommendations based on feedback
+#### 5.7.6 Continuous Feedback\n- If you apply this strategy, expected GPA impact is X\n- Allow students to mark strategies as tried\n- Adjust recommendations based on feedback
 
 ### 5.8 Academic Transparency & Disclaimers
 
 #### 5.8.1 CLP Intro Disclaimer
 **Arabic:**
-هذا التقييم يساعدك على فهم سلوكك الدراسي وليس اختبار شخصية أو تشخيصًا نفسيًا.
-\n**English:**
+هذا التقييم يساعدك على فهم سلوكك الدراسي وليس اختبار شخصية أو تشخيصًا نفسيًا.\n
+**English:**
 This assessment helps understand your study behaviors. It is not a personality test or psychological diagnosis.
 
 #### 5.8.2 CLP Result Disclaimer
@@ -340,8 +337,7 @@ This assessment helps understand your study behaviors. It is not a personality t
 These results are adjustable and do not reflect intelligence or ability.
 
 #### 5.8.3 General Disclaimer
-**Arabic:**
-هذه التوصيات إرشادية ولا تُعد بديلاً عن السجلات الأكاديمية الرسمية.
+**Arabic:**\nهذه التوصيات إرشادية ولا تُعد بديلاً عن السجلات الأكاديمية الرسمية.
 
 **English:**
 These recommendations are advisory and not a replacement for official academic records.
@@ -386,45 +382,154 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Compare against honor roll thresholds
 \n---
 
-## 7. Navigation & UI Structure Improvements
+## 7. Navigation & UI Structure
 
-### 7.1 Nested Tabs System
-- Implement nested tabs within main pages to group related features
-- Reduce top-level navigation complexity
-- Group similar functionalities under parent tabs with sub-tabs
+### 7.1 Desktop Navigation (Header-Based)
+\n#### 7.1.1 Header Layout
+- Fixed top header navigation bar
+- Logo positioned on start side (RTL: right / LTR: left)
+- Horizontal primary navigation items
+- Language switcher on end side (RTL: left / LTR: right)
+\n#### 7.1.2 Primary Navigation Items (Max 4–5)
+1. **Dashboard** (لوحة التحكم)
+2. **GPA Calculator** (حاسبة المعدل)
+3. **Improvement** (تحسين المعدل)
+4. **Reports** (التقارير)
+5. **Settings** (الإعدادات)
 
-**Example Structure:**
-- **لوحة التحكم (Dashboard)** - Main landing page
-- **حاسبة المعدل (GPA Calculator)**
-  - Sub-tab: إضافة مواد (Add Courses)
-  - Sub-tab: عرض المواد (View Courses)
-  - Sub-tab: تعديل المواد (Edit Courses)
-- **محاكي السيناريوهات (Scenario Simulator)**
-  - Sub-tab: سيناريوهات جديدة (New Scenarios)\n  - Sub-tab: السيناريوهات المحفوظة (Saved Scenarios)
-- **تحسين المعدل (GPA Improvement)**\n  - Sub-tab: فرص التحسين (Improvement Opportunities)
-  - Sub-tab: خطة العمل (Action Plan)
-- **الجدول الزمني الأكاديمي (Academic Timeline)**
-- **التقارير والتحليلات (Reports & Analytics)**
-  - Sub-tab: تقارير الأداء (Performance Reports)
-  - Sub-tab: التحليلات المتقدمة (Advanced Analytics)\n  - Sub-tab: تصدير PDF (PDF Export)
-- **الإعدادات (Settings)**
-  - Sub-tab: الجامعة والنظام (University & System)
-  - Sub-tab: اللغة والواجهة (Language & Interface)\n  - Sub-tab: الخصوصية (Privacy)
+#### 7.1.3 Header Navigation Rules
+- Display only top-level sections
+- Avoid overcrowding
+- Each item maps to a real page or internal tab group
+- Active page clearly highlighted with visual indicator
+- Smooth hover states for all navigation items
 
-### 7.2 Collapsible Sidebar Menu
-- Implement collapsible sidebar navigation
-- When collapsed: Show only icons\n- When expanded: Show icons + text labels
-- Toggle button to collapse/expand sidebar
-- Save sidebar state in local storage
-- Smooth animation for collapse/expand transitions
-- Responsive behavior: Auto-collapse on mobile devices
+#### 7.1.4 Nested Content Organization
+- Use internal tabs within pages for sub-sections
+- Example: GPA Calculator page contains tabs for Add Courses, View Courses, Edit Courses\n- Example: Reports page contains tabs for Performance Reports, Advanced Analytics, PDF Export
 
-### 7.3 Logo Interaction
-- Clicking on logo returns user to main dashboard (home page)
-- Logo must be clickable and visually indicate interactivity on hover
-- Maintain consistent logo placement across all pages
+### 7.2 Mobile Navigation (Bottom Navigation Bar)
 
----
+#### 7.2.1 Bottom Navigation Layout\n- Fixed bottom navigation bar
+- Position: sticky at bottom for easy thumb access
+- Icons + short labels\n- Maximum 4–5 primary actions
+\n#### 7.2.2 Bottom Navigation Items\n1. **Dashboard** (🏠 لوحة التحكم)
+2. **Calculator** (🧮 الحاسبة)
+3. **Improve** (📈 تحسين)
+4. **Reports** (📊 التقارير)
+5. **Settings** (⚙️ الإعدادات)
+\n#### 7.2.3 Bottom Navigation Rules
+- Use universally recognizable icons
+- Short, clear labels (1–2 words max)
+- Active tab clearly highlighted with color and icon fill
+- Smooth transitions between tabs
+- Icons and labels must adapt to RTL/LTR direction
+
+#### 7.2.4 Icon Selection Guidelines
+- Dashboard: Home icon (🏠)
+- Calculator: Calculator or grid icon (🧮)
+- Improve: Trending up or growth icon (📈)
+- Reports: Chart or analytics icon (📊)
+- Settings: Gear or settings icon (⚙️)
+
+### 7.3 Responsive Behavior
+
+#### 7.3.1 Breakpoint Strategy
+- Desktop: ≥ 768px → Header navigation
+- Mobile: < 768px → Bottom navigation
+- Automatic switching based on screen size
+- No duplicated logic or hardcoded breakpoints where possible
+
+#### 7.3.2 Navigation State Persistence
+- Active page state persists when switching between desktop and mobile views
+- Navigation selection synced across all screen sizes
+- User's current page remains active after resize
+
+### 7.4 Scroll Behavior
+
+#### 7.4.1 Navigation Action Scroll
+- On every navigation action (clicking any navigation item):
+  - Automatically scroll to TOP of the page
+  - Do NOT preserve previous scroll position
+  - Smooth scroll animation (if supported)
+
+#### 7.4.2 Page Load Scroll
+- On initial page load: Start at top of page
+- On navigation between pages: Reset scroll to top
+\n### 7.5 RTL / LTR Support
+
+#### 7.5.1 Header Navigation RTL/LTR
+- Logo position flips: RTL (right) / LTR (left)
+- Navigation items order respects text direction
+- Language switcher position flips: RTL (left) / LTR (right)
+- All spacing and alignment use logical CSS properties
+
+#### 7.5.2 Bottom Navigation RTL/LTR
+- Icon and label order respects text direction
+- Navigation items order flips for RTL\n- Active indicator position adapts to direction
+- All spacing uses logical CSS properties
+
+#### 7.5.3 Logical CSS Properties
+- Use `margin-inline-start` / `margin-inline-end`
+- Use `padding-inline-start` / `padding-inline-end`
+- Use `text-align: start` / `text-align: end`
+- Avoid `left` / `right` in directional properties
+\n### 7.6 Logo Interaction
+- Logo is clickable on both desktop and mobile
+- Clicking logo returns user to Dashboard (home page)
+- Visual hover state indicates interactivity
+- Consistent logo placement across all pages
+- Logo size adapts to screen size (larger on desktop, compact on mobile)
+
+### 7.7 UX Principles (Mandatory)
+
+#### 7.7.1 Cognitive Load Minimization
+- Limit top-level navigation to 4–5 items
+- Use clear, descriptive labels
+- Consistent icon usage
+- Predictable navigation behavior
+\n#### 7.7.2 Mobile Optimization
+- Bottom navigation optimized for one-handed use
+- Touch targets minimum 44x44px
+- Clear visual feedback on tap
+- No hidden critical features
+
+#### 7.7.3 Visual Hierarchy
+- Active page clearly distinguished\n- Consistent spacing and alignment\n- Clear separation between navigation and content
+- Accessible color contrast (WCAG AA minimum)
+
+#### 7.7.4 Predictability
+- Navigation behavior consistent across all pages
+- Same navigation structure on desktop and mobile
+- Clear visual feedback for all interactions
+- No unexpected navigation changes
+
+### 7.8 Navigation Validation Checklist
+
+#### 7.8.1 Desktop Navigation Validation
+- [ ] All navigation items have valid destinations
+- [ ] Active page is clearly highlighted
+- [ ] Logo is clickable and returns to Dashboard\n- [ ] Language switcher is accessible
+- [ ] Navigation items are not overcrowded
+- [ ] RTL/LTR switching works correctly
+\n#### 7.8.2 Mobile Navigation Validation
+- [ ] Bottom navigation is fixed and accessible
+- [ ] All icons are universally recognizable
+- [ ] Active tab is clearly highlighted
+- [ ] Touch targets are minimum 44x44px
+- [ ] Navigation items match desktop sections
+- [ ] RTL/LTR switching works correctly
+
+#### 7.8.3 Responsive Validation
+- [ ] Navigation switches automatically at breakpoint
+- [ ] Active page state persists across screen sizes
+- [ ] No duplicated or missing features
+- [ ] Smooth transitions between navigation modes
+\n#### 7.8.4 Scroll Behavior Validation
+- [ ] Navigation action scrolls to top automatically
+- [ ] Previous scroll position is not preserved
+- [ ] Smooth scroll animation works (if supported)
+\n---
 
 ## 8. Branding & Visual Identity
 
@@ -439,8 +544,8 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Works well in both RTL (Arabic) and LTR (English) layouts
 - Scalable and responsive
 - Color scheme aligned with platform identity
-- Includes both icon and text versions
-- Icon-only version for collapsed sidebar
+- Includes both full logo (icon + text) and icon-only versions
+- Icon-only version for mobile bottom navigation (if needed)
 
 **Suggested Color Palette:**
 - Primary: Deep Blue (#1E3A8A) - Trust, intelligence, professionalism
@@ -448,15 +553,16 @@ All learning strategies are based on peer-reviewed research:\n\n1. **Dunlosky et
 - Accent: Gold/Amber (#F59E0B) - Achievement, excellence\n- Neutral: Slate Gray (#64748B) - Balance, sophistication
 - Background: Light Gray (#F8FAFC) / Dark Navy (#0F172A) for dark mode
 
-### 8.3 Favicon
-- Create professional favicon based on logo icon
+### 8.3 Favicon\n- Create professional favicon based on logo icon
 - Multiple sizes: 16x16, 32x32, 48x48, 64x64
 - SVG version for modern browsers
 - Optimized for visibility at small sizes
 - Consistent with brand identity
-\n---
 
-## 9. Footer Design\n
+---
+
+## 9. Footer Design
+
 ### 9.1 Footer Structure
 Professional, comprehensive footer with multiple sections:
 \n**Section 1: About**
@@ -486,7 +592,8 @@ Professional, comprehensive footer with multiple sections:
 - Version information
 
 ### 9.2 Footer Pages
-\n#### 9.2.1 How to Use Page (كيفية استخدام الموقع)
+
+#### 9.2.1 How to Use Page (كيفية استخدام الموقع)
 - Step-by-step guide for new users
 - Video tutorials or animated guides (optional)
 - Feature explanations with screenshots
@@ -539,7 +646,8 @@ Professional, comprehensive footer with multiple sections:
 - Direction affects layout, navigation, forms, tables, charts, icons, modals, and pagination
 
 ### 10.3 Logical CSS\n- Use margin-inline-*, padding-inline-*
-- Use text-align: start / end\n- Avoid duplicating layouts for RTL/LTR
+- Use text-align: start / end
+- Avoid duplicating layouts for RTL/LTR
 \n### 10.4 Language Preference Persistence
 - Save user language preference in browser local storage
 - Apply preference across all sessions
@@ -555,12 +663,12 @@ Professional, comprehensive footer with multiple sections:
 - Accessible contrast and focus states
 - Simple interface for non-technical users
 - Smooth transitions and animations
-- Intuitive navigation
-
+- Intuitive navigation\n
 ### 11.2 Interaction Improvements
-- Logo clickable to return to home
-- Collapsible sidebar with smooth animation
-- Nested tabs for better organization
+- Logo clickable to return to Dashboard
+- Header navigation on desktop with clear active states
+- Bottom navigation on mobile optimized for thumb access
+- Automatic scroll to top on navigation actions
 - Clear visual feedback for all interactions
 - Loading states for calculations
 - Success/error notifications
@@ -575,12 +683,10 @@ Professional, comprehensive footer with multiple sections:
 - No backend or database required
 - No user authentication or login system
 - Data persists across sessions on the same device
-- CLP results stored locally
-- Sidebar state stored locally
+- CLP results stored locally\n- Navigation state stored locally
 
 ### 12.2 Privacy Messaging
-- Display clear privacy policy
-- Inform users that all data is stored locally on their device
+- Display clear privacy policy\n- Inform users that all data is stored locally on their device
 - Explain that no data is sent to any server
 \n### 12.3 Academic Disclaimers
 - Display context-aware disclaimers
@@ -629,17 +735,21 @@ Professional, comprehensive footer with multiple sections:
 - Results must match official university calculations 100%
 - Document edge cases\n- Test CLP assessment flow
 - Test integrated recommendations
-- Test navigation and UI interactions
-- Test responsive design on multiple devices
+- Test navigation and UI interactions on both desktop and mobile
+- Test responsive design on multiple devices and screen sizes
 - Test RTL/LTR switching
-- Test sidebar collapse/expand functionality
+- Test header navigation on desktop
+- Test bottom navigation on mobile
+- Test scroll-to-top behavior on navigation actions
+- Test logo clickability and return to Dashboard
 
 ---
 
 ## 16. Sprint Plan
 
 ### Sprint 0 – Preparation (3–4 days)
-**Objective:** Establish solid foundation\n\n**Tasks:**
+**Objective:** Establish solid foundation\n
+**Tasks:**
 - Review current GPA calculation logic
 - Isolate GPA Engine into independent module
 - Define interfaces between GPA Engine, CLP Module, and Recommendation Engine
@@ -650,20 +760,23 @@ Professional, comprehensive footer with multiple sections:
 - Technical Decisions Document
 - Logo and Favicon files
 - Design System documentation
-\n### Sprint 1 – UI/UX Improvements (1 week)
+
+### Sprint 1 – Navigation & UI Improvements (1 week)
 **Tasks:**
 - Implement new branding (logo, colors, favicon)
-- Build collapsible sidebar navigation
-- Implement nested tabs system
-- Create footer with all required pages
-- Make logo clickable to home
+- Build desktop header navigation
+- Build mobile bottom navigation
+- Implement responsive navigation switching
+- Make logo clickable to Dashboard
+- Implement scroll-to-top on navigation actions\n- Create footer with all required pages
 - Improve overall design consistency
 
 **Deliverables:**
 - Updated UI with new branding
-- Collapsible sidebar\n- Nested tabs structure
-- Professional footer
-- Footer pages (How to Use, Privacy Policy, Terms, Disclaimer, FAQ)
+- Desktop header navigation
+- Mobile bottom navigation
+- Responsive navigation system
+- Professional footer\n- Footer pages (How to Use, Privacy Policy, Terms, Disclaimer, FAQ)
 
 ### Sprint 2 – Cognitive Learning Profile (CLP) (1 week)
 **Tasks:**\n- Build CLP assessment (10–15 questions)
@@ -688,19 +801,17 @@ Professional, comprehensive footer with multiple sections:
 - Link each GPA recommendation with appropriate study strategy
 - Explain why each strategy matches the student's profile
 - Prevent unrealistic recommendations
-
-**Deliverables:**
-- Integrated Action Cards
+\n**Deliverables:**\n- Integrated Action Cards
 - Explanation Layer
 \n### Sprint 5 – Polish & Testing (4–5 days)
 **Tasks:**
 - Improve user experience
 - Write final copy
 - Enhance interactions
-- Test Arabic / English\n- Test all navigation flows
+- Test Arabic / English\n- Test all navigation flows (desktop and mobile)
 - Test responsive design
-- Final QA
-
+- Test scroll behavior
+- Final QA\n
 **Deliverables:**
 - Production-ready UI
 - Final Copy
@@ -709,47 +820,42 @@ Professional, comprehensive footer with multiple sections:
 
 ---
 \n## 17. Wireframes\n
-### Dashboard (Main Page)
+### Desktop Layout (Header Navigation)
 ```
-[ Logo: AcademiQ | أكاديميك ] [Language Switch]\n[☰ Sidebar Toggle]
-\n[Sidebar - Expanded]
-🏠 لوحة التحكم\n🧮 حاسبة المعدل
-🔬 محاكي السيناريوهات
-📈 تحسين المعدل
-⏱️ الجدول الزمني\n📊 التقارير والتحليلات
-⚙️ الإعدادات
-\n[Main Content]\nCurrent GPA: 2.71
+[ Logo: AcademiQ | أكاديميك ]  [ Dashboard | Calculator | Improve | Reports | Settings ]  [ Language: EN/AR ]
+\n[Main Content Area]\nCurrent GPA: 2.71
 Target GPA: [ 3.00 ]
 
 [ Improve My GPA ]
 [ Understand How I Learn ]
 \n--------------------------------
-Top Improvement Opportunities\n- Biophysics (3 credits) +0.24
-- Anatomy (4 credits) +0.31
+Top Improvement Opportunities\n- Biophysics (3 credits) +0.24\n- Anatomy (4 credits) +0.31
 --------------------------------
 
 [Footer]
 [About] [Quick Links] [Resources] [Legal] [Contact]
-Developed by echo-π | © 2026 AcademiQ
-```
+Developed by echo-π | © 2026 AcademiQ\n```
 
-### Sidebar - Collapsed
-```
-[☰]\n🏠\n🧮
-🔬
-📈
-⏱️
-📊\n⚙️
-```
+### Mobile Layout (Bottom Navigation)
+```\n[ Logo: AcademiQ ]  [ Language: EN/AR ]
 
-### Nested Tabs Example (GPA Calculator)
-```
-[ حاسبة المعدل ]
-\n[Sub-tabs:]
-[ إضافة مواد ] [ عرض المواد ] [ تعديل المواد ]
-\n[Content based on selected sub-tab]
-```
-\n---
+[Main Content Area]
+Current GPA: 2.71
+Target GPA: [ 3.00 ]
+
+[ Improve My GPA ]
+[ Understand How I Learn ]
+
+--------------------------------
+Top Improvement Opportunities
+- Biophysics (3 credits) +0.24
+- Anatomy (4 credits) +0.31
+--------------------------------
+
+[Bottom Navigation Bar - Fixed]
+[ 🏠 Dashboard ] [ 🧮 Calculator ] [ 📈 Improve ] [ 📊 Reports ] [ ⚙️ Settings ]\n```
+
+---
 
 ## 18. Copy for UI (AR / EN)
 
@@ -757,9 +863,30 @@ Developed by echo-π | © 2026 AcademiQ
 **Arabic:** أكاديميك - منصة الذكاء الأكاديمي  
 **English:** AcademiQ - Academic Intelligence Platform
 
+### Navigation Labels
+**Dashboard:**
+- Arabic: لوحة التحكم
+- English: Dashboard
+
+**GPA Calculator:**
+- Arabic: حاسبة المعدل
+- English: Calculator
+
+**Improvement:**
+- Arabic: تحسين المعدل
+- English: Improve
+
+**Reports:**\n- Arabic: التقارير
+- English: Reports
+
+**Settings:**
+- Arabic: الإعدادات
+- English: Settings
+
 ### Footer Credits
 **Arabic:** تم التطوير بواسطة echo-π  
-**English:** Developed by echo-π\n
+**English:** Developed by echo-π
+
 ### CLP Intro
 **Arabic:**
 هذا التقييم يساعدك على فهم سلوكك الدراسي وليس اختبار شخصية أو تشخيصًا نفسيًا.
@@ -789,8 +916,7 @@ These recommendations are advisory and not a replacement for official academic r
 
 ---
 
-## 19. Documentation
-
+## 19. Documentation\n
 ### 19.1 System Overview
 - Academic Decision Support System
 - Does not provide diagnosis\n- Based on adjustable behaviors
@@ -800,8 +926,7 @@ Based on proven research:
 - Cepeda et al., 2006
 - Bjork & Bjork, 2011
 
-With simplified, non-academic explanations for students.
-
+With simplified, non-academic explanations for students.\n
 ### 19.3 Ethical Statement
 - No personality classification
 - No deterministic predictions
@@ -825,9 +950,10 @@ With simplified, non-academic explanations for students.
 
 - Fully working bilingual academic platform
 - New professional branding (AcademiQ)\n- Professional logo and favicon
-- Collapsible sidebar navigation
-- Nested tabs for better organization
-- Clickable logo returning to home
+- Desktop header navigation
+- Mobile bottom navigation\n- Responsive navigation switching
+- Automatic scroll-to-top on navigation actions
+- Clickable logo returning to Dashboard
 - Comprehensive professional footer
 - Footer pages (How to Use, Privacy Policy, Terms, Disclaimer, FAQ)
 - Exact GPA logic matching university rules
@@ -840,3 +966,4 @@ With simplified, non-academic explanations for students.
 - Deployment-ready version
 - Clear documentation for future updates
 - Fully client-side with no backend dependencies
+- Native desktop and mobile navigation experience

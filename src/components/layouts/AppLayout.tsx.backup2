@@ -1,0 +1,172 @@
+import { Link, useLocation } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import {
+  LayoutDashboard,
+  Calculator,
+  FlaskConical,
+  TrendingUp,
+  Clock,
+  FileText,
+  Settings,
+  Menu,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react';
+import { Header } from './Header';
+import { Footer } from './Footer';
+import { Logo } from '@/components/common/Logo';
+import { cn } from '@/lib/utils';
+import { useState, useEffect } from 'react';
+
+interface AppLayoutProps {
+  children: React.ReactNode;
+}
+
+const SIDEBAR_COLLAPSED_KEY = 'echo_pi_sidebar_collapsed';
+
+export function AppLayout({ children }: AppLayoutProps) {
+  const { t, language } = useLanguage();
+  const location = useLocation();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    const saved = localStorage.getItem(SIDEBAR_COLLAPSED_KEY);
+    return saved === 'true';
+  });
+
+  useEffect(() => {
+    localStorage.setItem(SIDEBAR_COLLAPSED_KEY, sidebarCollapsed.toString());
+  }, [sidebarCollapsed]);
+
+  const menuItems = [
+    { icon: LayoutDashboard, label: t('nav.dashboard'), path: '/' },
+    { icon: Calculator, label: t('nav.gpa'), path: '/gpa' },
+    { icon: FlaskConical, label: t('nav.learning'), path: '/learning' },
+    { icon: FileText, label: t('nav.reports'), path: '/reports' },
+    { icon: Settings, label: t('nav.settings'), path: '/settings' },
+  ];
+
+  // Scroll to top on navigation
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [location.pathname]);
+
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      {/* الهيدر */}
+      <Header />
+      
+      {/* التخطيط الرئيسي */}
+      <div className="flex flex-1">
+        {/* القائمة الجانبية للشاشات الكبيرة */}
+        <aside
+          className={cn(
+            'hidden lg:flex flex-col border-e border-border bg-card transition-all duration-300',
+            sidebarCollapsed ? 'w-20' : 'w-64'
+          )}
+        >
+          <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+            {menuItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = location.pathname === item.path;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  title={sidebarCollapsed ? item.label : undefined}
+                  className={cn(
+                    'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all',
+                    isActive
+                      ? 'bg-primary text-primary-foreground shadow-sm'
+                      : 'text-foreground hover:bg-accent hover:text-accent-foreground',
+                    sidebarCollapsed && 'justify-center px-2'
+                  )}
+                >
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {!sidebarCollapsed && <span>{item.label}</span>}
+                </Link>
+              );
+            })}
+          </nav>
+
+          {/* زر الطي/الفتح */}
+          <div className="p-4 border-t border-border">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
+              className={cn('w-full', sidebarCollapsed && 'px-2')}
+              title={
+                sidebarCollapsed
+                  ? language === 'ar'
+                    ? 'فتح القائمة'
+                    : 'Expand Menu'
+                  : language === 'ar'
+                  ? 'إخفاء القائمة'
+                  : 'Collapse Menu'
+              }
+            >
+              {sidebarCollapsed ? (
+                <ChevronRight className="h-4 w-4" />
+              ) : (
+                <>
+                  <ChevronLeft className="h-4 w-4 me-2" />
+                  <span>{language === 'ar' ? 'إخفاء' : 'Collapse'}</span>
+                </>
+              )}
+            </Button>
+          </div>
+        </aside>
+
+        {/* زر القائمة للموبايل */}
+        <div className="lg:hidden fixed bottom-6 end-6 z-50">
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button size="icon" className="h-14 w-14 rounded-full shadow-lg">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72 p-0">
+              <div className="flex flex-col h-full">
+                <div className="p-6 border-b border-border">
+                  <h2 className="text-xl font-bold text-foreground">القائمة</h2>
+                </div>
+                <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+                  {menuItems.map((item) => {
+                    const Icon = item.icon;
+                    const isActive = location.pathname === item.path;
+                    return (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className={cn(
+                          'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all',
+                          isActive
+                            ? 'bg-primary text-primary-foreground shadow-sm'
+                            : 'text-foreground hover:bg-accent hover:text-accent-foreground'
+                        )}
+                      >
+                        <Icon className="h-5 w-5" />
+                        <span>{item.label}</span>
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
+
+        {/* المحتوى الرئيسي */}
+        <main className="flex-1 overflow-y-auto">
+          <div className="container max-w-7xl mx-auto p-6 lg:p-8">
+            {children}
+          </div>
+        </main>
+      </div>
+      
+      {/* الفوتر */}
+      <Footer />
+    </div>
+  );
+}
