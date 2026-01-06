@@ -89,6 +89,8 @@ const translations: Record<Language, Record<string, string>> = {
     'gpa.good': 'Good',
     'gpa.pass': 'Pass',
     'gpa.fail': 'Fail',
+    'gpa.cumulative': 'Cumulative GPA',
+    'gpa.current': 'Current GPA',
     
     // Courses
     'course.add': 'Add Course',
@@ -102,6 +104,9 @@ const translations: Record<Language, Record<string, string>> = {
     'course.year': 'Year',
     'course.isRetake': 'Is Retake',
     'course.noCourses': 'No courses added yet',
+    'course.totalHours': 'Total Hours',
+    'course.passedHours': 'Passed Hours',
+    'course.totalCourses': 'Total Courses',
     
     // Simulator
     'simulator.title': 'GPA Scenario Simulator',
@@ -199,6 +204,8 @@ const translations: Record<Language, Record<string, string>> = {
     'gpa.good': 'جيد',
     'gpa.pass': 'مقبول',
     'gpa.fail': 'راسب',
+    'gpa.cumulative': 'المعدل التراكمي',
+    'gpa.current': 'المعدل الفصلي',
     
     // Courses
     'course.add': 'إضافة مقرر',
@@ -212,6 +219,9 @@ const translations: Record<Language, Record<string, string>> = {
     'course.year': 'السنة',
     'course.isRetake': 'إعادة',
     'course.noCourses': 'لم تتم إضافة أي مقررات بعد',
+    'course.totalHours': 'إجمالي الساعات',
+    'course.passedHours': 'الساعات المجتازة',
+    'course.totalCourses': 'إجمالي المقررات',
     
     // Simulator
     'simulator.title': 'محاكي سيناريوهات المعدل',

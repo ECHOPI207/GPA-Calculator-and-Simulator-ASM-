@@ -13,7 +13,6 @@ export function Footer() {
         links: [
           { label: 'كيفية الاستخدام', path: '/how-to-use' },
           { label: 'الميزات', path: '/' },
-          { label: 'التسعير', path: '/' },
         ],
       },
       legal: {
@@ -38,7 +37,6 @@ export function Footer() {
         links: [
           { label: 'How to Use', path: '/how-to-use' },
           { label: 'Features', path: '/' },
-          { label: 'Pricing', path: '/' },
         ],
       },
       legal: {
