@@ -60,6 +60,8 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.learning': 'Learning & Study',
     'nav.reports': 'Reports & Analytics',
     'nav.settings': 'Settings',
+    'nav.calculator': 'GPA Calculator',
+    'nav.admin': 'Admin',
     
     // Auth
     'auth.login': 'Login',
@@ -107,6 +109,8 @@ const translations: Record<Language, Record<string, string>> = {
     'course.totalHours': 'Total Hours',
     'course.passedHours': 'Passed Hours',
     'course.totalCourses': 'Total Courses',
+    'course.manageCourses': 'Manage Courses',
+    'course.yourCourses': 'Your Courses',
     
     // Simulator
     'simulator.title': 'GPA Scenario Simulator',
@@ -137,6 +141,9 @@ const translations: Record<Language, Record<string, string>> = {
     'settings.theme': 'Theme',
     'settings.lightMode': 'Light Mode',
     'settings.darkMode': 'Dark Mode',
+    'settings.currentUniversity': 'Current University',
+    'settings.defaultUniversity': 'Default University',
+    'settings.universityRulesApplied': 'University rules are applied',
     
     // Common
     'common.save': 'Save',
@@ -163,6 +170,8 @@ const translations: Record<Language, Record<string, string>> = {
     'message.courseUpdated': 'Course updated successfully',
     'message.courseDeleted': 'Course deleted successfully',
     'message.scenarioSaved': 'Scenario saved successfully',
+    'message.languageChanged': 'Language changed successfully',
+    'message.themeChanged': 'Theme changed successfully',
   },
   ar: {
     // App Name
@@ -175,6 +184,8 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.learning': 'التعلم والمذاكرة',
     'nav.reports': 'التقارير والتحليلات',
     'nav.settings': 'الإعدادات',
+    'nav.calculator': 'حاسبة المعدل',
+    'nav.admin': 'الإدارة',
     
     // Auth
     'auth.login': 'تسجيل الدخول',
@@ -222,6 +233,8 @@ const translations: Record<Language, Record<string, string>> = {
     'course.totalHours': 'إجمالي الساعات',
     'course.passedHours': 'الساعات المجتازة',
     'course.totalCourses': 'إجمالي المقررات',
+    'course.manageCourses': 'إدارة المقررات',
+    'course.yourCourses': 'مقرراتك',
     
     // Simulator
     'simulator.title': 'محاكي سيناريوهات المعدل',
@@ -252,6 +265,9 @@ const translations: Record<Language, Record<string, string>> = {
     'settings.theme': 'المظهر',
     'settings.lightMode': 'الوضع الفاتح',
     'settings.darkMode': 'الوضع الداكن',
+    'settings.currentUniversity': 'الجامعة الحالية',
+    'settings.defaultUniversity': 'الجامعة الافتراضية',
+    'settings.universityRulesApplied': 'يتم تطبيق قواعد الجامعة المحددة',
     
     // Common
     'common.save': 'حفظ',
@@ -278,5 +294,7 @@ const translations: Record<Language, Record<string, string>> = {
     'message.courseUpdated': 'تم تحديث المقرر بنجاح',
     'message.courseDeleted': 'تم حذف المقرر بنجاح',
     'message.scenarioSaved': 'تم حفظ السيناريو بنجاح',
+    'message.languageChanged': 'تم تغيير اللغة بنجاح',
+    'message.themeChanged': 'تم تغيير المظهر بنجاح',
   }
 };
