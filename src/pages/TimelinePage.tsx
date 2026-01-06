@@ -1,30 +1,29 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { courseApi } from '@/db/api';
+import { courseStorage, scenarioStorage } from "@/lib/storage";
 import { GPAEngine } from '@/lib/gpa-engine';
 import type { Course, SemesterSummary } from '@/types/types';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function TimelinePage() {
-  const { user } = useAuth();
+  
   const { t } = useLanguage();
   const [semesters, setSemesters] = useState<SemesterSummary[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadData();
-  }, [user]);
+  }, []);
 
   const loadData = async () => {
-    if (!user) return;
+    
     
     setLoading(true);
     try {
-      const coursesData = await courseApi.getCourses(user.id);
+      const coursesData = courseStorage.getAll();
       
       if (coursesData.length > 0) {
         const calculation = GPAEngine.calculateGPA(coursesData);

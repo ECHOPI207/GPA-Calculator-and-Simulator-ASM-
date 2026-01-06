@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,7 +21,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import type { Course, GradeSymbol } from '@/types/types';
 import { getGradePoints } from '@/lib/university-rules';
-import { courseApi } from '@/db/api';
+import { courseStorage } from "@/lib/storage";
 import { useToast } from '@/hooks/use-toast';
 
 interface CourseFormProps {
@@ -37,7 +36,6 @@ const SEMESTER_OPTIONS = ['Fall', 'Spring', 'Summer'];
 
 export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseFormProps) {
   const { t } = useLanguage();
-  const { user, profile } = useAuth();
   const { toast } = useToast();
   
   const [courseCode, setCourseCode] = useState(course?.courseCode || '');
@@ -49,16 +47,16 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
   const [isRetake, setIsRetake] = useState(course?.isRetake || false);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user || !profile?.universityId) return;
+    
 
     setLoading(true);
     try {
       const gradePoints = getGradePoints(grade);
       const courseData = {
-        userId: user.id,
-        universityId: profile.universityId || 'default-university',
+        userId: "local-user",
+        universityId: "default",
         courseCode,
         courseName,
         creditHours: Number.parseInt(creditHours),
@@ -71,13 +69,13 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
       };
 
       if (course) {
-        await courseApi.updateCourse(course.id, courseData);
+        courseStorage.update(course.id, courseData);
         toast({
           title: t('common.success'),
           description: t('message.courseUpdated'),
         });
       } else {
-        await courseApi.createCourse(courseData);
+        courseStorage.add(courseData);
         toast({
           title: t('common.success'),
           description: t('message.courseAdded'),

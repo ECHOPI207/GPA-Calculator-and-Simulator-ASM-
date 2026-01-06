@@ -1,4 +1,3 @@
-import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -10,39 +9,29 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { profileApi } from '@/db/api';
 import { useToast } from '@/hooks/use-toast';
 import { Languages, Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/hooks/use-theme';
 
 export default function SettingsPage() {
-  const { user, profile, refreshProfile } = useAuth();
+  
   const { t, language, setLanguage } = useLanguage();
   const { theme, setTheme } = useTheme();
   const { toast } = useToast();
 
-  const handleLanguageChange = async (newLanguage: 'en' | 'ar') => {
+  const handleLanguageChange = (newLanguage: 'en' | 'ar') => {
     setLanguage(newLanguage);
-    
-    if (user && profile) {
-      try {
-        await profileApi.updateProfile(user.id, { language: newLanguage });
-        await refreshProfile();
-        toast({
-          title: t('common.success'),
-          description: 'Language preference saved',
-        });
-      } catch (error) {
-        console.error('Error updating language:', error);
-      }
-    }
+    toast({
+      title: t('common.success'),
+      description: t('message.languageChanged'),
+    });
   };
 
   const handleThemeChange = (newTheme: 'light' | 'dark') => {
     setTheme(newTheme);
     toast({
       title: t('common.success'),
-      description: `Theme changed to ${newTheme} mode`,
+      description: t('message.themeChanged'),
     });
   };
 
@@ -122,39 +111,18 @@ export default function SettingsPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-2">
-            <Label>Current University</Label>
-            <Select value={profile?.universityId || 'default-university'} disabled>
+            <Label>{t('settings.currentUniversity')}</Label>
+            <Select value="default" disabled>
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="default-university">Default University</SelectItem>
+                <SelectItem value="default">{t('settings.defaultUniversity')}</SelectItem>
               </SelectContent>
             </Select>
             <p className="text-sm text-muted-foreground">
-              University grading rules are automatically applied
+              {t('settings.universityRulesApplied')}
             </p>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Account Info */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Account Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <Label>Username</Label>
-            <div className="p-3 bg-muted rounded-md">
-              {profile?.username || 'Not set'}
-            </div>
-          </div>
-          <div className="space-y-2">
-            <Label>Role</Label>
-            <div className="p-3 bg-muted rounded-md capitalize">
-              {profile?.role || 'user'}
-            </div>
           </div>
         </CardContent>
       </Card>

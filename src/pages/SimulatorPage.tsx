@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +12,7 @@ import {
 } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { courseApi } from '@/db/api';
+import { courseStorage, scenarioStorage } from "@/lib/storage";
 import { GPAEngine } from '@/lib/gpa-engine';
 import type { Course, ScenarioCourse, GradeSymbol } from '@/types/types';
 import { Plus, Trash2, TrendingUp, TrendingDown } from 'lucide-react';
@@ -22,7 +21,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 const GRADE_OPTIONS: GradeSymbol[] = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'F'];
 
 export default function SimulatorPage() {
-  const { user } = useAuth();
+  
   const { t } = useLanguage();
   const [courses, setCourses] = useState<Course[]>([]);
   const [scenarioCourses, setScenarioCourses] = useState<ScenarioCourse[]>([]);
@@ -31,14 +30,14 @@ export default function SimulatorPage() {
 
   useEffect(() => {
     loadCourses();
-  }, [user]);
+  }, []);
 
   const loadCourses = async () => {
-    if (!user) return;
+    
     
     setLoading(true);
     try {
-      const coursesData = await courseApi.getCourses(user.id);
+      const coursesData = courseStorage.getAll();
       setCourses(coursesData);
       
       if (coursesData.length > 0) {

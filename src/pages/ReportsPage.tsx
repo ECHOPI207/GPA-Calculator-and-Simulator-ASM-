@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { courseApi } from '@/db/api';
+import { courseStorage, scenarioStorage } from "@/lib/storage";
 import { GPAEngine } from '@/lib/gpa-engine';
 import type { Course, CourseImpact } from '@/types/types';
 import { FileDown, TrendingUp, TrendingDown, Award } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ReportsPage() {
-  const { user } = useAuth();
+  
   const { t } = useLanguage();
   const [courses, setCourses] = useState<Course[]>([]);
   const [impacts, setImpacts] = useState<CourseImpact[]>([]);
@@ -20,14 +19,14 @@ export default function ReportsPage() {
 
   useEffect(() => {
     loadData();
-  }, [user]);
+  }, []);
 
   const loadData = async () => {
-    if (!user) return;
+    
     
     setLoading(true);
     try {
-      const coursesData = await courseApi.getCourses(user.id);
+      const coursesData = courseStorage.getAll();
       setCourses(coursesData);
       
       if (coursesData.length > 0) {
