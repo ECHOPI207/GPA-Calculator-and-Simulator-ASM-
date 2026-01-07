@@ -1,13 +1,14 @@
+import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
 import { CourseForm } from '@/components/courses/CourseForm';
 import { CourseList } from '@/components/courses/CourseList';
+import { TranscriptUpload } from '@/components/courses/TranscriptUpload';
 import { GPACard } from '@/components/gpa/GPACard';
-import { courseStorage } from '@/lib/storage';
+import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { GPAEngine } from '@/lib/gpa-engine';
+import { courseStorage } from '@/lib/storage';
 import type { Course, GPACalculation } from '@/types/types';
-import { Plus } from 'lucide-react';
 
 export default function CalculatorPage() {
   const { t } = useLanguage();
@@ -26,6 +27,8 @@ export default function CalculatorPage() {
     if (coursesData.length > 0) {
       const calculation = GPAEngine.calculateGPA(coursesData);
       setGpaCalc(calculation);
+    } else {
+      setGpaCalc(null); // Clear GPA if no courses
     }
   };
 
@@ -34,27 +37,22 @@ export default function CalculatorPage() {
     setFormOpen(false);
   };
 
-  const handleCourseUpdated = () => {
-    loadCourses();
-  };
-
-  const handleCourseDeleted = () => {
-    loadCourses();
-  };
-
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold">{t('nav.calculator')}</h1>
           <p className="text-muted-foreground mt-2">
             {t('course.manageCourses')}
           </p>
         </div>
-        <Button onClick={() => setFormOpen(true)}>
-          <Plus className="h-4 w-4 me-2" />
-          {t('course.add')}
-        </Button>
+        <div className="flex gap-2">
+          <TranscriptUpload onSuccess={loadCourses} />
+          <Button onClick={() => setFormOpen(true)}>
+            <Plus className="h-4 w-4 me-2" />
+            {t('course.add')}
+          </Button>
+        </div>
       </div>
 
       {/* ملخص المعدل */}
@@ -85,7 +83,7 @@ export default function CalculatorPage() {
       <CourseForm
         open={formOpen}
         onOpenChange={setFormOpen}
-        onSuccess={loadCourses}
+        onSuccess={handleCourseAdded}
       />
     </div>
   );

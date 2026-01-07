@@ -1,16 +1,16 @@
+import { Calendar, GraduationCap, Target, TrendingUp, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { courseStorage } from '@/lib/storage';
-import { GPAImprovementEngine } from '@/lib/gpa-improvement-engine';
-import type { ImprovementAnalysis } from '@/lib/gpa-improvement-engine';
-import {
-  ImprovementSummary,
-  ImprovementSection,
-} from '@/components/gpa/ImprovementComponents';
-import { Card, CardContent } from '@/components/ui/card';
-import { Zap, Target, Calendar, TrendingUp, GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import {
+  ImprovementSection,
+  ImprovementSummary,
+} from '@/components/gpa/ImprovementComponents';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
+import type { ImprovementAnalysis } from '@/lib/gpa-improvement-engine';
+import { GPAImprovementEngine } from '@/lib/gpa-improvement-engine';
+import { courseStorage } from '@/lib/storage';
 
 export default function ImprovementPage() {
   const { t, language } = useLanguage();

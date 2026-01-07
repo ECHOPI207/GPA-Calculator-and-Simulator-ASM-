@@ -90,6 +90,7 @@ export interface SemesterSummary {
   year: number;
   courses: Course[];
   semesterGPA: number;
+  cumulativeGPA: number;
   totalCredits: number;
   earnedCredits: number;
 }

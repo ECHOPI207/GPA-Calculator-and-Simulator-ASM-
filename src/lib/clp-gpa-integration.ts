@@ -5,10 +5,10 @@
  * to provide personalized, behavior-aware academic strategies
  */
 
-import type { CLPProfile, CLPDomain } from './clp-engine';
-import type { ImprovementAction } from './gpa-improvement-engine';
+import type { CLPDomain, CLPProfile } from './clp-engine';
 import type { StudyStrategy } from './clp-strategies';
 import { StrategyMatcher } from './clp-strategies';
+import type { ImprovementAction } from './gpa-improvement-engine';
 
 export interface IntegratedRecommendation {
   // GPA Component

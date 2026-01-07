@@ -1,6 +1,8 @@
+import { Plus, Trash2, TrendingDown, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,13 +12,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { courseStorage, scenarioStorage } from "@/lib/storage";
-import { GPAEngine } from '@/lib/gpa-engine';
-import type { Course, ScenarioCourse, GradeSymbol } from '@/types/types';
-import { Plus, Trash2, TrendingUp, TrendingDown } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { GPAEngine } from '@/lib/gpa-engine';
+import { courseStorage, scenarioStorage } from "@/lib/storage";
+import type { Course, GradeSymbol, ScenarioCourse } from '@/types/types';
 
 const GRADE_OPTIONS: GradeSymbol[] = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'F'];
 

@@ -1,10 +1,15 @@
-import { useLanguage } from '@/contexts/LanguageContext';
 import { Card, CardContent } from '@/components/ui/card';
+import PageMeta from '@/components/common/PageMeta';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function TermsPage() {
   const { language } = useLanguage();
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      <PageMeta 
+        title={language === 'ar' ? 'شروط الاستخدام | المساعد الأكاديمي' : 'Terms of Service | Academic Assistant'}
+        description={language === 'ar' ? 'شروط استخدام منصة المساعد الأكاديمي.' : 'Terms of service for Academic Assistant platform.'}
+      />
       <h1 className="text-4xl font-bold">{language === 'ar' ? 'شروط الاستخدام' : 'Terms of Service'}</h1>
       <Card>
         <CardContent className="pt-6 space-y-4">

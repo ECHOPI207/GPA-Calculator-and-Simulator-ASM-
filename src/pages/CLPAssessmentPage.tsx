@@ -1,15 +1,15 @@
+import { AlertCircle, Brain, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Label } from '@/components/ui/label';
 import { Progress } from '@/components/ui/progress';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CLP_QUESTIONS, CLPEngine, type CLPAnswer } from '@/lib/clp-engine';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { CLP_QUESTIONS, type CLPAnswer, CLPEngine } from '@/lib/clp-engine';
 import { clpStorage } from '@/lib/storage';
-import { Brain, AlertCircle, CheckCircle2 } from 'lucide-react';
 
 export default function CLPAssessmentPage() {
   const { language } = useLanguage();

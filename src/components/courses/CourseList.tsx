@@ -1,16 +1,5 @@
+import { Edit, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,11 +10,39 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { Edit, Trash2 } from 'lucide-react';
-import type { Course } from '@/types/types';
-import { courseStorage } from '@/lib/storage';
-import { GPAEngine } from '@/lib/gpa-engine';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
+import { GPAEngine } from '@/lib/gpa-engine';
+import { courseStorage } from '@/lib/storage';
+import type { Course } from '@/types/types';
 import { CourseForm } from './CourseForm';
 
 interface CourseListProps {
@@ -38,11 +55,49 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
   const { toast } = useToast();
   const [editingCourse, setEditingCourse] = useState<Course | undefined>();
   const [deletingCourse, setDeletingCourse] = useState<Course | undefined>();
+  const [deletingSemester, setDeletingSemester] = useState<string | undefined>();
+  const [editingSemester, setEditingSemester] = useState<string | undefined>();
+  const [editSemesterYear, setEditSemesterYear] = useState<string>('');
+  const [editSemesterTerm, setEditSemesterTerm] = useState<string>('');
   const [formOpen, setFormOpen] = useState(false);
 
   const handleEdit = (course: Course) => {
     setEditingCourse(course);
     setFormOpen(true);
+  };
+
+  const openEditSemesterDialog = (semesterKey: string) => {
+    const [yearStr, term] = semesterKey.split('-');
+    setEditingSemester(semesterKey);
+    setEditSemesterYear(yearStr);
+    setEditSemesterTerm(term);
+  };
+
+  const handleUpdateSemester = () => {
+    if (!editingSemester) return;
+
+    const [oldYearStr, oldTerm] = editingSemester.split('-');
+    const oldYear = Number(oldYearStr);
+
+    const semesterCourses = courses.filter(c => c.year === oldYear && c.semester === oldTerm);
+    const idsToUpdate = semesterCourses.map(c => c.id);
+    
+    const newYear = Number(editSemesterYear);
+    
+    if (idsToUpdate.length > 0) {
+      courseStorage.updateMany(idsToUpdate, {
+        year: newYear,
+        semester: editSemesterTerm
+      });
+      
+      toast({
+        title: t('common.success'),
+        description: language === 'ar' ? 'تم تحديث الفصل الدراسي بنجاح' : 'Semester updated successfully',
+      });
+      onCoursesChange();
+    }
+    
+    setEditingSemester(undefined);
   };
 
   const handleDelete = () => {
@@ -63,6 +118,33 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
       });
     } finally {
       setDeletingCourse(undefined);
+    }
+  };
+
+  const handleDeleteSemester = () => {
+    if (!deletingSemester) return;
+    
+    const [yearStr, semester] = deletingSemester.split('-');
+    const year = Number(yearStr);
+
+    const semesterCourses = courses.filter(c => c.year === year && c.semester === semester);
+    const idsToDelete = semesterCourses.map(c => c.id);
+
+    try {
+      courseStorage.deleteMany(idsToDelete);
+       toast({
+        title: t('common.success'),
+        description: language === 'ar' ? 'تم حذف الفصل الدراسي بنجاح' : 'Semester deleted successfully',
+      });
+      onCoursesChange();
+    } catch (error) {
+       toast({
+        title: t('common.error'),
+        description: error instanceof Error ? error.message : 'حدث خطأ',
+        variant: 'destructive',
+      });
+    } finally {
+      setDeletingSemester(undefined);
     }
   };
 
@@ -115,7 +197,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-xl">
-                    {semester} {year}
+                    {semester} {year}/{Number(year) + 1}
                   </CardTitle>
                   <div className="flex items-center gap-4">
                     <div className="text-sm text-muted-foreground">
@@ -124,6 +206,23 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
                     <div className="text-2xl font-bold text-primary">
                       {semesterSummary.semesterGPA.toFixed(2)}
                     </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => openEditSemesterDialog(key)}
+                      title={language === 'ar' ? 'تعديل الفصل الدراسي' : 'Edit Semester'}
+                    >
+                      <Edit className="h-5 w-5" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive hover:text-destructive hover:bg-destructive/10"
+                      onClick={() => setDeletingSemester(key)}
+                      title={language === 'ar' ? 'حذف الفصل الدراسي' : 'Delete Semester'}
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </Button>
                   </div>
                 </div>
                 <div className="flex gap-4 text-sm text-muted-foreground">
@@ -144,6 +243,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
                         <TableHead>{t('course.code')}</TableHead>
                         <TableHead>{t('course.name')}</TableHead>
                         <TableHead className="text-center">{t('course.credits')}</TableHead>
+                        <TableHead className="text-center">{language === 'ar' ? 'النقاط' : 'Points'}</TableHead>
                         <TableHead className="text-center">{t('course.grade')}</TableHead>
                         <TableHead className="text-end">
                           {language === 'ar' ? 'الإجراءات' : 'Actions'}
@@ -163,6 +263,9 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
                           </TableCell>
                           <TableCell>{course.courseName}</TableCell>
                           <TableCell className="text-center">{course.creditHours}</TableCell>
+                          <TableCell className="text-center">
+                            {(course.gradePoints * course.creditHours).toFixed(2)}
+                          </TableCell>
                           <TableCell className="text-center">
                             <Badge className={getGradeColor(course.grade)}>
                               {course.grade}
@@ -207,6 +310,52 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
         onSuccess={onCoursesChange}
       />
 
+      <Dialog open={!!editingSemester} onOpenChange={(open) => !open && setEditingSemester(undefined)}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{language === 'ar' ? 'تعديل الفصل الدراسي' : 'Edit Semester'}</DialogTitle>
+            <DialogDescription>
+              {language === 'ar' 
+                ? 'قم بتعديل السنة الدراسية والفصل لجميع المواد في هذا الفصل.'
+                : 'Update the academic year and term for all courses in this semester.'}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="year" className="text-end">
+                {language === 'ar' ? 'السنة' : 'Year'}
+              </Label>
+              <Input
+                id="year"
+                type="number"
+                value={editSemesterYear}
+                onChange={(e) => setEditSemesterYear(e.target.value)}
+                className="col-span-3"
+                placeholder="YYYY"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="term" className="text-end">
+                {language === 'ar' ? 'الفصل' : 'Term'}
+              </Label>
+              <Select value={editSemesterTerm} onValueChange={setEditSemesterTerm}>
+                <SelectTrigger className="col-span-3">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Fall">{language === 'ar' ? 'الخريف (Fall)' : 'Fall'}</SelectItem>
+                  <SelectItem value="Spring">{language === 'ar' ? 'الربيع (Spring)' : 'Spring'}</SelectItem>
+                  <SelectItem value="Summer">{language === 'ar' ? 'الصيف (Summer)' : 'Summer'}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button type="submit" onClick={handleUpdateSemester}>{language === 'ar' ? 'حفظ' : 'Save'}</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <AlertDialog open={!!deletingCourse} onOpenChange={(open) => !open && setDeletingCourse(undefined)}>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -220,6 +369,25 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
           <AlertDialogFooter>
             <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
             <AlertDialogAction onClick={handleDelete}>
+              {t('common.delete')}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={!!deletingSemester} onOpenChange={(open) => !open && setDeletingSemester(undefined)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{language === 'ar' ? 'حذف الفصل الدراسي' : 'Delete Semester'}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {language === 'ar' 
+                ? 'هل أنت متأكد من حذف هذا الفصل الدراسي بالكامل؟ سيتم حذف جميع المواد المسجلة في هذا الفصل. لا يمكن التراجع عن هذا الإجراء.'
+                : 'Are you sure you want to delete this entire semester? All courses in this semester will be deleted. This action cannot be undone.'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteSemester} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
               {t('common.delete')}
             </AlertDialogAction>
           </AlertDialogFooter>

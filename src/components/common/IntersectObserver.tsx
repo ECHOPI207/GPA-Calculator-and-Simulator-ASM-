@@ -10,7 +10,9 @@ const IntersectObserver = () => {
     // to pick up new elements on the page.
     // We use a small timeout to ensure the DOM has updated.
     const timer = setTimeout(() => {
-        Observer.restart();
+        if (Observer) {
+            Observer.restart();
+        }
     }, 100);
 
     return () => clearTimeout(timer);

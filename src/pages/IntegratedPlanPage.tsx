@@ -1,28 +1,27 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { clpStorage, courseStorage } from '@/lib/storage';
-import { GPAImprovementEngine } from '@/lib/gpa-improvement-engine';
-import { CLPGPAIntegration } from '@/lib/clp-gpa-integration';
-import type { IntegratedActionPlan, IntegratedRecommendation } from '@/lib/clp-gpa-integration';
 import { 
-  Brain, 
-  TrendingUp, 
   AlertCircle, 
   ArrowRight, 
+  Brain, 
   CheckCircle2,
   Lightbulb,
   Target,
+  TrendingUp, 
   Zap
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
+import type { IntegratedActionPlan, IntegratedRecommendation } from '@/lib/clp-gpa-integration';
+import { CLPGPAIntegration } from '@/lib/clp-gpa-integration';
+import { GPAImprovementEngine } from '@/lib/gpa-improvement-engine';
+import { clpStorage, courseStorage } from '@/lib/storage';
 
 export default function IntegratedPlanPage() {
   const { language } = useLanguage();
-  const navigate = useNavigate();
   const [plan, setPlan] = useState<IntegratedActionPlan | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -36,14 +35,19 @@ export default function IntegratedPlanPage() {
       // التحقق من وجود ملف CLP
       const profile = clpStorage.get();
       if (!profile) {
-        navigate('/clp-assessment');
+        // بدلاً من التوجيه، نعرض حالة فارغة في الـ render
+        setPlan(null);
+        setLoading(false);
         return;
       }
 
       // الحصول على المقررات
       const courses = courseStorage.getAll();
+      
+      // حتى لو لم تكن هناك مقررات، يمكننا عرض نصائح عامة، لكن الخطة تحتاج بيانات
       if (courses.length === 0) {
-        navigate('/calculator');
+        setPlan(null);
+        setLoading(false);
         return;
       }
 

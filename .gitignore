@@ -7,14 +7,22 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+.pnpm-store
+
+# Build Output
 dist
 dist-ssr
 output
-*.local
-package-lock.json
 
-# Editor directories and files
+# Environment Variables (Security)
+.env
+.env.local
+.env.*.local
+! .env.example
+
+# IDEs and Editors
 .vscode/*
 !.vscode/extensions.json
 .idea
@@ -26,4 +34,11 @@ package-lock.json
 *.sw?
 .sync
 history/*.json
+
+# Testing and Coverage
+coverage
+.nyc_output
+
+# Temporary Files
 .vite_cache
+*.local

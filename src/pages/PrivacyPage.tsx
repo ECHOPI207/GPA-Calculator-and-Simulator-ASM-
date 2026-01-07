@@ -1,12 +1,17 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Card, CardContent } from '@/components/ui/card';
 import { Shield } from 'lucide-react';
+import PageMeta from '@/components/common/PageMeta';
+import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function PrivacyPage() {
   const { language } = useLanguage();
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      <PageMeta 
+        title={language === 'ar' ? 'سياسة الخصوصية | المساعد الأكاديمي' : 'Privacy Policy | Academic Assistant'}
+        description={language === 'ar' ? 'نحن نحترم خصوصيتك. بياناتك تخزن محلياً فقط.' : 'We respect your privacy. Your data is stored locally only.'}
+      />
       <div className="flex items-center gap-4 mb-6">
         <div className="rounded-full bg-primary/10 p-3">
           <Shield className="h-8 w-8 text-primary" />

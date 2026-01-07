@@ -61,8 +61,8 @@ export function Logo({ collapsed = false, className }: LogoProps) {
       {/* النص */}
       {!collapsed && (
         <div className="flex flex-col">
-          <div className="flex items-baseline gap-1">
-            <span className="text-xl font-bold text-foreground">echo</span>
+          <div className="flex items-baseline gap-1" dir="ltr">
+            <span className="text-xl font-bold text-foreground">Echo</span>
             <span className="text-2xl font-bold text-primary">-π</span>
           </div>
           <span className="text-xs text-muted-foreground leading-tight">

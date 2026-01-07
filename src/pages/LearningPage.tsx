@@ -1,22 +1,24 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { TabLayout } from '@/components/common/TabLayout';
 import { Brain, Lightbulb, Target } from 'lucide-react';
-import { clpStorage } from '@/lib/storage';
-import { useNavigate } from 'react-router-dom';
+import PageMeta from '@/components/common/PageMeta';
 import { useEffect, useState } from 'react';
-
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { TabLayout } from '@/components/common/TabLayout';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
+import type { CLPProfile } from '@/lib/clp-engine';
+import { STUDY_STRATEGIES, StrategyMatcher } from '@/lib/clp-strategies';
+import { clpStorage } from '@/lib/storage';
 // Import CLP components
 import CLPResultsPage from './CLPResultsPage';
 import IntegratedPlanPage from './IntegratedPlanPage';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { StrategyMatcher, STUDY_STRATEGIES } from '@/lib/clp-strategies';
-import type { CLPProfile } from '@/lib/clp-engine';
 
 export default function LearningPage() {
   const { language } = useLanguage();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [hasProfile, setHasProfile] = useState(false);
+  const currentTab = searchParams.get('tab') || 'profile';
 
   useEffect(() => {
     setHasProfile(clpStorage.exists());
@@ -53,7 +55,7 @@ export default function LearningPage() {
         </p>
       </div>
 
-      <TabLayout tabs={tabs} defaultTab="profile">
+      <TabLayout tabs={tabs} defaultTab={currentTab}>
         {(activeTab) => {
           switch (activeTab) {
             case 'profile':
@@ -136,7 +138,11 @@ function StrategiesTab({ hasProfile, navigate }: { hasProfile: boolean; navigate
 
   return (
     <div className="space-y-6">
-      {profile && (
+      <PageMeta 
+        title={language === 'ar' ? 'نمط التعلم | المساعد الأكاديمي' : 'Learning Style | Academic Assistant'}
+        description={language === 'ar' ? 'اكتشف نمط تعلمك واحصل على استراتيجيات دراسية مخصصة.' : 'Discover your learning style and get personalized study strategies.'}
+      />
+      <div>{profile && (
         <Card className="bg-primary/5 border-primary/20">
           <CardContent className="pt-6">
             <p className="text-sm text-muted-foreground">
@@ -147,6 +153,7 @@ function StrategiesTab({ hasProfile, navigate }: { hasProfile: boolean; navigate
           </CardContent>
         </Card>
       )}
+      </div>
 
       <div className="grid gap-6">
         {recommendedStrategies.map((strategy) => (

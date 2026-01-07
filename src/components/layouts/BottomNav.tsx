@@ -1,8 +1,8 @@
+import { Brain, Calculator, FileText, LayoutDashboard, Settings } from 'lucide-react';
+import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Calculator, Brain, FileText, Settings } from 'lucide-react';
-import { useEffect } from 'react';
 
 export function BottomNav() {
   const { t, language } = useLanguage();

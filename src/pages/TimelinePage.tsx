@@ -1,12 +1,12 @@
+import { Minus, TrendingDown, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { courseStorage, scenarioStorage } from "@/lib/storage";
-import { GPAEngine } from '@/lib/gpa-engine';
-import type { Course, SemesterSummary } from '@/types/types';
-import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { GPAEngine } from '@/lib/gpa-engine';
+import { courseStorage, scenarioStorage } from "@/lib/storage";
+import type { Course, SemesterSummary } from '@/types/types';
 
 export default function TimelinePage() {
   

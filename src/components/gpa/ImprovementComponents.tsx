@@ -1,15 +1,11 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { 
-  TrendingUp, 
-  Zap, 
-  Target, 
-  Calendar,
   ArrowRight,
   CheckCircle2
 } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useLanguage } from '@/contexts/LanguageContext';
 import type { ImprovementAction } from '@/lib/gpa-improvement-engine';
 
 interface ImprovementCardProps {
@@ -78,7 +74,7 @@ export function ImprovementCard({ action, onSelect }: ImprovementCardProps) {
             <Badge variant="secondary" className="text-base">
               {action.currentGrade}
             </Badge>
-            <ArrowRight className="h-4 w-4 text-muted-foreground" />
+            <ArrowRight className={`h-4 w-4 text-muted-foreground ${language === 'ar' ? 'rotate-180' : ''}`} />
             <Badge className="bg-primary text-primary-foreground text-base">
               {action.suggestedGrade}
             </Badge>

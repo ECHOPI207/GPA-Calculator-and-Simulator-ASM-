@@ -1,14 +1,13 @@
+import { AlertCircle, ArrowRight, Brain, CheckCircle2, TrendingUp } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Link, useNavigate } from 'react-router-dom';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Progress } from '@/components/ui/progress';
+import { useLanguage } from '@/contexts/LanguageContext';
+import type { CLPDomainResult, CLPProfile } from '@/lib/clp-engine';
 import { clpStorage } from '@/lib/storage';
-import type { CLPProfile, CLPDomainResult } from '@/lib/clp-engine';
-import { Brain, TrendingUp, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
 
 export default function CLPResultsPage() {
   const { language } = useLanguage();
@@ -200,7 +199,7 @@ export default function CLPResultsPage() {
                 </p>
               </div>
               <Button asChild size="lg">
-                <Link to="/integrated-plan">
+                <Link to="/learning?tab=plan">
                   {language === 'ar' ? 'عرض خطة العمل المتكاملة' : 'View Integrated Action Plan'}
                   <ArrowRight className="h-4 w-4 ms-2" />
                 </Link>

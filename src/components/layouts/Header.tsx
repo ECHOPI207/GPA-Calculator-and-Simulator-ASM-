@@ -1,11 +1,10 @@
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Button } from '@/components/ui/button';
-import { Languages, Moon, Sun } from 'lucide-react';
-import { useTheme } from '@/hooks/use-theme';
-import { Logo } from '@/components/common/Logo';
+import { Brain, Calculator, FileText, Languages, LayoutDashboard, Moon, Settings, Sun } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { Logo } from '@/components/common/Logo';
+import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from '@/hooks/use-theme';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, Calculator, Brain, FileText, Settings } from 'lucide-react';
 
 export function Header() {
   const { language, setLanguage, t } = useLanguage();

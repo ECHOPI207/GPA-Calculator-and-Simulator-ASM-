@@ -1,4 +1,6 @@
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Languages, Moon, Sun } from 'lucide-react';
+import PageMeta from '@/components/common/PageMeta';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import {
@@ -8,10 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Button } from '@/components/ui/button';
-import { useToast } from '@/hooks/use-toast';
-import { Languages, Moon, Sun } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from '@/hooks/use-theme';
+import { useToast } from '@/hooks/use-toast';
 
 export default function SettingsPage() {
   
@@ -36,7 +37,11 @@ export default function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-2xl mx-auto space-y-6">
+      <PageMeta 
+        title={language === 'ar' ? 'الإعدادات | المساعد الأكاديمي' : 'Settings | Academic Assistant'}
+        description={language === 'ar' ? 'تخصيص تفضيلات التطبيق واللغة والمظهر.' : 'Customize app preferences, language, and theme.'}
+      />
       <div>
         <h1 className="text-3xl font-bold">{t('settings.title')}</h1>
         <p className="text-muted-foreground mt-2">

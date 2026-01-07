@@ -1,6 +1,14 @@
-import { useState, useEffect } from 'react';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
@@ -10,19 +18,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { Checkbox } from '@/components/ui/checkbox';
-import type { Course, GradeSymbol } from '@/types/types';
-import { getGradePoints } from '@/lib/university-rules';
-import { courseStorage } from "@/lib/storage";
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
+import { courseStorage } from "@/lib/storage";
+import { getGradePoints } from '@/lib/university-rules';
+import type { Course, GradeSymbol } from '@/types/types';
 
 interface CourseFormProps {
   open: boolean;
@@ -221,6 +221,11 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
                   onChange={(e) => setYear(e.target.value)}
                   required
                 />
+                <p className="text-[0.8rem] text-muted-foreground">
+                  {t('course.year') === 'السنة' 
+                    ? 'أدخل سنة بداية العام الأكاديمي (مثلاً: لعام 2023/2024 أدخل 2023)' 
+                    : 'Enter Academic Year Start (e.g. for 2023/2024 enter 2023)'}
+                </p>
               </div>
             </div>
 

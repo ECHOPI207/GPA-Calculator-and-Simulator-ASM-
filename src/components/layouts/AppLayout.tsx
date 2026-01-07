@@ -1,8 +1,8 @@
-import { Header } from './Header';
-import { Footer } from './Footer';
-import { BottomNav } from './BottomNav';
-import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { BottomNav } from './BottomNav';
+import { Footer } from './Footer';
+import { Header } from './Header';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -19,7 +19,9 @@ export function AppLayout({ children }: AppLayoutProps) {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header with desktop navigation */}
-      <Header />
+      <div className="print:hidden">
+        <Header />
+      </div>
 
       {/* Main Content - Add bottom padding on mobile for bottom nav */}
       <main className="flex-1 pb-20 lg:pb-0">
@@ -29,10 +31,14 @@ export function AppLayout({ children }: AppLayoutProps) {
       </main>
 
       {/* Footer */}
-      <Footer />
+      <div className="print:hidden">
+        <Footer />
+      </div>
 
       {/* Mobile Bottom Navigation */}
-      <BottomNav />
+      <div className="print:hidden">
+        <BottomNav />
+      </div>
     </div>
   );
 }

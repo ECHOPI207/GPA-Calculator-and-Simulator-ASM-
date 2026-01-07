@@ -1,4 +1,4 @@
-import type { University, GradeRule, GPAClassificationRule } from '@/types/types';
+import type { GPAClassificationRule, GradeRule, University } from '@/types/types';
 
 // Default university grading rules based on provided images
 export const DEFAULT_GRADE_RULES: GradeRule[] = [

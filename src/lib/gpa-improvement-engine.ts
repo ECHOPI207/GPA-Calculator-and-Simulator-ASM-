@@ -1,6 +1,6 @@
 import type { Course, GradeSymbol } from '@/types/types';
-import { getGradePoints } from './university-rules';
 import { GPAEngine } from './gpa-engine';
+import { getGradePoints } from './university-rules';
 
 export interface ImprovementAction {
   id: string;

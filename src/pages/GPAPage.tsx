@@ -1,6 +1,7 @@
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Calculator, Target, TrendingUp } from 'lucide-react';
 import { TabLayout } from '@/components/common/TabLayout';
-import { Calculator, TrendingUp, Target } from 'lucide-react';
+import PageMeta from '@/components/common/PageMeta';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 // Import existing page components
 import CalculatorPage from './CalculatorPage';
@@ -30,6 +31,10 @@ export default function GPAPage() {
 
   return (
     <div>
+      <PageMeta 
+        title={language === 'ar' ? 'إدارة المعدل | المساعد الأكاديمي' : 'GPA Management | Academic Assistant'}
+        description={language === 'ar' ? 'أدوات حساب وتحسين وتوقع المعدل التراكمي.' : 'Tools for calculating, improving, and predicting your GPA.'}
+      />
       <div className="mb-6">
         <h1 className="text-3xl font-bold">
           {language === 'ar' ? 'إدارة المعدل الأكاديمي' : 'GPA Management'}

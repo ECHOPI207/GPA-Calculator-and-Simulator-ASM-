@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 
 interface Tab {
@@ -16,6 +16,12 @@ interface TabLayoutProps {
 
 export function TabLayout({ tabs, defaultTab, children, className }: TabLayoutProps) {
   const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
+
+  useEffect(() => {
+    if (defaultTab) {
+      setActiveTab(defaultTab);
+    }
+  }, [defaultTab]);
 
   // Scroll to top when tab changes
   useEffect(() => {

@@ -1,12 +1,17 @@
-import { useLanguage } from '@/contexts/LanguageContext';
+import { BookOpen, CheckCircle2, Lightbulb, Target } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BookOpen, Target, Lightbulb, CheckCircle2 } from 'lucide-react';
+import PageMeta from '@/components/common/PageMeta';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function HowToUsePage() {
   const { language } = useLanguage();
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
+      <PageMeta 
+        title={language === 'ar' ? 'كيفية الاستخدام | المساعد الأكاديمي' : 'How to Use | Academic Assistant'}
+        description={language === 'ar' ? 'دليل شامل لاستخدام ميزات المساعد الأكاديمي.' : 'Comprehensive guide to using Academic Assistant features.'}
+      />
       <div>
         <h1 className="text-4xl font-bold mb-3">
           {language === 'ar' ? 'كيفية استخدام المنصة' : 'How to Use the Platform'}

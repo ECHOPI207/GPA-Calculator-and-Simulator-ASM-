@@ -55,6 +55,22 @@ export const courseStorage = {
     courseStorage.save(filtered);
   },
 
+  deleteMany: (ids: string[]): void => {
+    const courses = courseStorage.getAll();
+    const idsSet = new Set(ids);
+    const filtered = courses.filter(c => !idsSet.has(c.id));
+    courseStorage.save(filtered);
+  },
+
+  updateMany: (ids: string[], updates: Partial<Course>): void => {
+    const courses = courseStorage.getAll();
+    const idsSet = new Set(ids);
+    const updatedCourses = courses.map(c => 
+      idsSet.has(c.id) ? { ...c, ...updates } : c
+    );
+    courseStorage.save(updatedCourses);
+  },
+
   clear: (): void => {
     localStorage.removeItem(COURSES_KEY);
   },

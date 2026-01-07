@@ -1,91 +1,84 @@
-# Welcome to Your Miaoda Project
+# GPA Calculator and Simulator (ASM)
 
-## Project Info
+![Status](https://img.shields.io/badge/Status-Production--Ready-green)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Tech](https://img.shields.io/badge/Tech-React%20%7C%20Vite%20%7C%20Tailwind-blueviolet)
 
-## Project Directory
+A comprehensive academic tool designed to help students track their academic progress, simulate future GPA scenarios, and receive personalized study strategies using AI.
 
-```
-├── README.md # Documentation
-├── components.json # Component library configuration
-├── index.html # Entry file
-├── package.json # Package management
-├── postcss.config.js # PostCSS configuration
-├── public # Static resources directory
-│   ├── favicon.png # Icon
-│   └── images # Image resources
-├── src # Source code directory
-│   ├── App.tsx # Entry file
-│   ├── components # Components directory
-│   ├── context # Context directory
-│   ├── db # Database configuration directory
-│   ├── hooks # Common hooks directory
-│   ├── index.css # Global styles
-│   ├── layout # Layout directory
-│   ├── lib # Utility library directory
-│   ├── main.tsx # Entry file
-│   ├── routes.tsx # Routing configuration
-│   ├── pages # Pages directory
-│   ├── services # Database interaction directory
-│   ├── types # Type definitions directory
-├── tsconfig.app.json # TypeScript frontend configuration file
-├── tsconfig.json # TypeScript configuration file
-├── tsconfig.node.json # TypeScript Node.js configuration file
-└── vite.config.ts # Vite configuration file
-```
+## 🚀 Features
 
-## Tech Stack
+- **GPA Calculator:** Accurate calculation of Semester and Cumulative GPA.
+- **Future Simulator:** "What-if" analysis to plan future semesters and target grades.
+- **Cognitive Learning Profile (CLP):** Assess your learning style and get tailored advice.
+- **AI Academic Assistant:** Powered by Google Gemini to provide personalized study plans and insights.
+- **Multi-language Support:** English and Arabic.
+- **Privacy First:** All data is stored locally in your browser.
 
-Vite, TypeScript, React, Supabase
+## 🛠️ Tech Stack
 
-## Development Guidelines
+- **Frontend:** React 18, Vite, TypeScript
+- **UI:** Tailwind CSS, Radix UI, Lucide Icons
+- **AI:** Google Gemini API
+- **Charts:** Recharts
+- **State/Storage:** LocalStorage
 
-### How to edit code locally?
+## 📦 Installation
 
-You can choose [VSCode](https://code.visualstudio.com/Download) or any IDE you prefer. The only requirement is to have Node.js and npm installed.
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/ECHOPI207/GPA-Calculator-and-Simulator-ASM-.git
+    cd GPA-Calculator-and-Simulator-ASM-
+    ```
 
-### Environment Requirements
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    # or
+    pnpm install
+    ```
 
-```
-# Node.js ≥ 20
-# npm ≥ 10
-Example:
-# node -v   # v20.18.3
-# npm -v    # 10.8.2
-```
+3.  **Environment Setup:**
+    Copy `.env.example` to `.env` and add your Google Gemini API Key.
+    ```bash
+    cp .env.example .env
+    ```
+    Edit `.env`:
+    ```env
+    VITE_GEMINI_API_KEY=your_api_key_here
+    ```
 
-### Installing Node.js on Windows
+4.  **Run the development server:**
+    ```bash
+    npm run dev
+    ```
 
-```
-# Step 1: Visit the Node.js official website: https://nodejs.org/, click download. The website will automatically suggest a suitable version (32-bit or 64-bit) for your system.
-# Step 2: Run the installer: Double-click the downloaded installer to run it.
-# Step 3: Complete the installation: Follow the installation wizard to complete the process.
-# Step 4: Verify installation: Open Command Prompt (cmd) or your IDE terminal, and type `node -v` and `npm -v` to check if Node.js and npm are installed correctly.
-```
+5.  **Build for production:**
+    ```bash
+    npm run build
+    ```
 
-### Installing Node.js on macOS
+## 📂 Project Structure
 
 ```
-# Step 1: Using Homebrew (Recommended method): Open Terminal. Type the command `brew install node` and press Enter. If Homebrew is not installed, you need to install it first by running the following command in Terminal:
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-Alternatively, use the official installer: Visit the Node.js official website. Download the macOS .pkg installer. Open the downloaded .pkg file and follow the prompts to complete the installation.
-# Step 2: Verify installation: Open Command Prompt (cmd) or your IDE terminal, and type `node -v` and `npm -v` to check if Node.js and npm are installed correctly.
+gpa-calculator-asm/
+├── data/               # Static data files and templates
+├── docs/               # Documentation and guides
+├── public/             # Static assets (images, icons)
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── contexts/       # React Context (Language, Theme)
+│   ├── hooks/          # Custom React Hooks
+│   ├── lib/            # Business logic and helpers
+│   ├── pages/          # Application routes/pages
+│   ├── services/       # External API services (Gemini)
+│   ├── types/          # TypeScript definitions
+│   └── main.tsx        # Entry point
+├── .env.example        # Environment variables template
+├── package.json        # Dependencies
+└── vite.config.ts      # Vite configuration
 ```
 
-### After installation, follow these steps:
+## 📄 License
 
-```
-# Step 1: Download the code package
-# Step 2: Extract the code package
-# Step 3: Open the code package with your IDE and navigate into the code directory
-# Step 4: In the IDE terminal, run the command to install dependencies: npm i
-# Step 5: In the IDE terminal, run the command to start the development server: npm run dev -- --host 127.0.0.1
-# Step 6: if step 5 failed, try this command to start the development server: npx vite --host 127.0.0.1
-```
-
-### How to develop backend services?
-
-Configure environment variables and install relevant dependencies.If you need to use a database, please use the official version of Supabase.
-
-## Learn More
-
-You can also check the help documentation: Download and Building the app（ [https://intl.cloud.baidu.com/en/doc/MIAODA/s/download-and-building-the-app-en](https://intl.cloud.baidu.com/en/doc/MIAODA/s/download-and-building-the-app-en)）to learn more detailed content.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

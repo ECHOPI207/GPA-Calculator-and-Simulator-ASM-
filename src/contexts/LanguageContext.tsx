@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { createContext, type ReactNode, useContext, useEffect, useState } from 'react';
 import type { Language } from '@/types/types';
 
 interface LanguageContextType {
@@ -24,7 +24,6 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.reports': 'Reports & Analytics',
     'nav.settings': 'Settings',
     'nav.calculator': 'GPA Calculator',
-    'nav.admin': 'Admin',
     
     // Auth
     'auth.login': 'Login',

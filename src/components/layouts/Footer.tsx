@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { Logo } from '@/components/common/Logo';
 import { Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Logo } from '@/components/common/Logo';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export function Footer() {
   const { language } = useLanguage();

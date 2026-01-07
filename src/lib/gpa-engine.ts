@@ -1,13 +1,13 @@
 import type {
   Course,
-  GPACalculation,
-  SemesterSummary,
   CourseImpact,
+  GPACalculation,
   GPAPrediction,
-  ValidationError,
-  ScenarioCourse
+  ScenarioCourse, 
+  SemesterSummary,
+  ValidationError
 } from '@/types/types';
-import { getGradePoints, getClassification, isPassingGrade } from './university-rules';
+import { getClassification, getGradePoints, isPassingGrade } from './university-rules';
 
 /**
  * Core GPA Calculation Engine
@@ -67,10 +67,40 @@ export class GPAEngine {
     const classificationRule = getClassification(cumulativeGPA);
 
     // Sort semesters chronologically
+    const semesterOrder: Record<string, number> = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
     semesters.sort((a, b) => {
       if (a.year !== b.year) return a.year - b.year;
-      return a.semester.localeCompare(b.semester);
+      return (semesterOrder[a.semester] || 4) - (semesterOrder[b.semester] || 4);
     });
+
+    // Calculate running cumulative GPA for each semester
+    // We need to re-evaluate the cumulative GPA at the end of each semester
+    // taking into account course retakes up to that point
+    for (let i = 0; i < semesters.length; i++) {
+      const semester = semesters[i];
+      
+      // Get all courses up to and including this semester
+      const coursesUpToNow: Course[] = [];
+      for (let j = 0; j <= i; j++) {
+        coursesUpToNow.push(...semesters[j].courses);
+      }
+      
+      // Calculate cumulative GPA for this subset
+      // We use a simplified logic here: just use getLatestAttempts on the subset
+      const latestAttemptsUpToNow = this.getLatestAttempts(coursesUpToNow);
+      
+      let runningQualityPoints = 0;
+      let runningRegisteredHours = 0;
+      
+      for (const course of latestAttemptsUpToNow.values()) {
+        runningQualityPoints += course.gradePoints * course.creditHours;
+        runningRegisteredHours += course.creditHours;
+      }
+      
+      semester.cumulativeGPA = runningRegisteredHours > 0 
+        ? Number((runningQualityPoints / runningRegisteredHours).toFixed(2))
+        : 0;
+    }
 
     return {
       currentGPA: semesters.length > 0 ? semesters[semesters.length - 1].semesterGPA : 0,
@@ -108,8 +138,8 @@ export class GPAEngine {
       // Sort attempts chronologically (latest last)
       attempts.sort((a, b) => {
         if (a.year !== b.year) return a.year - b.year;
-        const semesterOrder: Record<string, number> = { 'Fall': 1, 'Spring': 2, 'Summer': 3 };
-        return (semesterOrder[a.semester] || 0) - (semesterOrder[b.semester] || 0);
+        const semesterOrder: Record<string, number> = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
+        return (semesterOrder[a.semester] || 4) - (semesterOrder[b.semester] || 4);
       });
       
       // Take the latest attempt
@@ -144,19 +174,9 @@ export class GPAEngine {
       courses,
       semesterGPA: Number(semesterGPA.toFixed(2)),
       totalCredits,
-      earnedCredits
+      earnedCredits,
+      cumulativeGPA: 0
     };
-  }
-
-  /**
-   * Check if a course has a later retake
-   */
-  private static hasLaterRetake(course: Course, allCourses: Course[]): boolean {
-    return allCourses.some(c => 
-      c.originalCourseId === course.id && 
-      c.isRetake &&
-      (c.year > course.year || (c.year === course.year && c.semester > course.semester))
-    );
   }
 
   /**

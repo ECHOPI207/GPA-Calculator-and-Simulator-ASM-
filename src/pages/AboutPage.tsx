@@ -1,12 +1,17 @@
-import { useLanguage } from '@/contexts/LanguageContext';
+import { Heart, Lightbulb, Shield, Target, TrendingUp, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Target, Users, Shield, Lightbulb, TrendingUp, Heart } from 'lucide-react';
+import PageMeta from '@/components/common/PageMeta';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function AboutPage() {
   const { language } = useLanguage();
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
+      <PageMeta 
+        title={language === 'ar' ? 'من نحن | المساعد الأكاديمي' : 'About Us | Academic Assistant'}
+        description={language === 'ar' ? 'منصة أكاديمية ذكية لتحليل وتحسين المعدل الأكاديمي بدقة علمية.' : 'Intelligent academic platform for analyzing and improving GPA with scientific precision.'}
+      />
       {/* Hero Section */}
       <div className="text-center space-y-4">
         <h1 className="text-4xl font-bold">
