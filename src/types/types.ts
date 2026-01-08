@@ -4,7 +4,7 @@ export type Language = 'en' | 'ar';
 
 export type UserRole = 'user' | 'admin';
 
-export type GradeSymbol = 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'D' | 'F';
+export type GradeSymbol = 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'F';
 
 export type GPAClassification = 'excellent' | 'very_good' | 'good' | 'pass' | 'fail';
 
@@ -62,6 +62,7 @@ export interface Course {
   semester: string;
   year: number;
   isRetake: boolean;
+  isZeroCredit?: boolean; // For courses that have grades but don't count toward GPA (e.g., Al-Ryada University)
   originalCourseId?: string;
   createdAt?: string;
   updatedAt?: string;

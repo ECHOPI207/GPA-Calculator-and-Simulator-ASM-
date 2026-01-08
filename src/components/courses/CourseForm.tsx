@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
 import {
   Dialog,
   DialogContent,
@@ -31,13 +32,19 @@ interface CourseFormProps {
   onSuccess: () => void;
 }
 
-const GRADE_OPTIONS: GradeSymbol[] = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'D', 'F'];
+const GRADE_OPTIONS: GradeSymbol[] = ['A', 'A-', 'B+', 'B', 'B-', 'C+', 'C', 'C-', 'D+', 'D', 'F'];
 const SEMESTER_OPTIONS = ['Fall', 'Spring', 'Summer'];
 
 export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseFormProps) {
   const { t } = useLanguage();
   const { toast } = useToast();
-  
+
+  // Check current university
+  const [currentUniversityId] = useState(() => {
+    return typeof window !== 'undefined' ? localStorage.getItem('universityId') : null;
+  });
+  const isAlRyada = currentUniversityId === 'al-ryada-university';
+
   const [courseCode, setCourseCode] = useState(course?.courseCode || '');
   const [courseName, setCourseName] = useState(course?.courseName || '');
   const [creditHours, setCreditHours] = useState(course?.creditHours?.toString() || '3');
@@ -45,6 +52,7 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
   const [semester, setSemester] = useState(course?.semester || 'Fall');
   const [year, setYear] = useState(course?.year?.toString() || new Date().getFullYear().toString());
   const [isRetake, setIsRetake] = useState(course?.isRetake || false);
+  const [isZeroCredit, setIsZeroCredit] = useState(course?.isZeroCredit || false);
   const [loading, setLoading] = useState(false);
 
   // تحديث الحقول عند تغيير المقرر (للتعديل)
@@ -57,6 +65,7 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
       setSemester(course.semester);
       setYear(course.year.toString());
       setIsRetake(course.isRetake);
+      setIsZeroCredit(course.isZeroCredit || false);
     } else if (!course && open) {
       // إعادة تعيين النموذج للإضافة
       setCourseCode('');
@@ -66,12 +75,26 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
       setSemester('Fall');
       setYear(new Date().getFullYear().toString());
       setIsRetake(false);
+      setIsZeroCredit(false);
     }
   }, [course, open]);
 
+  // Auto-detect zero-credit courses based on code patterns (for Al-Ryada University)
+  useEffect(() => {
+    const code = courseCode.toUpperCase();
+    const isZeroCreditPattern = code.startsWith('UNC') ||
+      code.startsWith('UNE') ||
+      code.startsWith('UC') ||
+      code.startsWith('UE');
+
+    if (isZeroCreditPattern && !isZeroCredit) {
+      setIsZeroCredit(true);
+    }
+  }, [courseCode]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
 
     setLoading(true);
     try {
@@ -87,6 +110,7 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
         semester,
         year: Number.parseInt(year),
         isRetake,
+        isZeroCredit,
         originalCourseId: course?.originalCourseId
       };
 
@@ -126,6 +150,7 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
     setSemester('Fall');
     setYear(new Date().getFullYear().toString());
     setIsRetake(false);
+    setIsZeroCredit(false);
   };
 
   return (
@@ -222,8 +247,8 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
                   required
                 />
                 <p className="text-[0.8rem] text-muted-foreground">
-                  {t('course.year') === 'السنة' 
-                    ? 'أدخل سنة بداية العام الأكاديمي (مثلاً: لعام 2023/2024 أدخل 2023)' 
+                  {t('course.year') === 'السنة'
+                    ? 'أدخل سنة بداية العام الأكاديمي (مثلاً: لعام 2023/2024 أدخل 2023)'
                     : 'Enter Academic Year Start (e.g. for 2023/2024 enter 2023)'}
                 </p>
               </div>
@@ -239,6 +264,27 @@ export function CourseForm({ open, onOpenChange, course, onSuccess }: CourseForm
                 {t('course.isRetake')}
               </Label>
             </div>
+
+            {/* Zero Credit Toggle - For Al-Ryada University Only */}
+            {isAlRyada && (
+              <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/30">
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="isZeroCredit" className="cursor-pointer font-medium">
+                    {t('course.isRetake') === 'إعادة' ? 'مقرر بدون ساعات معتمدة' : 'Zero Credit Course'}
+                  </Label>
+                  <p className="text-xs text-muted-foreground">
+                    {t('course.isRetake') === 'إعادة'
+                      ? 'للمقررات التي لها درجة لكن لا تُحسب في المعدل (مثل UNC, UNE)'
+                      : 'For courses with grades that don\'t count toward GPA (e.g., UNC, UNE)'}
+                  </p>
+                </div>
+                <Switch
+                  id="isZeroCredit"
+                  checked={isZeroCredit}
+                  onCheckedChange={setIsZeroCredit}
+                />
+              </div>
+            )}
           </div>
 
           <DialogFooter>

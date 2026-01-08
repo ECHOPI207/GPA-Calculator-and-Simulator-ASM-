@@ -1,140 +1,108 @@
-import { Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Logo } from '@/components/common/Logo';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Github, Linkedin, Mail } from 'lucide-react';
 
 export function Footer() {
-  const { language } = useLanguage();
+  const { t, dir } = useLanguage();
 
-  const footerLinks = {
-    ar: {
-      product: {
-        title: 'المنتج',
-        links: [
-          { label: 'كيفية الاستخدام', path: '/how-to-use' },
-          { label: 'الميزات', path: '/' },
-        ],
-      },
-      legal: {
-        title: 'قانوني',
-        links: [
-          { label: 'سياسة الخصوصية', path: '/privacy' },
-          { label: 'شروط الاستخدام', path: '/terms' },
-          { label: 'من نحن', path: '/about' },
-        ],
-      },
-      support: {
-        title: 'الدعم',
-        links: [
-          { label: 'مركز المساعدة', path: '/how-to-use' },
-          { label: 'اتصل بنا', path: '/about' },
-        ],
-      },
+  const footerSections = [
+    {
+      title: t('footer.column.platform'),
+      links: [
+        { label: t('footer.link.features'), path: '/' },
+        { label: t('footer.link.howTo'), path: '/how-to-use' },
+      ],
     },
-    en: {
-      product: {
-        title: 'Product',
-        links: [
-          { label: 'How to Use', path: '/how-to-use' },
-          { label: 'Features', path: '/' },
-        ],
-      },
-      legal: {
-        title: 'Legal',
-        links: [
-          { label: 'Privacy Policy', path: '/privacy' },
-          { label: 'Terms of Service', path: '/terms' },
-          { label: 'About Us', path: '/about' },
-        ],
-      },
-      support: {
-        title: 'Support',
-        links: [
-          { label: 'Help Center', path: '/how-to-use' },
-          { label: 'Contact Us', path: '/about' },
-        ],
-      },
+    {
+      title: t('footer.column.resources'),
+      links: [
+        { label: t('footer.link.blog'), path: '/learning' },
+        { label: t('nav.gpa'), path: '/gpa' },
+      ],
     },
-  };
-
-  const links = footerLinks[language];
+    {
+      title: t('footer.column.legal'),
+      links: [
+        { label: t('footer.link.privacy'), path: '/privacy' },
+        { label: t('footer.link.terms'), path: '/terms' },
+      ],
+    },
+    {
+      title: t('footer.column.connect'),
+      links: [
+        { label: t('footer.link.contact'), path: '/about' },
+      ],
+    },
+  ];
 
   return (
-    <footer className="border-t border-border bg-card mt-auto">
-      <div className="container mx-auto px-6 py-12 max-w-7xl">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-          {/* اللوجو والوصف */}
-          <div className="md:col-span-1">
-            <Logo className="mb-4" />
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              {language === 'ar'
-                ? 'منصة ذكية لتحليل وتحسين المعدل الأكاديمي مع استراتيجيات مذاكرة مخصصة'
-                : 'Intelligent platform for analyzing and improving academic GPA with personalized study strategies'}
+    <footer className="border-t border-border/40 bg-card/30 backdrop-blur-sm mt-auto" dir={dir}>
+      <div className="container mx-auto px-6 py-12 lg:py-16 max-w-7xl">
+
+        {/* Top Section: Brand & Socials */}
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 mb-12 border-b border-border/50 pb-12 items-center lg:items-start text-center lg:text-start">
+
+          {/* Brand Block */}
+          <div className="flex-1 flex flex-col gap-6 items-center lg:items-start">
+            <Logo className="w-fit scale-110" />
+            <p className="text-base text-muted-foreground leading-relaxed max-w-md">
+              {t('footer.about.desc')}
             </p>
           </div>
 
-          {/* روابط المنتج */}
-          <div>
-            <h3 className="font-semibold mb-4">{links.product.title}</h3>
-            <ul className="space-y-2">
-              {links.product.links.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* روابط قانونية */}
-          <div>
-            <h3 className="font-semibold mb-4">{links.legal.title}</h3>
-            <ul className="space-y-2">
-              {links.legal.links.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* روابط الدعم */}
-          <div>
-            <h3 className="font-semibold mb-4">{links.support.title}</h3>
-            <ul className="space-y-2">
-              {links.support.links.map((link) => (
-                <li key={link.path}>
-                  <Link
-                    to={link.path}
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          {/* Socials - Now prominent on the right/left */}
+          <div className="flex items-center gap-4">
+            {[
+              { icon: Github, href: "https://github.com/ECHOPI207" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/mohamed-mostafa-mohamed" },
+              { icon: Mail, href: "mailto:mohamed.mostafa.req@gmail.com" }
+            ].map((social, idx) => (
+              <a
+                key={idx}
+                href={social.href}
+                target="_blank"
+                rel="noreferrer"
+                className="h-12 w-12 flex items-center justify-center rounded-full bg-secondary/50 text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 ring-1 ring-border hover:ring-primary shadow-sm hover:shadow-lg hover:shadow-primary/25"
+              >
+                <social.icon className="h-6 w-6" />
+              </a>
+            ))}
           </div>
         </div>
 
-        {/* الحقوق والتطوير */}
-        <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-muted-foreground">
-          <p>
-            © 2026 echo-π. {language === 'ar' ? 'جميع الحقوق محفوظة' : 'All rights reserved'}.
+        {/* Links Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 mb-12 text-center md:text-start">
+          {footerSections.map((section, idx) => (
+            <div key={idx} className="flex flex-col gap-4">
+              <h4 className="font-bold text-foreground tracking-tight text-lg">{section.title}</h4>
+              <ul className="space-y-3">
+                {section.links.map((link, linkIdx) => (
+                  <li key={linkIdx}>
+                    <Link
+                      to={link.path}
+                      className="text-sm text-muted-foreground hover:text-primary transition-colors inline-flex items-center gap-2 group justify-center md:justify-start"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary transition-colors duration-300" />
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom Bar: Copyright */}
+        <div className="pt-8 border-t border-border/50 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-start">
+          <p className="text-sm text-muted-foreground font-medium">
+            {t('footer.copyright')}
           </p>
-          <p className="flex items-center gap-2">
-            {language === 'ar' ? 'صُنع بـ' : 'Made with'}
-            <Heart className="h-4 w-4 text-red-500 fill-red-500" />
-            {language === 'ar' ? 'بواسطة' : 'by'} <span className="font-semibold text-primary">echo-π</span>
-          </p>
+
+          <div className="flex items-center gap-6 text-sm font-medium text-muted-foreground">
+            <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-primary transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>

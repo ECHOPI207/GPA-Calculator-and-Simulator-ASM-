@@ -1,4 +1,4 @@
-import { AlertCircle, Check, FileText, Loader2, Upload } from 'lucide-react';
+import { AlertCircle, FileText, Loader2, Upload, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -6,11 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { ScrollArea } from '@/components/ui/scroll-area';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { courseStorage } from '@/lib/storage';
 import { GeminiService } from '@/services/gemini';
 import { Course } from '@/types/types';
+import { gradePoints, getGradePoints } from '@/lib/university-rules';
 
 interface TranscriptUploadProps {
   onSuccess: () => void;
@@ -28,7 +29,6 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
   const onDrop = async (acceptedFiles: File[]) => {
     if (acceptedFiles.length === 0) return;
 
-    const file = acceptedFiles[0];
     setLoading(true);
     setError(null);
     setExtractedCourses([]);
@@ -37,8 +37,27 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
     try {
       // Use stored key or env key
       const service = new GeminiService(apiKey);
-      const courses = await service.extractCoursesFromImage(file);
-      setExtractedCourses(courses);
+      const allCourses: Course[] = [];
+
+      for (let i = 0; i < acceptedFiles.length; i++) {
+        const file = acceptedFiles[i];
+        try {
+           const courses = await service.extractCoursesFromImage(file);
+           allCourses.push(...courses);
+        } catch (err: any) {
+           console.error(`Error processing file ${file.name}:`, err);
+           // We continue processing other files even if one fails, but we track the error
+           if (err.message === 'MISSING_API_KEY') {
+             throw err; // Stop immediately for missing API key
+           }
+        }
+      }
+      
+      if (allCourses.length === 0 && acceptedFiles.length > 0) {
+         throw new Error("Failed to extract courses from any of the uploaded images.");
+      }
+
+      setExtractedCourses(allCourses);
     } catch (err: any) {
       console.error(err);
       if (err.message === 'MISSING_API_KEY') {
@@ -59,7 +78,7 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
     accept: {
       'image/*': ['.jpeg', '.jpg', '.png', '.webp']
     },
-    maxFiles: 1
+    maxFiles: undefined // Allow multiple files
   });
 
   const handleSaveApiKey = () => {
@@ -80,6 +99,24 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
     onSuccess();
   };
 
+  const updateCourse = (index: number, field: keyof Course, value: any) => {
+    const updated = [...extractedCourses];
+    const course = { ...updated[index], [field]: value };
+    
+    // Auto-recalculate grade points if grade changes
+    if (field === 'grade') {
+      course.gradePoints = getGradePoints(value as string);
+    }
+    
+    updated[index] = course;
+    setExtractedCourses(updated);
+  };
+
+  const removeCourse = (index: number) => {
+    const updated = extractedCourses.filter((_, i) => i !== index);
+    setExtractedCourses(updated);
+  };
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -88,10 +125,10 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
           {language === 'ar' ? 'رفع كشف درجات' : 'Upload Transcript'}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[800px] max-h-[85vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>
-            {language === 'ar' ? 'استخراج المقررات من الصورة' : 'Extract Courses from Image'}
+            {language === 'ar' ? 'استخراج المقررات من الصور' : 'Extract Courses from Images'}
           </DialogTitle>
         </DialogHeader>
 
@@ -125,7 +162,7 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
             </div>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-6 flex-1 overflow-hidden flex flex-col">
             {!extractedCourses.length && (
               <div
                 {...getRootProps()}
@@ -139,7 +176,7 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
                   <div className="flex flex-col items-center gap-2">
                     <Loader2 className="h-10 w-10 animate-spin text-primary" />
                     <p className="text-sm text-muted-foreground">
-                      {language === 'ar' ? 'جاري تحليل الصورة...' : 'Analyzing image...'}
+                      {language === 'ar' ? 'جاري تحليل الصور...' : 'Analyzing images...'}
                     </p>
                   </div>
                 ) : (
@@ -147,8 +184,8 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
                     <FileText className="h-10 w-10 text-muted-foreground" />
                     <p className="font-medium">
                       {language === 'ar' 
-                        ? 'اسحب الصورة هنا أو اضغط للاختيار' 
-                        : 'Drag image here or click to select'}
+                        ? 'اسحب الصور هنا أو اضغط للاختيار' 
+                        : 'Drag images here or click to select'}
                     </p>
                     <p className="text-xs text-muted-foreground">
                       PNG, JPG, JPEG
@@ -167,44 +204,121 @@ export function TranscriptUpload({ onSuccess }: TranscriptUploadProps) {
             )}
 
             {extractedCourses.length > 0 && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
+              <div className="flex-1 flex flex-col gap-4 overflow-hidden">
+                <div className="flex items-center justify-between shrink-0">
                   <h3 className="font-semibold">
                     {language === 'ar' 
-                      ? `تم العثور على ${extractedCourses.length} مقررات` 
-                      : `Found ${extractedCourses.length} courses`}
+                      ? `تم العثور على ${extractedCourses.length} مقررات (يرجى المراجعة)` 
+                      : `Found ${extractedCourses.length} courses (Please Verify)`}
                   </h3>
                   <Button variant="ghost" size="sm" onClick={() => setExtractedCourses([])}>
                     {language === 'ar' ? 'إعادة الرفع' : 'Re-upload'}
                   </Button>
                 </div>
                 
-                <ScrollArea className="h-[200px] border rounded-md p-2">
-                  <div className="space-y-2">
+                <div className="flex-1 overflow-y-auto border rounded-md p-2">
+                  <div className="space-y-3">
                     {extractedCourses.map((course, idx) => (
-                      <div key={idx} className="flex items-center justify-between p-2 bg-muted/50 rounded text-sm">
-                        <div className="font-medium">{course.courseName} <span className="text-muted-foreground">({course.courseCode})</span></div>
-                        <div className="flex items-center gap-2">
-                          <span className="bg-background px-2 py-0.5 rounded border">{course.grade}</span>
-                          <span className="text-muted-foreground">{course.creditHours} hrs</span>
+                      <div key={idx} className="flex flex-col gap-3 p-3 bg-muted/50 rounded-lg border">
+                        {/* Row 1: Course Name */}
+                        <Input 
+                          value={course.courseName} 
+                          onChange={(e) => updateCourse(idx, 'courseName', e.target.value)}
+                          placeholder="Course Name"
+                          className="h-8 text-sm font-medium w-full"
+                        />
+                        
+                        {/* Row 2: Details */}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Input 
+                            value={course.courseCode} 
+                            onChange={(e) => updateCourse(idx, 'courseCode', e.target.value)}
+                            placeholder="Code"
+                            className="h-8 text-xs w-24 shrink-0"
+                          />
+
+                          <Select 
+                            value={course.semester} 
+                            onValueChange={(v) => updateCourse(idx, 'semester', v)}
+                          >
+                            <SelectTrigger className="h-8 w-24 shrink-0">
+                              <SelectValue placeholder="Sem" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="Fall">Fall</SelectItem>
+                              <SelectItem value="Spring">Spring</SelectItem>
+                              <SelectItem value="Summer">Summer</SelectItem>
+                            </SelectContent>
+                          </Select>
+
+                          <Input 
+                            type="number" 
+                            value={course.year} 
+                            onChange={(e) => updateCourse(idx, 'year', Number(e.target.value))}
+                            className="h-8 w-20 shrink-0"
+                            placeholder="Year"
+                          />
+
+                          <Select 
+                            value={course.grade} 
+                            onValueChange={(v) => updateCourse(idx, 'grade', v)}
+                          >
+                            <SelectTrigger className="h-8 w-20 shrink-0">
+                              <SelectValue placeholder="Grade" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.keys(gradePoints).map((g) => (
+                                <SelectItem key={g} value={g}>{g}</SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          
+                          <Input 
+                            type="number" 
+                            value={course.creditHours} 
+                            onChange={(e) => updateCourse(idx, 'creditHours', Number(e.target.value))}
+                            className="h-8 w-16 shrink-0"
+                            min={0}
+                            max={10}
+                            title="Credit Hours"
+                          />
+
+                          <div className="flex-1" /> {/* Spacer */}
+
+                          <Button 
+                            variant="ghost" 
+                            size="icon" 
+                            className="h-8 w-8 text-destructive hover:text-destructive/90 shrink-0"
+                            onClick={() => removeCourse(idx)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
                         </div>
                       </div>
                     ))}
                   </div>
-                </ScrollArea>
+                </div>
+                 <div className="shrink-0 flex justify-end gap-2 pt-4">
+                  <Button variant="outline" onClick={() => setOpen(false)}>
+                    {language === 'ar' ? 'إلغاء' : 'Cancel'}
+                  </Button>
+                  <Button onClick={handleConfirmCourses}>
+                    {language === 'ar' ? 'حفظ المقررات' : 'Save Courses'}
+                  </Button>
+                </div>
               </div>
             )}
           </div>
         )}
-
-        <DialogFooter>
-          {extractedCourses.length > 0 && (
-            <Button onClick={handleConfirmCourses} className="w-full sm:w-auto">
-              <Check className="h-4 w-4 me-2" />
-              {language === 'ar' ? 'إضافة المقررات' : 'Add Courses'}
+        
+        {/* Only show Footer if not showing courses (since we moved buttons inside) */}
+        {!extractedCourses.length && !needsApiKey && (
+          <DialogFooter>
+             <Button variant="outline" onClick={() => setOpen(false)}>
+              {language === 'ar' ? 'إلغاء' : 'Cancel'}
             </Button>
-          )}
-        </DialogFooter>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

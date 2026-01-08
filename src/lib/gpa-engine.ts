@@ -3,7 +3,7 @@ import type {
   CourseImpact,
   GPACalculation,
   GPAPrediction,
-  ScenarioCourse, 
+  ScenarioCourse,
   SemesterSummary,
   ValidationError
 } from '@/types/types';
@@ -21,7 +21,7 @@ export class GPAEngine {
   static calculateGPA(courses: Course[]): GPACalculation {
     // Group courses by semester
     const semesterMap = new Map<string, Course[]>();
-    
+
     for (const course of courses) {
       const key = `${course.year}-${course.semester}`;
       if (!semesterMap.has(key)) {
@@ -32,11 +32,11 @@ export class GPAEngine {
 
     // Calculate semester summaries
     const semesters: SemesterSummary[] = [];
-    
+
     // For cumulative GPA, we need to count each course only once (latest attempt)
     // Build a map of course code to latest attempt
     const latestAttempts = this.getLatestAttempts(courses);
-    
+
     let totalQualityPoints = 0;
     let totalRegisteredHours = 0;
     let totalPassedHours = 0;
@@ -51,6 +51,9 @@ export class GPAEngine {
 
     // Calculate cumulative totals using only latest attempts
     for (const course of latestAttempts.values()) {
+      // Skip zero-credit courses (they have grades but don't count toward GPA)
+      if (course.isZeroCredit) continue;
+
       totalQualityPoints += course.gradePoints * course.creditHours;
       totalRegisteredHours += course.creditHours;
       if (isPassingGrade(course.grade)) {
@@ -59,8 +62,8 @@ export class GPAEngine {
     }
 
     // Calculate cumulative GPA
-    const cumulativeGPA = totalRegisteredHours > 0 
-      ? totalQualityPoints / totalRegisteredHours 
+    const cumulativeGPA = totalRegisteredHours > 0
+      ? totalQualityPoints / totalRegisteredHours
       : 0;
 
     // Get classification
@@ -78,26 +81,29 @@ export class GPAEngine {
     // taking into account course retakes up to that point
     for (let i = 0; i < semesters.length; i++) {
       const semester = semesters[i];
-      
+
       // Get all courses up to and including this semester
       const coursesUpToNow: Course[] = [];
       for (let j = 0; j <= i; j++) {
         coursesUpToNow.push(...semesters[j].courses);
       }
-      
+
       // Calculate cumulative GPA for this subset
       // We use a simplified logic here: just use getLatestAttempts on the subset
       const latestAttemptsUpToNow = this.getLatestAttempts(coursesUpToNow);
-      
+
       let runningQualityPoints = 0;
       let runningRegisteredHours = 0;
-      
+
       for (const course of latestAttemptsUpToNow.values()) {
+        // Skip zero-credit courses
+        if (course.isZeroCredit) continue;
+
         runningQualityPoints += course.gradePoints * course.creditHours;
         runningRegisteredHours += course.creditHours;
       }
-      
-      semester.cumulativeGPA = runningRegisteredHours > 0 
+
+      semester.cumulativeGPA = runningRegisteredHours > 0
         ? Number((runningQualityPoints / runningRegisteredHours).toFixed(2))
         : 0;
     }
@@ -121,7 +127,7 @@ export class GPAEngine {
    */
   private static getLatestAttempts(courses: Course[]): Map<string, Course> {
     const courseMap = new Map<string, Course[]>();
-    
+
     // Group all attempts of each course
     for (const course of courses) {
       const key = course.courseCode;
@@ -130,10 +136,10 @@ export class GPAEngine {
       }
       courseMap.get(key)!.push(course);
     }
-    
+
     // For each course, find the latest attempt
     const latestAttempts = new Map<string, Course>();
-    
+
     for (const [courseCode, attempts] of courseMap) {
       // Sort attempts chronologically (latest last)
       attempts.sort((a, b) => {
@@ -141,12 +147,12 @@ export class GPAEngine {
         const semesterOrder: Record<string, number> = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
         return (semesterOrder[a.semester] || 4) - (semesterOrder[b.semester] || 4);
       });
-      
+
       // Take the latest attempt
       const latestAttempt = attempts[attempts.length - 1];
       latestAttempts.set(courseCode, latestAttempt);
     }
-    
+
     return latestAttempts;
   }
 
@@ -159,6 +165,9 @@ export class GPAEngine {
     let earnedCredits = 0;
 
     for (const course of courses) {
+      // Skip zero-credit courses
+      if (course.isZeroCredit) continue;
+
       totalQualityPoints += course.gradePoints * course.creditHours;
       totalCredits += course.creditHours;
       if (isPassingGrade(course.grade)) {
@@ -184,15 +193,15 @@ export class GPAEngine {
    */
   static calculateCourseImpact(courses: Course[]): CourseImpact[] {
     const impacts: CourseImpact[] = [];
-    
+
     for (const course of courses) {
       // Calculate GPA without this course
       const coursesWithout = courses.filter(c => c.id !== course.id);
       const gpaWithout = this.calculateGPA(coursesWithout).cumulativeGPA;
       const gpaWith = this.calculateGPA(courses).cumulativeGPA;
-      
+
       const impact = gpaWith - gpaWithout;
-      
+
       impacts.push({
         course,
         impact: Number(impact.toFixed(3)),
@@ -202,7 +211,7 @@ export class GPAEngine {
 
     // Sort by absolute impact
     impacts.sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
-    
+
     return impacts;
   }
 
@@ -219,26 +228,26 @@ export class GPAEngine {
 
     // Best case: all A grades
     const bestCasePoints = futureCourses.reduce((sum, c) => sum + (4.0 * c.creditHours), 0);
-    const bestCase = (currentCalc.totalQualityPoints + bestCasePoints) / 
+    const bestCase = (currentCalc.totalQualityPoints + bestCasePoints) /
       (currentCalc.totalRegisteredHours + remainingCredits);
 
     // Worst case: all passing grades (D)
     const worstCasePoints = futureCourses.reduce((sum, c) => sum + (1.7 * c.creditHours), 0);
-    const worstCase = (currentCalc.totalQualityPoints + worstCasePoints) / 
+    const worstCase = (currentCalc.totalQualityPoints + worstCasePoints) /
       (currentCalc.totalRegisteredHours + remainingCredits);
 
     // Realistic case: based on expected grades
     const realisticPoints = futureCourses.reduce(
-      (sum, c) => sum + (getGradePoints(c.expectedGrade) * c.creditHours), 
+      (sum, c) => sum + (getGradePoints(c.expectedGrade) * c.creditHours),
       0
     );
-    const realisticCase = (currentCalc.totalQualityPoints + realisticPoints) / 
+    const realisticCase = (currentCalc.totalQualityPoints + realisticPoints) /
       (currentCalc.totalRegisteredHours + remainingCredits);
 
     // Calculate required GPA for target
     let requiredGPAForTarget: number | undefined;
     if (targetGPA && remainingCredits > 0) {
-      const requiredPoints = (targetGPA * (currentCalc.totalRegisteredHours + remainingCredits)) - 
+      const requiredPoints = (targetGPA * (currentCalc.totalRegisteredHours + remainingCredits)) -
         currentCalc.totalQualityPoints;
       requiredGPAForTarget = requiredPoints / remainingCredits;
     }
@@ -270,7 +279,7 @@ export class GPAEngine {
     // Check for duplicates (same course, same semester, not a retake)
     for (const [code, coursesWithCode] of courseCodeMap) {
       const semesterMap = new Map<string, Course[]>();
-      
+
       for (const course of coursesWithCode) {
         const key = `${course.year}-${course.semester}`;
         if (!semesterMap.has(key)) {
@@ -317,7 +326,7 @@ export class GPAEngine {
     targetGPA: number
   ): { achievable: boolean; requiredAverage: number; message: string } {
     const currentCalc = this.calculateGPA(currentCourses);
-    
+
     const requiredTotalPoints = targetGPA * (currentCalc.totalRegisteredHours + remainingCredits);
     const requiredFuturePoints = requiredTotalPoints - currentCalc.totalQualityPoints;
     const requiredAverage = requiredFuturePoints / remainingCredits;

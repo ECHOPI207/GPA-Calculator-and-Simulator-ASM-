@@ -48,10 +48,10 @@ export function BottomNav() {
 
   return (
     <nav
-      className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80 border-t border-border shadow-lg"
+      className="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-background/80 backdrop-blur-lg supports-[backdrop-filter]:bg-background/60 border-t border-border/40 shadow-2xl safe-p-b mx-auto"
       dir={language === 'ar' ? 'rtl' : 'ltr'}
     >
-      <div className="flex items-center justify-around h-16 px-2 max-w-md mx-auto">
+      <div className="flex items-center justify-around h-16 sm:h-20 px-4 max-w-lg mx-auto">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive =
@@ -63,17 +63,29 @@ export function BottomNav() {
               key={item.path}
               to={item.path}
               className={cn(
-                'flex flex-col items-center justify-center gap-1 px-3 py-2 rounded-lg transition-all min-w-[60px] active:scale-95',
-                'hover:bg-accent',
+                'relative flex flex-col items-center justify-center gap-1 rounded-2xl w-full h-full transition-all duration-300',
                 isActive
-                  ? 'text-primary bg-primary/10'
-                  : 'text-muted-foreground'
+                  ? 'text-primary'
+                  : 'text-muted-foreground hover:text-foreground'
               )}
             >
-              <Icon className={cn('h-5 w-5 transition-transform', isActive && 'scale-110')} />
-              <span className="text-xs font-medium leading-none">
+              <div
+                className={cn(
+                  "p-1.5 rounded-xl transition-all duration-300",
+                  isActive ? "bg-primary/10 translate-y-[-2px]" : "bg-transparent"
+                )}
+              >
+                <Icon className={cn('h-5 w-5 sm:h-6 sm:w-6 transition-all', isActive && "fill-current")} />
+              </div>
+              <span className={cn(
+                "text-[10px] sm:text-xs font-semibold leading-none transition-all",
+                isActive ? "font-bold" : "font-medium"
+              )}>
                 {item.labelShort}
               </span>
+              {isActive && (
+                <span className="absolute top-0 inset-x-4 h-[2px] bg-primary rounded-b-full shadow-[0_2px_10px_rgba(var(--primary),0.5)]" />
+              )}
             </Link>
           );
         })}

@@ -16,7 +16,7 @@ const translations: Record<Language, Record<string, string>> = {
     // App Name
     'app.name': 'echo-π Academic Intelligence',
     'app.tagline': 'Your Academic Success Partner',
-    
+
     // Navigation
     'nav.dashboard': 'Dashboard',
     'nav.gpa': 'GPA Management',
@@ -24,7 +24,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.reports': 'Reports & Analytics',
     'nav.settings': 'Settings',
     'nav.calculator': 'GPA Calculator',
-    
+
     // Auth
     'auth.login': 'Login',
     'auth.logout': 'Logout',
@@ -36,7 +36,7 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'Create Account',
     'auth.alreadyHaveAccount': 'Already have an account?',
     'auth.dontHaveAccount': "Don't have an account?",
-    
+
     // Dashboard
     'dashboard.title': 'Academic Dashboard',
     'dashboard.currentGPA': 'Current GPA',
@@ -46,7 +46,7 @@ const translations: Record<Language, Record<string, string>> = {
     'dashboard.classification': 'Classification',
     'dashboard.recentCourses': 'Recent Courses',
     'dashboard.quickStats': 'Quick Statistics',
-    
+
     // GPA
     'gpa.excellent': 'Excellent',
     'gpa.veryGood': 'Very Good',
@@ -55,7 +55,7 @@ const translations: Record<Language, Record<string, string>> = {
     'gpa.fail': 'Fail',
     'gpa.cumulative': 'Cumulative GPA',
     'gpa.current': 'Current GPA',
-    
+
     // Courses
     'course.add': 'Add Course',
     'course.edit': 'Edit Course',
@@ -73,7 +73,7 @@ const translations: Record<Language, Record<string, string>> = {
     'course.totalCourses': 'Total Courses',
     'course.manageCourses': 'Manage Courses',
     'course.yourCourses': 'Your Courses',
-    
+
     // Simulator
     'simulator.title': 'GPA Scenario Simulator',
     'simulator.createScenario': 'Create Scenario',
@@ -83,18 +83,18 @@ const translations: Record<Language, Record<string, string>> = {
     'simulator.bestCase': 'Best Case',
     'simulator.worstCase': 'Worst Case',
     'simulator.realistic': 'Realistic',
-    
+
     // Timeline
     'timeline.title': 'Academic Timeline',
     'timeline.semesterGPA': 'Semester GPA',
     'timeline.performance': 'Performance Trend',
-    
+
     // Reports
     'reports.title': 'Academic Reports',
     'reports.export': 'Export PDF',
     'reports.analysis': 'Detailed Analysis',
     'reports.recommendations': 'Recommendations',
-    
+
     // Settings
     'settings.title': 'Settings',
     'settings.language': 'Language',
@@ -106,7 +106,7 @@ const translations: Record<Language, Record<string, string>> = {
     'settings.currentUniversity': 'Current University',
     'settings.defaultUniversity': 'Default University',
     'settings.universityRulesApplied': 'University rules are applied',
-    
+
     // Common
     'common.save': 'Save',
     'common.cancel': 'Cancel',
@@ -120,13 +120,13 @@ const translations: Record<Language, Record<string, string>> = {
     'common.search': 'Search',
     'common.filter': 'Filter',
     'common.export': 'Export',
-    
+
     // Validation
     'validation.required': 'This field is required',
     'validation.invalidGrade': 'Invalid grade',
     'validation.invalidCredits': 'Invalid credit hours',
     'validation.duplicateCourse': 'Duplicate course detected',
-    
+
     // Messages
     'message.courseAdded': 'Course added successfully',
     'message.courseUpdated': 'Course updated successfully',
@@ -134,12 +134,32 @@ const translations: Record<Language, Record<string, string>> = {
     'message.scenarioSaved': 'Scenario saved successfully',
     'message.languageChanged': 'Language changed successfully',
     'message.themeChanged': 'Theme changed successfully',
+
+    // Footer
+    'footer.about.desc': 'Empowering academic excellence through data-driven insights and personalized learning strategies.',
+    'footer.column.platform': 'The Platform',
+    'footer.link.features': 'Capabilities',
+    'footer.link.howTo': 'How it Works',
+    'footer.link.pricing': 'Plans',
+    'footer.column.resources': 'Knowledge Hub',
+    'footer.link.blog': 'Academic Blog',
+    'footer.link.guides': 'Study Guides',
+    'footer.link.stories': 'Success Stories',
+    'footer.column.legal': 'Trust & Compliance',
+    'footer.link.privacy': 'Privacy Pledge',
+    'footer.link.terms': 'Terms of Use',
+    'footer.column.connect': 'About Platform',
+    'footer.link.support': 'Smart Support',
+    'footer.link.contact': 'Partner with Us',
+    'footer.cta.title': 'Ready to elevate your GPA?',
+    'footer.cta.button': 'Start Your Journey',
+    'footer.copyright': '© 2026 echo-π. All Rights Reserved. Crafted for Scholars.',
   },
   ar: {
     // App Name
     'app.name': 'منصة echo-π الذكية للمعدل الأكاديمي',
     'app.tagline': 'شريكك في النجاح الأكاديمي',
-    
+
     // Navigation
     'nav.dashboard': 'لوحة التحكم',
     'nav.gpa': 'إدارة المعدل',
@@ -148,7 +168,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.settings': 'الإعدادات',
     'nav.calculator': 'حاسبة المعدل',
     'nav.admin': 'الإدارة',
-    
+
     // Auth
     'auth.login': 'تسجيل الدخول',
     'auth.logout': 'تسجيل الخروج',
@@ -160,7 +180,7 @@ const translations: Record<Language, Record<string, string>> = {
     'auth.createAccount': 'إنشاء حساب جديد',
     'auth.alreadyHaveAccount': 'لديك حساب بالفعل؟',
     'auth.dontHaveAccount': 'ليس لديك حساب؟',
-    
+
     // Dashboard
     'dashboard.title': 'لوحة التحكم الأكاديمية',
     'dashboard.currentGPA': 'المعدل الفصلي',
@@ -170,7 +190,7 @@ const translations: Record<Language, Record<string, string>> = {
     'dashboard.classification': 'التقدير',
     'dashboard.recentCourses': 'المقررات الأخيرة',
     'dashboard.quickStats': 'إحصائيات سريعة',
-    
+
     // GPA
     'gpa.excellent': 'ممتاز',
     'gpa.veryGood': 'جيد جداً',
@@ -179,7 +199,7 @@ const translations: Record<Language, Record<string, string>> = {
     'gpa.fail': 'راسب',
     'gpa.cumulative': 'المعدل التراكمي',
     'gpa.current': 'المعدل الفصلي',
-    
+
     // Courses
     'course.add': 'إضافة مقرر',
     'course.edit': 'تعديل المقرر',
@@ -197,7 +217,7 @@ const translations: Record<Language, Record<string, string>> = {
     'course.totalCourses': 'إجمالي المقررات',
     'course.manageCourses': 'إدارة المقررات',
     'course.yourCourses': 'مقرراتك',
-    
+
     // Simulator
     'simulator.title': 'محاكي سيناريوهات المعدل',
     'simulator.createScenario': 'إنشاء سيناريو',
@@ -207,18 +227,18 @@ const translations: Record<Language, Record<string, string>> = {
     'simulator.bestCase': 'أفضل حالة',
     'simulator.worstCase': 'أسوأ حالة',
     'simulator.realistic': 'واقعي',
-    
+
     // Timeline
     'timeline.title': 'الجدول الزمني الأكاديمي',
     'timeline.semesterGPA': 'معدل الفصل',
     'timeline.performance': 'اتجاه الأداء',
-    
+
     // Reports
     'reports.title': 'التقارير الأكاديمية',
     'reports.export': 'تصدير PDF',
     'reports.analysis': 'تحليل مفصل',
     'reports.recommendations': 'التوصيات',
-    
+
     // Settings
     'settings.title': 'الإعدادات',
     'settings.language': 'اللغة',
@@ -230,7 +250,7 @@ const translations: Record<Language, Record<string, string>> = {
     'settings.currentUniversity': 'الجامعة الحالية',
     'settings.defaultUniversity': 'الجامعة الافتراضية',
     'settings.universityRulesApplied': 'يتم تطبيق قواعد الجامعة المحددة',
-    
+
     // Common
     'common.save': 'حفظ',
     'common.cancel': 'إلغاء',
@@ -244,13 +264,13 @@ const translations: Record<Language, Record<string, string>> = {
     'common.search': 'بحث',
     'common.filter': 'تصفية',
     'common.export': 'تصدير',
-    
+
     // Validation
     'validation.required': 'هذا الحقل مطلوب',
     'validation.invalidGrade': 'درجة غير صالحة',
     'validation.invalidCredits': 'ساعات معتمدة غير صالحة',
     'validation.duplicateCourse': 'تم اكتشاف مقرر مكرر',
-    
+
     // Messages
     'message.courseAdded': 'تمت إضافة المقرر بنجاح',
     'message.courseUpdated': 'تم تحديث المقرر بنجاح',
@@ -258,13 +278,33 @@ const translations: Record<Language, Record<string, string>> = {
     'message.scenarioSaved': 'تم حفظ السيناريو بنجاح',
     'message.languageChanged': 'تم تغيير اللغة بنجاح',
     'message.themeChanged': 'تم تغيير المظهر بنجاح',
+
+    // Footer
+    'footer.about.desc': 'نمكن التميز الأكاديمي عبر تحليلات ذكية واستراتيجيات تعلم مخصصة.',
+    'footer.column.platform': 'المنظومة',
+    'footer.link.features': 'القدرات',
+    'footer.link.howTo': 'كيف تعمل',
+    'footer.link.pricing': 'الباقات',
+    'footer.column.resources': 'المعرفة',
+    'footer.link.blog': 'المدونة الأكاديمية',
+    'footer.link.guides': 'أدلة المذاكرة',
+    'footer.link.stories': 'قصص النجاح',
+    'footer.column.legal': 'الثقة والالتزام',
+    'footer.link.privacy': 'عهد الخصوصية',
+    'footer.link.terms': 'شروط الاستخدام',
+    'footer.column.connect': 'الشركة',
+    'footer.link.support': 'المساندة الذكية',
+    'footer.link.contact': 'من نحن',
+    'footer.cta.title': 'جاهز لرفع معدلك؟',
+    'footer.cta.button': 'ابدأ رحلة التميز',
+    'footer.copyright': '© 2026 echo-π. جميع الحقوق محفوظة.',
   }
 };
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>(() => {
     const saved = localStorage.getItem('language');
-    return (saved === 'ar' || saved === 'en') ? saved : 'en';
+    return (saved === 'ar' || saved === 'en') ? saved : 'ar';
   });
 
   const dir = language === 'ar' ? 'rtl' : 'ltr';

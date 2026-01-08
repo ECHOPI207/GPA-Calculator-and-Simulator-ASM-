@@ -42,3 +42,6 @@ coverage
 # Temporary Files
 .vite_cache
 *.local
+
+.vercel
+.env*.local

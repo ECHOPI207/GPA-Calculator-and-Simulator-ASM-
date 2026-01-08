@@ -1,6 +1,7 @@
 // خدمة التخزين المحلي للمقررات والسيناريوهات
 import type { Course, Scenario } from '@/types/types';
 import type { CLPProfile } from './clp-engine';
+import { getGradePoints, normalizeGrade } from './university-rules';
 
 const COURSES_KEY = 'echo-pi-courses';
 const SCENARIOS_KEY = 'echo-pi-scenarios';
@@ -18,7 +19,40 @@ export const courseStorage = {
   getAll: (): Course[] => {
     try {
       const data = localStorage.getItem(COURSES_KEY);
-      return data ? JSON.parse(data) : [];
+      const courses = data ? JSON.parse(data) : [];
+
+      // Get current university
+      const selectedUniversityId = typeof window !== 'undefined'
+        ? localStorage.getItem('universityId')
+        : null;
+      const isAlRyada = selectedUniversityId === 'al-ryada-university';
+
+      // Recalculate gradePoints based on current university
+      // Also auto-detect zero-credit courses based on code patterns (Al-Ryada only)
+      // Also normalize R-prefixed retake grades (Al-Ryada only)
+      return courses.map((course: Course) => {
+        const code = course.courseCode.toUpperCase();
+        const isZeroCreditPattern = isAlRyada && (
+          code.startsWith('UNC') ||
+          code.startsWith('UNE') ||
+          code.startsWith('UC') ||
+          code.startsWith('UE')
+        );
+
+        // Check if grade has R prefix (retake indicator in Al-Ryada)
+        const originalGrade = course.grade;
+        const hasRPrefix = originalGrade.toUpperCase().startsWith('R') && originalGrade.length > 1;
+        const normalizedGrade = isAlRyada ? normalizeGrade(originalGrade) : originalGrade;
+
+        return {
+          ...course,
+          grade: normalizedGrade as any, // Normalize the grade
+          gradePoints: getGradePoints(normalizedGrade),
+          isRetake: course.isRetake || (isAlRyada && hasRPrefix), // Auto-mark as retake if R prefix
+          // Only mark as zero-credit if explicitly set OR if pattern matches in Al-Ryada
+          isZeroCredit: isAlRyada ? (course.isZeroCredit || isZeroCreditPattern) : false
+        };
+      });
     } catch {
       return [];
     }
@@ -65,7 +99,7 @@ export const courseStorage = {
   updateMany: (ids: string[], updates: Partial<Course>): void => {
     const courses = courseStorage.getAll();
     const idsSet = new Set(ids);
-    const updatedCourses = courses.map(c => 
+    const updatedCourses = courses.map(c =>
       idsSet.has(c.id) ? { ...c, ...updates } : c
     );
     courseStorage.save(updatedCourses);

@@ -81,22 +81,22 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
 
     const semesterCourses = courses.filter(c => c.year === oldYear && c.semester === oldTerm);
     const idsToUpdate = semesterCourses.map(c => c.id);
-    
+
     const newYear = Number(editSemesterYear);
-    
+
     if (idsToUpdate.length > 0) {
       courseStorage.updateMany(idsToUpdate, {
         year: newYear,
         semester: editSemesterTerm
       });
-      
+
       toast({
         title: t('common.success'),
         description: language === 'ar' ? 'تم تحديث الفصل الدراسي بنجاح' : 'Semester updated successfully',
       });
       onCoursesChange();
     }
-    
+
     setEditingSemester(undefined);
   };
 
@@ -123,7 +123,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
 
   const handleDeleteSemester = () => {
     if (!deletingSemester) return;
-    
+
     const [yearStr, semester] = deletingSemester.split('-');
     const year = Number(yearStr);
 
@@ -132,13 +132,13 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
 
     try {
       courseStorage.deleteMany(idsToDelete);
-       toast({
+      toast({
         title: t('common.success'),
         description: language === 'ar' ? 'تم حذف الفصل الدراسي بنجاح' : 'Semester deleted successfully',
       });
       onCoursesChange();
     } catch (error) {
-       toast({
+      toast({
         title: t('common.error'),
         description: error instanceof Error ? error.message : 'حدث خطأ',
         variant: 'destructive',
@@ -178,9 +178,9 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
   const sortedSemesters = Array.from(semesterMap.entries()).sort((a, b) => {
     const [yearA, semesterA] = a[0].split('-');
     const [yearB, semesterB] = b[0].split('-');
-    
+
     if (yearA !== yearB) return Number(yearA) - Number(yearB);
-    
+
     const semesterOrder: Record<string, number> = { 'Fall': 1, 'Spring': 2, 'Summer': 3 };
     return (semesterOrder[semesterA] || 0) - (semesterOrder[semesterB] || 0);
   });
@@ -191,7 +191,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
         {sortedSemesters.map(([key, semesterCourses]) => {
           const [year, semester] = key.split('-');
           const semesterSummary = GPAEngine.calculateSemesterGPA(semesterCourses);
-          
+
           return (
             <Card key={key}>
               <CardHeader>
@@ -260,6 +260,11 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
                                 {t('course.isRetake')}
                               </Badge>
                             )}
+                            {course.isZeroCredit && (
+                              <Badge variant="secondary" className="ms-2 text-xs bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-500/20">
+                                {language === 'ar' ? '0 س.م' : '0 CH'}
+                              </Badge>
+                            )}
                           </TableCell>
                           <TableCell>{course.courseName}</TableCell>
                           <TableCell className="text-center">{course.creditHours}</TableCell>
@@ -315,7 +320,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
           <DialogHeader>
             <DialogTitle>{language === 'ar' ? 'تعديل الفصل الدراسي' : 'Edit Semester'}</DialogTitle>
             <DialogDescription>
-              {language === 'ar' 
+              {language === 'ar'
                 ? 'قم بتعديل السنة الدراسية والفصل لجميع المواد في هذا الفصل.'
                 : 'Update the academic year and term for all courses in this semester.'}
             </DialogDescription>
@@ -361,7 +366,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>{t('course.delete')}</AlertDialogTitle>
             <AlertDialogDescription>
-              {language === 'ar' 
+              {language === 'ar'
                 ? `هل أنت متأكد من حذف ${deletingCourse?.courseCode}؟ لا يمكن التراجع عن هذا الإجراء.`
                 : `Are you sure you want to delete ${deletingCourse?.courseCode}? This action cannot be undone.`}
             </AlertDialogDescription>
@@ -380,7 +385,7 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
           <AlertDialogHeader>
             <AlertDialogTitle>{language === 'ar' ? 'حذف الفصل الدراسي' : 'Delete Semester'}</AlertDialogTitle>
             <AlertDialogDescription>
-              {language === 'ar' 
+              {language === 'ar'
                 ? 'هل أنت متأكد من حذف هذا الفصل الدراسي بالكامل؟ سيتم حذف جميع المواد المسجلة في هذا الفصل. لا يمكن التراجع عن هذا الإجراء.'
                 : 'Are you sure you want to delete this entire semester? All courses in this semester will be deleted. This action cannot be undone.'}
             </AlertDialogDescription>
