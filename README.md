@@ -62,7 +62,6 @@ A comprehensive academic tool designed to help students track their academic pro
 
 ```
 gpa-calculator-asm/
-├── data/               # Static data files and templates
 ├── docs/               # Documentation and guides
 ├── public/             # Static assets (images, icons)
 ├── src/
