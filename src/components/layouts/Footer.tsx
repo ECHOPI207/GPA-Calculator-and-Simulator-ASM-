@@ -76,7 +76,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 mb-12 text-center md:text-start">
           {footerSections.map((section, idx) => (
             <div key={idx} className="flex flex-col gap-4">
-              <h4 className="font-bold text-foreground tracking-tight text-lg">{section.title}</h4>
+              <h2 className="font-bold text-foreground tracking-tight text-lg">{section.title}</h2>
               <ul className="space-y-3">
                 {section.links.map((link, linkIdx) => (
                   <li key={linkIdx}>
