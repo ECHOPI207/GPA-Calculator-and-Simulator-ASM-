@@ -7,7 +7,7 @@ import type {
   SemesterSummary,
   ValidationError
 } from '@/types/types';
-import { getClassification, getGradePoints, isPassingGrade } from './university-rules';
+import { getClassification, getGradePoints, isPassingGrade, isFailNoCredit, isPassOnlyGrade, normalizeGrade } from './university-rules';
 
 /**
  * Core GPA Calculation Engine
@@ -54,6 +54,23 @@ export class GPAEngine {
       // Skip zero-credit courses (they have grades but don't count toward GPA)
       if (course.isZeroCredit) continue;
 
+      const normalizedGrade = normalizeGrade(course.grade);
+
+      // Handle Pass-only grades (P) - count hours but not quality points
+      if (isPassOnlyGrade(normalizedGrade)) {
+        totalRegisteredHours += course.creditHours;
+        totalPassedHours += course.creditHours;
+        continue;
+      }
+
+      // Handle failed grades with no credit (FA, FW) - count hours with 0 quality points
+      if (isFailNoCredit(normalizedGrade)) {
+        totalRegisteredHours += course.creditHours;
+        // Don't add to passed hours or quality points
+        continue;
+      }
+
+      // Normal grade calculation
       totalQualityPoints += course.gradePoints * course.creditHours;
       totalRegisteredHours += course.creditHours;
       if (isPassingGrade(course.grade)) {
@@ -69,8 +86,8 @@ export class GPAEngine {
     // Get classification
     const classificationRule = getClassification(cumulativeGPA);
 
-    // Sort semesters chronologically
-    const semesterOrder: Record<string, number> = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
+    // Sort semesters chronologically (Fall starts academic year)
+    const semesterOrder: Record<string, number> = { 'Fall': 1, 'Spring': 2, 'Summer': 3 };
     semesters.sort((a, b) => {
       if (a.year !== b.year) return a.year - b.year;
       return (semesterOrder[a.semester] || 4) - (semesterOrder[b.semester] || 4);
@@ -99,6 +116,21 @@ export class GPAEngine {
         // Skip zero-credit courses
         if (course.isZeroCredit) continue;
 
+        const normalizedGrade = normalizeGrade(course.grade);
+
+        // Handle Pass-only grades (P)
+        if (isPassOnlyGrade(normalizedGrade)) {
+          runningRegisteredHours += course.creditHours;
+          continue;
+        }
+
+        // Handle failed grades with no credit (FA, FW)
+        if (isFailNoCredit(normalizedGrade)) {
+          runningRegisteredHours += course.creditHours;
+          continue;
+        }
+
+        // Normal grade calculation
         runningQualityPoints += course.gradePoints * course.creditHours;
         runningRegisteredHours += course.creditHours;
       }
@@ -141,10 +173,10 @@ export class GPAEngine {
     const latestAttempts = new Map<string, Course>();
 
     for (const [courseCode, attempts] of courseMap) {
-      // Sort attempts chronologically (latest last)
+      // Sort attempts chronologically (latest last) - Fall starts academic year
       attempts.sort((a, b) => {
         if (a.year !== b.year) return a.year - b.year;
-        const semesterOrder: Record<string, number> = { 'Spring': 1, 'Summer': 2, 'Fall': 3 };
+        const semesterOrder: Record<string, number> = { 'Fall': 1, 'Spring': 2, 'Summer': 3 };
         return (semesterOrder[a.semester] || 4) - (semesterOrder[b.semester] || 4);
       });
 

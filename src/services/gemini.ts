@@ -18,7 +18,14 @@ const fileToGenerativePart = async (file: File) => {
 };
 
 function normalizeGrade(input: string): GradeSymbol {
-  const normalized = input.trim().toUpperCase();
+  let normalized = input.trim().toUpperCase();
+  
+  // Al-Ryada University uses R prefix for retakes (RD = D, RC = C, etc.)
+  // Strip the R prefix if present
+  if (normalized.startsWith('R') && normalized.length > 1) {
+    normalized = normalized.substring(1);
+  }
+  
   // Map common variations to supported GradeSymbol types
   // Supported: 'A' | 'A-' | 'B+' | 'B' | 'B-' | 'C+' | 'C' | 'C-' | 'D+' | 'D' | 'F'
   const map: Record<string, GradeSymbol> = {

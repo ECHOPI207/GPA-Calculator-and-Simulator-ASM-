@@ -225,13 +225,21 @@ export function CourseList({ courses, onCoursesChange }: CourseListProps) {
                     </Button>
                   </div>
                 </div>
-                <div className="flex gap-4 text-sm text-muted-foreground">
+                <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground">
                   <span>
-                    {language === 'ar' ? 'الساعات' : 'Credits'}: {semesterSummary.totalCredits}
+                    {language === 'ar' ? 'الساعات المسجلة' : 'Registered Credits'}: <strong className="text-foreground">{semesterSummary.totalCredits}</strong>
                   </span>
                   <span>•</span>
                   <span>
-                    {language === 'ar' ? 'المقررات' : 'Courses'}: {semesterCourses.length}
+                    {language === 'ar' ? 'الساعات المجتازة' : 'Earned Credits'}: <strong className="text-foreground">{semesterSummary.earnedCredits}</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    {language === 'ar' ? 'المقررات' : 'Courses'}: <strong className="text-foreground">{semesterCourses.length}</strong>
+                  </span>
+                  <span>•</span>
+                  <span>
+                    {language === 'ar' ? 'إجمالي النقاط' : 'Quality Points'}: <strong className="text-foreground">{(semesterSummary.semesterGPA * semesterSummary.totalCredits).toFixed(2)}</strong>
                   </span>
                 </div>
               </CardHeader>

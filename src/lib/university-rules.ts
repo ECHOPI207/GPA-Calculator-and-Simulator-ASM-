@@ -280,6 +280,33 @@ export function isPassingGrade(gradeSymbol: string): boolean {
   return gradeSymbol !== 'F' && gradeSymbol !== 'FA' && gradeSymbol !== 'FW';
 }
 
+/**
+ * Check if grade indicates a retake attempt (RC, RD, RF, RFB)
+ * These grades don't count in cumulative unless they're the final attempt
+ */
+export function isRetakeGrade(gradeSymbol: string): boolean {
+  const normalized = normalizeGrade(gradeSymbol).toUpperCase();
+  return ['RC', 'RD', 'RF', 'RFB'].includes(normalized);
+}
+
+/**
+ * Check if grade is a fail with no credit earned (FA = Fail Absent, FW = Fail Withdrawn)
+ * These count as attempts with 0 quality points
+ */
+export function isFailNoCredit(gradeSymbol: string): boolean {
+  const normalized = normalizeGrade(gradeSymbol).toUpperCase();
+  return ['FA', 'FW'].includes(normalized);
+}
+
+/**
+ * Check if grade is Pass-only (no quality points, just credit hours)
+ * P = Pass (used for pass/fail courses)
+ */
+export function isPassOnlyGrade(gradeSymbol: string): boolean {
+  const normalized = normalizeGrade(gradeSymbol).toUpperCase();
+  return normalized === 'P';
+}
+
 export const gradePoints: Record<string, number> = DEFAULT_GRADE_RULES.reduce((acc, rule) => {
   acc[rule.symbol] = rule.points;
   return acc;
