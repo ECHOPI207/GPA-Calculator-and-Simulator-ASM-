@@ -25,11 +25,11 @@ export default function DashboardPage() {
   const loadData = () => {
     const allCourses = courseStorage.getAll();
     setCourses(allCourses);
-    
+
     if (allCourses.length > 0) {
       const calculation = GPAEngine.calculateGPA(allCourses);
       setGpaCalc(calculation);
-      
+
       // Prepare Trend Data
       const trend = calculation.semesters.map(sem => ({
         name: `${sem.semester} ${sem.year}`,
@@ -52,7 +52,7 @@ export default function DashboardPage() {
   if (courses.length === 0) {
     return (
       <div className="space-y-6">
-        <PageMeta 
+        <PageMeta
           title={language === 'ar' ? 'لوحة المعلومات | المساعد الأكاديمي' : 'Dashboard | Academic Assistant'}
           description={language === 'ar' ? 'نظرة عامة على أدائك الأكاديمي والمعدل التراكمي.' : 'Overview of your academic performance and GPA.'}
         />
@@ -60,7 +60,7 @@ export default function DashboardPage() {
           <h1 className="text-3xl font-bold text-foreground">{t('dashboard.title')}</h1>
           <p className="text-muted-foreground mt-2">{t('app.tagline')}</p>
         </div>
-        
+
         <Card className="border-2 border-dashed border-border">
           <CardContent className="py-16 text-center">
             <div className="flex justify-center mb-6">
@@ -68,11 +68,11 @@ export default function DashboardPage() {
                 <GraduationCap className="h-16 w-16 text-primary" />
               </div>
             </div>
-            <h3 className="text-2xl font-bold mb-3 text-foreground">
+            <h2 className="text-2xl font-bold mb-3 text-foreground">
               {language === 'ar' ? 'لا توجد مقررات' : 'No courses added yet'}
-            </h3>
+            </h2>
             <p className="text-muted-foreground text-lg mb-6 max-w-md mx-auto">
-              {language === 'ar' 
+              {language === 'ar'
                 ? 'ابدأ بإضافة مقرراتك الدراسية في صفحة حاسبة المعدل لتتبع أدائك الأكاديمي'
                 : 'Start by adding your courses in the Calculator page to track your academic performance'}
             </p>
@@ -90,7 +90,7 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <PageMeta 
+      <PageMeta
         title={language === 'ar' ? 'لوحة المعلومات | المساعد الأكاديمي' : 'Dashboard | Academic Assistant'}
         description={language === 'ar' ? 'نظرة عامة على أدائك الأكاديمي والمعدل التراكمي.' : 'Overview of your academic performance and GPA.'}
       />
@@ -98,8 +98,8 @@ export default function DashboardPage() {
       <div>
         <h1 className="text-3xl font-bold">{t('dashboard.title')}</h1>
         <p className="text-muted-foreground mt-2">
-          {language === 'ar' 
-            ? 'نظرة عامة على أدائك الأكاديمي وإحصائيات متقدمة' 
+          {language === 'ar'
+            ? 'نظرة عامة على أدائك الأكاديمي وإحصائيات متقدمة'
             : 'Overview of your academic performance and advanced statistics'}
         </p>
       </div>
@@ -154,26 +154,26 @@ export default function DashboardPage() {
                 <AreaChart data={trendData}>
                   <defs>
                     <linearGradient id="colorGpa" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8}/>
-                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0}/>
+                      <stop offset="5%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
+                      <stop offset="95%" stopColor="hsl(var(--primary))" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="name" className="text-xs" />
                   <YAxis domain={[0, 4]} className="text-xs" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'hsl(var(--card))', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
                       borderColor: 'hsl(var(--border))',
-                      borderRadius: 'var(--radius)' 
-                    }} 
+                      borderRadius: 'var(--radius)'
+                    }}
                   />
-                  <Area 
-                    type="monotone" 
-                    dataKey="cumulative" 
-                    stroke="hsl(var(--primary))" 
-                    fillOpacity={1} 
-                    fill="url(#colorGpa)" 
+                  <Area
+                    type="monotone"
+                    dataKey="cumulative"
+                    stroke="hsl(var(--primary))"
+                    fillOpacity={1}
+                    fill="url(#colorGpa)"
                     name="GPA"
                   />
                 </AreaChart>
@@ -200,12 +200,12 @@ export default function DashboardPage() {
                   <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
                   <XAxis dataKey="name" className="text-xs" />
                   <YAxis className="text-xs" />
-                  <Tooltip 
-                    contentStyle={{ 
-                      backgroundColor: 'hsl(var(--card))', 
+                  <Tooltip
+                    contentStyle={{
+                      backgroundColor: 'hsl(var(--card))',
                       borderColor: 'hsl(var(--border))',
-                      borderRadius: 'var(--radius)' 
-                    }} 
+                      borderRadius: 'var(--radius)'
+                    }}
                   />
                   <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]}>
                     {gradeData.map((entry, index) => (
