@@ -101,6 +101,7 @@ export function Header() {
             onClick={toggleLanguage}
             className="w-9 h-9 rounded-full transition-transform hover:rotate-180 duration-500"
             title={language === 'en' ? 'العربية' : 'English'}
+            aria-label={language === 'en' ? 'Switch to Arabic' : 'Switch to English'}
           >
             <Languages className="h-4 w-4" />
           </Button>
@@ -112,6 +113,7 @@ export function Header() {
             onClick={toggleTheme}
             className="w-9 h-9 rounded-full transition-transform hover:rotate-12 duration-300"
             title={theme === 'light' ? 'الوضع الداكن' : 'الوضع الفاتح'}
+            aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
           >
             {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </Button>
@@ -119,7 +121,7 @@ export function Header() {
           {/* Profile Menu */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="w-9 h-9 rounded-full text-muted-foreground hover:text-foreground">
+              <Button variant="ghost" size="sm" className="w-9 h-9 rounded-full text-muted-foreground hover:text-foreground" aria-label="Open profile menu">
                 <UserCircle className="h-5 w-5" />
               </Button>
             </DropdownMenuTrigger>

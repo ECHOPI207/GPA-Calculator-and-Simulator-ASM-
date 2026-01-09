@@ -54,9 +54,9 @@ export function Footer() {
           {/* Socials - Now prominent on the right/left */}
           <div className="flex items-center gap-4">
             {[
-              { icon: Github, href: "https://github.com/ECHOPI207" },
-              { icon: Linkedin, href: "https://www.linkedin.com/in/mohamed-mostafa-mohamed" },
-              { icon: Mail, href: "mailto:mohamed.mostafa.req@gmail.com" }
+              { icon: Github, href: "https://github.com/ECHOPI207", label: "GitHub Profile" },
+              { icon: Linkedin, href: "https://www.linkedin.com/in/mohamed-mostafa-mohamed", label: "LinkedIn Profile" },
+              { icon: Mail, href: "mailto:mohamed.mostafa.req@gmail.com", label: "Email Contact" }
             ].map((social, idx) => (
               <a
                 key={idx}
@@ -64,6 +64,7 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
                 className="h-12 w-12 flex items-center justify-center rounded-full bg-secondary/50 text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-300 ring-1 ring-border hover:ring-primary shadow-sm hover:shadow-lg hover:shadow-primary/25"
+                aria-label={social.label}
               >
                 <social.icon className="h-6 w-6" />
               </a>

@@ -1,0 +1,8 @@
+# Robots.txt for GPA Calculator and Simulator (ASM)
+# https://www.robotstxt.org/robotstxt.html
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update with actual URL when deployed)
+# Sitemap: https://yourdomain.com/sitemap.xml
